@@ -97,28 +97,68 @@ const Nav = () => {
                       <div
                         tabIndex={0}
                         role="button"
-                        className=" m-1 hidden lg:flex"
+                        className="m-1 hidden lg:flex"
                       >
                         <img
-                          className="w-[45px] h-[45px] rounded-full hidden lg:flex"
+                          className="w-[45px] border border-teal-500 h-[45px] rounded-full hidden lg:flex"
                           src={user?.photoURL}
                           alt=""
                         />
                       </div>
+
                       <div
                         tabIndex={0}
-                        className="dropdown-content z-50 menu p-2 shadow bg-[#353b48] rounded-box w-52"
+                        className="dropdown-content z-50 border border-teal-500 menu p-2 shadow bg-[#353b48] rounded-box w-60"
                       >
-                        <h1 className="m-1 text-[#f5f6fa] border p-1 rounded-md font-semibold">
+                        <img
+                          className="w-[45px] border border-teal-500 h-[45px] rounded-full hidden lg:flex mx-auto mt-2 mb-1"
+                          src={user?.photoURL}
+                          alt=""
+                        />
+                        <h1 className="mx-1 text-[#f5f6fa] p-1 text-center rounded-md font-semibold">
                           {user?.displayName}
                         </h1>
-                        <h1 className="m-1 text-[#f5f6fa] border p-1 rounded-md font-semibold">
+                        <h1 className="mx-1 text-[#f5f6fa] p-1 text-center rounded-md font-semibold">
                           {user?.email}
                         </h1>
-                        <Button onClick={() => logOut()} className="my-2 w-full">
+                        <h1 className="mx-1 text-[#f5f6fa] p-1 text-center rounded-md font-semibold">
+                          {
+                            user?.uid.slice(0,20) + "..."
+                          }
+                        </h1>
+                        <Link to={'/profile'} className="rounded-lg py-2 text-center border border-teal-500 text-white hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-1000">View Profile</Link>
+
+                        <div className="my-5 flex flex-col gap-1">
+
+                          <NavLink
+                            to={"/yourSchools"}
+                              className={({ isActive, isPending }) =>
+                              isPending ? "" : isActive ? "font-bold border-b border-teal-500 transition-all text-teal-500 ease-in-out duration-300" : "text-white border-b hover:border-b-teal-500"
+                            }
+                            >
+                            <Typography as="p" className="p-1 font-normal hover:text-teal-500 hover:border-b-teal-500 pb-3 px-3 duration-300 ease-in-out cursor-pointer text-sm gro ">
+                              Your Schools
+                            </Typography>
+                          </NavLink>
+
+                          <NavLink
+                            to={"/yourClasses"}
+                              className={({ isActive, isPending }) =>
+                              isPending ? "" : isActive ? "font-bold border-b border-teal-500 transition-all text-teal-500 ease-in-out duration-300" : "text-white border-b hover:border-b-teal-500"
+                            }
+                            >
+                            <Typography as="p" className="p-1 font-normal hover:text-teal-500 hover:border-b-teal-500 pb-3 px-3 duration-300 ease-in-out cursor-pointer text-sm gro ">
+                              Your Classes
+                            </Typography>
+                          </NavLink>
+
+                        </div>
+
+                        <Button onClick={() => logOut()} className="border border-teal-500 text-white hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-500">
                           Log Out
                         </Button>
                       </div>
+
                     </div>
                   </div>
                 ) : (

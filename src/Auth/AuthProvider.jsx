@@ -2,14 +2,18 @@
 import { createContext, useEffect, useState } from "react";
 import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import auth from "../Firebase/firebase.config";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
+import UAParser from 'ua-parser-js';
 
 export const AuthContext = createContext(null) ;
 
 const AuthProvider = ({children}) => {
 
-    // const axiosCommon = useAxiosCommon() ;
+    const axiosSecure = useAxiosSecure() ;
     const [user , setUser] = useState(null) ;
     const [loading , setLoading] = useState(true) ;
+    const parser = new UAParser();
+    const deviceInfo = parser.getResult();
 
     const createUser = (email , pass) => {
         setLoading(true) ;
@@ -50,9 +54,30 @@ const AuthProvider = ({children}) => {
         const unSubscribe = onAuthStateChanged(auth , (currentUser) => {
             setLoading(false) ;
             setUser(currentUser) ;
+            if(currentUser){
+
+                // axiosSecure.put('/jwt' , {email : currentUser?.email})
+                // .then((result) => {
+                //     console.log(result)
+                // })
+
+                const userInfo = {
+                    email : currentUser?.email ,
+                    devicesInfo : {
+                        deviceName : deviceInfo?.os?.name +' '+deviceInfo?.os?.version ,
+                        loginDate : new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString() + ' ' + new Date().toLocaleTimeString('en-US', { hour: 'numeric', hour12: true }).split(' ')[1] 
+                    },
+                }
+
+                axiosSecure.put('/updateDevice' , userInfo)
+                .then((result) => {
+                    return result ;
+                })
+
+            }
         })
         return unSubscribe ;
-    } , [])
+    } , [axiosSecure , deviceInfo])
 
     const authInfo = {
         user ,

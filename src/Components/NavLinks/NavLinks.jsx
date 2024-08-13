@@ -1,9 +1,7 @@
 
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const NavLinks = ({path , label}) => {
-
-  const {pathname} = useLocation() ;
 
   return (
     <Link to={path} className={`link gro`}>

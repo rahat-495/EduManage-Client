@@ -6,17 +6,22 @@ import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import axios from 'axios' ;
 import useAuth from "../../Hooks/useAuth";
 import { ToastContainer, toast } from "react-toastify";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import UAParser from 'ua-parser-js';
 
 const key = import.meta.env.VITE_IMAGE_HOISTING_API_KEY;
 const apiUrl = `https://api.imgbb.com/1/upload?key=${key}`;
 
 const SignUpC = ({remember , setRemember}) => {
 
+  const axiosSecure = useAxiosSecure() ;
   const {createUser , setProfile} = useAuth() ;
   const navigate = useNavigate() ;
   const [eye , setEye] = useState(false) ;
   const [errorText , setErrorText] = useState('') ;
   const [passInt, setPassInt] = useState("");
+  const parser = new UAParser();
+  const deviceInfo = parser.getResult();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,6 +48,30 @@ const SignUpC = ({remember , setRemember}) => {
                 console.log(result.user);
                 toast.success("Register Success Fully !");
                 form.reset();
+
+                const userInfo = {
+                  name ,
+                  email ,
+                  image: imageUrl?.data?.display_url,
+                  role : "student" ,
+                  isBlock : false ,
+                  isFired : false ,
+                  applyForTeacher : "No" ,
+                  schools : [] ,
+                  classes : [] ,
+                  removedDevice : [] ,
+                  devicesInfo : [
+                    {
+                      deviceName :  deviceInfo?.os?.name +' '+deviceInfo?.os?.version   ,
+                      loginDate :  new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString() + ' ' + new Date().toLocaleTimeString('en-US', { hour: 'numeric', hour12: true }).split(' ')[1] 
+                    },
+                  ],
+                }
+        
+                axiosSecure.put('/createUser' , userInfo)
+                .then((result) => {
+                  console.log(result) ;
+                })
 
                 setTimeout(() => {
                   navigate("/");

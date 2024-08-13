@@ -6,14 +6,19 @@ import { useState } from "react";
 import useAuth from "../../Hooks/useAuth";
 import { ToastContainer , toast } from "react-toastify";
 import { FcGoogle } from "react-icons/fc";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import UAParser from 'ua-parser-js';
 
 const LoginC = ({location}) => {
 
+    const axiosSecure = useAxiosSecure() ;
     const { signIn , googleLogin } = useAuth() ;
     const navigate = useNavigate() ;
     const [eye , setEye] = useState(false) ;
     const [remember , setRemember] = useState(false) ;
     const [errorText , setErrorText] = useState('') ;
+    const parser = new UAParser();
+    const deviceInfo = parser.getResult();
 
     const handleSubmit = async (e) => {
         e.preventDefault() ;
@@ -25,9 +30,33 @@ const LoginC = ({location}) => {
         if(remember){
           signIn(email , pass) 
           .then((result) => {
-            console.log(result.user);
+            console.log(result);
             form.reset() ;
             toast.success('Login Success Fully !') ;
+
+            const userInfo = {
+              name : result?.user?.displayName ,
+              email : result?.user?.email ,
+              image: result?.user?.photoURL,
+              role : "student" ,
+              isBlock : false ,
+              isFired : false ,
+              applyForTeacher : "No" ,
+              schools : [] ,
+              classes : [] ,
+              removedDevice : [] ,
+              devicesInfo : [
+                {
+                  deviceName : deviceInfo?.os?.name +' '+deviceInfo?.os?.version  ,
+                  loginDate : new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString() + ' ' + new Date().toLocaleTimeString('en-US', { hour: 'numeric', hour12: true }).split(' ')[1] 
+                },
+              ],
+            }
+
+            axiosSecure.put('/createUser' , userInfo)
+            .then((result) => {
+              console.log(result) ;
+            })
   
             setTimeout(() => {
               if(location.state){
@@ -61,6 +90,30 @@ const LoginC = ({location}) => {
         console.log(result);  
         toast.success('Login Success Fully !') ;
         
+        const userInfo = {
+          name : result?.user?.displayName ,
+          email : result?.user?.email ,
+          image: result?.user?.photoURL,
+          role : "student" ,
+          isBlock : false ,
+          isFired : false ,
+          applyForTeacher : "No" ,
+          schools : [] ,
+          classes : [] ,
+          removedDevice : [] ,
+          devicesInfo : [
+            {
+              deviceName :  deviceInfo?.os?.name +' '+deviceInfo?.os?.version  ,
+              loginDate : new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString() + ' ' + new Date().toLocaleTimeString('en-US', { hour: 'numeric', hour12: true }).split(' ')[1] 
+            },
+          ],
+        }
+
+        axiosSecure.put('/createUser' , userInfo)
+        .then((result) => {
+          console.log(result) ;
+        })
+
         setTimeout(() => {
           if(location.state){
             navigate(location.state) ;

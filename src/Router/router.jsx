@@ -6,6 +6,17 @@ import Login from '../Pages/Login/Login';
 import SignUp from '../Pages/Register/SignUp';
 import AddSchool from '../Pages/AddSchool/AddSchool';
 import AddClass from '../Pages/AddClass/AddClass';
+import YourSchools from '../Pages/YourSchools/YourSchools';
+import YourClasses from '../Pages/YourClasses/YourClasses';
+import SchoolsDetails from '../Pages/SchoolsDetails/SchoolsDetails';
+import UpdateSchool from '../Pages/Update/UpdateSchool/UpdateSchool';
+import YourClassSubs from '../Pages/YourClassSubs/YourClassSubs';
+import ViewClassFromS from '../Pages/ViewClassFromS/ViewClassFromS';
+import ProfileRoot from '../Layout/ProfileRoot';
+import ProfileStatic from '../Page/ProfilePages/ProfileStatic/ProfileStatic';
+import MyProfile from '../Page/ProfilePages/MyProfile/MyProfile';
+import AdditionalInfo from '../Page/AdditionalInfo/AdditionalInfo';
+import Address from '../Page/ProfilePages/Address/Address';
 
 const router = createBrowserRouter([
     {
@@ -32,8 +43,54 @@ const router = createBrowserRouter([
                 path : '/addClass' ,
                 element : <AddClass/> ,
             },
+            {
+                path : '/yourSchools' ,
+                element : <YourSchools/> ,
+            },
+            {
+                path : '/yourClasses' ,
+                element : <YourClasses/> ,
+            },
+            {
+                path : '/schoolsDetails/:id' ,
+                element : <SchoolsDetails/> ,
+            },
+            {
+                path : '/update/:id' ,
+                element : <UpdateSchool/> ,
+            },
+            {
+                path : '/yourClasses/subjects/:id' ,
+                element : <YourClassSubs/> ,
+            },
+            {
+                path : '/schoolDetails/viewClasses/:id' ,
+                element : <ViewClassFromS/> ,
+            },
+        ] 
+    },
+    {
+        path : '/profile' ,
+        element : <ProfileRoot/> ,
+        children : [
+            {
+                path : '/profile' ,
+                element : <ProfileStatic/> ,
+            },
+            {
+                path : 'myProfile' ,
+                element : <MyProfile/> ,
+            },
+            {
+                path : 'additional-info' ,
+                element : <AdditionalInfo/> ,
+            },
+            {
+                path : 'address' ,
+                element : <Address/> ,
+            },
         ]
-    }
+    },
 ])
 
 export default router;
