@@ -37,6 +37,7 @@ const LoginC = ({location}) => {
             const userInfo = {
               name : result?.user?.displayName ,
               email : result?.user?.email ,
+              studentUid : result?.user?.uid ,
               image: result?.user?.photoURL,
               role : "student" ,
               isBlock : false ,
@@ -97,6 +98,7 @@ const LoginC = ({location}) => {
           name : result?.user?.displayName ,
           email : result?.user?.email ,
           image: result?.user?.photoURL,
+          studentUid : result?.user?.uid ,
           role : "student" ,
           isBlock : false ,
           isFired : false ,

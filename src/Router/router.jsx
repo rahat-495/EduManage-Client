@@ -20,6 +20,7 @@ import Address from '../Page/ProfilePages/Address/Address';
 import ContactUs from '../Pages/ContactUs/ContactUs';
 import Schools from '../Pages/Schools/Schools';
 import AddmissionForm from '../Pages/AddmissionForm/AddmissionForm';
+import AddmissionReq from '../Pages/AddmissionReq/AddmissionReq';
 
 const router = createBrowserRouter([
     {
@@ -81,6 +82,10 @@ const router = createBrowserRouter([
             {
                 path : '/addmissionForm/:id' ,
                 element : <AddmissionForm/> ,
+            },
+            {
+                path : '/addmissionRequests' ,
+                element : <AddmissionReq/> ,
             },
         ] 
     },

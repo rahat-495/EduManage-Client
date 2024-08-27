@@ -1,8 +1,8 @@
 
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAuth from "../../Hooks/useAuth";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Input, Option, Select } from "@material-tailwind/react";
 import Swal from "sweetalert2";
 import Lottie from "lottie-react";
@@ -13,6 +13,7 @@ const AddmissionForm = () => {
     const {id} = useParams() ;
     const {user , loading} = useAuth() ;
     const axiosSecure = useAxiosSecure() ;
+    const navigate = useNavigate() ;
 
     const { data : schoolInfo , isLoading : schoolLoading } = useQuery({
         queryKey : ['schoolInfo' , user?.email] ,
@@ -29,17 +30,10 @@ const AddmissionForm = () => {
             return data ;
         }
     })
-
-    const {mutateAsync} = useMutation({
-        mutationFn : async (addmissionInfo) => {
-            const {data} = await axiosSecure.post(`/reqForAddmission` , addmissionInfo) ;
-            return data ;
-        }
-    })
-
+    
     const handleAddmission = async (e) => {
         e.preventDefault() ;
-
+        
         const form = e.target ;
         const studentName = form.name.value ;
         const studentEmail = form.email.value ;
@@ -49,9 +43,10 @@ const AddmissionForm = () => {
         const motherName = form.motherName.value ;
         const grade = form.grade.value ;
         const address = form.address.value ;
-
+        
         const addmissionInfo = {
             studentName ,
+            studentUid : user?.uid ,
             studentEmail ,
             studentNumber ,
             parentNumber ,
@@ -61,6 +56,8 @@ const AddmissionForm = () => {
             schoolName : schoolInfo?.schoolName ,
             schoolId : schoolInfo?._id ,
             grade ,
+            schoolJoiningStatus : "pending" ,
+            gradeJoiningStatus : "pending" ,
         }
 
         Swal.fire({
@@ -71,9 +68,30 @@ const AddmissionForm = () => {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes , do it!"
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
-                mutateAsync(addmissionInfo)
+                axiosSecure.post(`/reqForAddmission` , addmissionInfo)
+                .then((res) => {
+                    
+                    if(res?.data?.insertedId){
+                        form.reset() ;
+                        navigate('/') ;
+
+                        Swal.fire({
+                            title: "Request Sended !",
+                            text: "Request Sended Success Fully !",
+                            icon: "success"
+                        });
+                    }
+                    else{
+                        Swal.fire({
+                            title: "You Are Already Applyed !",
+                            text: "Plz wait for teachers reviwe .",
+                            icon: "warning"
+                        });
+                    }
+
+                })
             }
         });
         

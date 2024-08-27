@@ -5,11 +5,16 @@ import {
   Typography,
   Button,
   IconButton,
+  Menu,
+  MenuHandler,
+  Avatar,
+  MenuList,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import { Link , NavLink, useLocation } from "react-router-dom";
+import { Link , useLocation } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import NavLists from "../../Components/NavLists/Navlists";
+import ProfileLinks from "../../Components/ProfileLinks/ProfileLinks";
 
 const Nav = () => {
 
@@ -55,73 +60,46 @@ const Nav = () => {
               <div className="flex items-center gap-x-1">
                 {user ? (
                   <div className="flex items-center justify-between">
-                    <div className="dropdown dropdown-hover z-30">
-                      <div
-                        tabIndex={0}
-                        role="button"
-                        className="m-1 hidden lg:flex"
-                      >
-                        <img
-                          className="w-[45px] border border-teal-500 h-[45px] rounded-full hidden lg:flex"
+
+                    <Menu>
+                      
+                      <MenuHandler>
+                        <Avatar
+                          className="cursor-pointer w-[45px] border border-teal-500 h-[45px] rounded-full hidden lg:flex"
                           src={user?.photoURL}
-                          alt=""
                         />
-                      </div>
+                      </MenuHandler>
 
-                      <div
-                        tabIndex={0}
-                        className="dropdown-content z-50 border border-teal-500 menu p-2 shadow bg-[#353b48] rounded-box w-60"
-                      >
-                        <img
-                          className="w-[45px] border border-teal-500 h-[45px] rounded-full hidden lg:flex mx-auto mt-2 mb-1"
-                          src={user?.photoURL}
-                          alt=""
-                        />
-                        <h1 className="mx-1 text-[#f5f6fa] p-1 text-center rounded-md font-semibold">
-                          {user?.displayName}
-                        </h1>
-                        <h1 className="mx-1 text-[#f5f6fa] p-1 text-center rounded-md font-semibold">
-                          {user?.email}
-                        </h1>
-                        <h1 className="mx-1 text-[#f5f6fa] p-1 text-center rounded-md font-semibold">
-                          {
-                            user?.uid.slice(0,20) + "..."
-                          }
-                        </h1>
-                        <Link to={'/profile'} className="rounded-lg py-2 text-center border border-teal-500 text-white hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-1000">View Profile</Link>
+                      <MenuList className="p-0 -ml-24 bg-transparent border-none rounded-2xl">
+                        <div className="border border-purple-500 menu p-2 shadow bg-[#0F172A] rounded-box w-60">
+                          <img
+                              className="w-[45px] border border-teal-500 h-[45px] rounded-full hidden lg:flex mx-auto mt-2 mb-1"
+                              src={user?.photoURL}
+                              alt=""
+                            />
+                            <h1 className="mx-1 text-[#f5f6fa] p-1 text-center rounded-md font-semibold">
+                              {user?.displayName}
+                            </h1>
+                            <h1 className="mx-1 text-[#f5f6fa] p-1 text-center rounded-md font-semibold">
+                              {user?.email}
+                            </h1>
+                            <h1 className="mx-1 text-[#f5f6fa] p-1 text-center rounded-md font-semibold">
+                              {
+                                user?.uid.slice(0,20) + "..."
+                              }
+                            </h1>
+                            <Link to={'/profile'} className="rounded-lg py-2 text-center border border-teal-500 text-white hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-1000">View Profile</Link>
 
-                        <div className="my-5 flex flex-col gap-1">
+                            <ProfileLinks/>
 
-                          <NavLink
-                            to={"/yourSchools"}
-                              className={({ isActive, isPending }) =>
-                              isPending ? "" : isActive ? "font-bold border-b border-teal-500 transition-all text-teal-500 ease-in-out duration-300" : "text-white border-b hover:border-b-teal-500"
-                            }
-                            >
-                            <Typography as="p" className="p-1 font-normal hover:text-teal-500 hover:border-b-teal-500 pb-3 px-3 duration-300 ease-in-out cursor-pointer text-sm gro ">
-                              Your Schools
-                            </Typography>
-                          </NavLink>
-
-                          <NavLink
-                            to={"/yourClasses"}
-                              className={({ isActive, isPending }) =>
-                              isPending ? "" : isActive ? "font-bold border-b border-teal-500 transition-all text-teal-500 ease-in-out duration-300" : "text-white border-b hover:border-b-teal-500"
-                            }
-                            >
-                            <Typography as="p" className="p-1 font-normal hover:text-teal-500 hover:border-b-teal-500 pb-3 px-3 duration-300 ease-in-out cursor-pointer text-sm gro ">
-                              Your Classes
-                            </Typography>
-                          </NavLink>
-
+                            <Button onClick={() => logOut()} className="border border-teal-500 text-white hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-500">
+                              Log Out
+                            </Button>
                         </div>
+                      </MenuList>
 
-                        <Button onClick={() => logOut()} className="border border-teal-500 text-white hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-500">
-                          Log Out
-                        </Button>
-                      </div>
+                    </Menu>
 
-                    </div>
                   </div>
                 ) : (
                   <div className="flex items-center gap-3">
@@ -187,8 +165,9 @@ const Nav = () => {
               </IconButton>
             </div>
           </div>
+
           <MobileNav open={openNav}>
-            {/* <NavLists/> */}
+            <NavLists/>
             <div className="flex items-center gap-x-1">
               <Button fullWidth variant="text" size="sm" className="">
                 <span>Log In</span>
@@ -198,6 +177,7 @@ const Nav = () => {
               </Button>
             </div>
           </MobileNav>
+
         </Navbar>
       </div>
     </div>

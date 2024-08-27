@@ -52,6 +52,7 @@ const SignUpC = ({remember , setRemember}) => {
                 const userInfo = {
                   name ,
                   email ,
+                  studentUid : result?.user?.uid ,
                   image: imageUrl?.data?.display_url,
                   role : "student" ,
                   isBlock : false ,
