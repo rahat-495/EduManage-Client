@@ -7,17 +7,27 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link , NavLink, useLocation } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
-import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
-import NavLinks from "../../Components/NavLinks/NavLinks";
+import NavLists from "../../Components/NavLists/Navlists";
 
 const Nav = () => {
 
+  const {pathname} = useLocation() ;
   const { user , logOut } = useAuth();
   const [openNav, setOpenNav] = useState(false);
-  const [dropdown , setDropDown] = useState(false) ;
-  const {pathname} = useLocation() ;
+  
+  useEffect(() => {
+    if(pathname.includes('/profile')){
+      document.body.style.backgroundColor = '#010313';
+    }
+    else if(pathname.includes('/addmissionForm')){
+      document.body.style.backgroundColor = '#010313';
+    }
+    else{
+      document.body.style.backgroundColor = '';
+    }
+  } , [pathname])
 
   useEffect(() => {
     window.addEventListener(
@@ -25,56 +35,6 @@ const Nav = () => {
       () => window.innerWidth >= 960 && setOpenNav(false)
     );
   }, []);
-  
-  const navList = (
-    <ul className="mt-2 gro mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-      <Typography as="li" className="p-1 font-normal gro">
-        <NavLink
-          to={"/"}
-          className={({ isActive, isPending }) =>
-            isPending ? "pending" : isActive ? "font-semibold underline transition-all ease-in-out duration-300" : ""
-          }
-        >
-          <NavLinks path={'/'} label={"Home"}/>
-        </NavLink>
-      </Typography>
-
-      <Typography as="li" onMouseEnter={() => setDropDown(!dropdown)} onMouseLeave={() => setDropDown(!dropdown)} className={`p-1 font-normal gro dropdown dropdown-hover ${pathname === '/addClass' && "underline font-semibold"}`}>
-
-        <ul tabIndex={0} className="dropdown-content mt-10 menu bg-[#1D232A] rounded-box z-[10] w-52 border flex flex-col gap-3">
-          <Link to={'/addSchool'} className={`gro font-semibold px-3 py-2 rounded-lg ${pathname === "/addSchool" ? "bg-white" : "hover:text-black hover:bg-white text-white"}`}>Add School</Link>
-          <Link to={'/addClass'} className={`gro font-semibold px-3 py-2 rounded-lg ${pathname === "/addClass" ? "bg-white" : "hover:text-black hover:bg-white text-white"}`}>Add Class</Link>
-        </ul>
-
-        <NavLink
-          to={'/addSchool'}
-          className={({ isActive, isPending }) =>
-            isPending ? "pending" : isActive ? "font-semibold underline transition-all ease-in-out duration-300" : ""
-          }
-        >
-          
-          <div className="flex items-center justify-center gap-1 link mt-2">
-            <NavLinks path={'/addSchool'} label={"Add"}/>
-            {
-              dropdown ? <FaAngleUp /> : <FaAngleDown />
-            }
-          </div>
-
-        </NavLink>
-      </Typography>
-
-      <Typography as="li" className="p-1 font-normal gro">
-        <NavLink
-          to={"/contact-us"}
-          className={({ isActive, isPending }) =>
-            isPending ? "pending" : isActive ? "font-semibold underline transition-all ease-in-out duration-300" : ""
-          }
-        >
-          <NavLinks path={'/contact-us'} label={"Contact Us"}/>
-        </NavLink>
-      </Typography>
-    </ul>
-  );
 
   return (
     <div className="sticky top-0 z-10 mx-auto max-w-[1440px]">
@@ -88,7 +48,9 @@ const Nav = () => {
               <span className="gro text-xl font-medium"></span> EduManage
             </Typography>
             <div className="flex items-center gap-4 gro">
-              <div className="mr-4 hidden lg:block">{navList}</div>
+              <div className="mr-4 hidden lg:block">
+                <NavLists/>
+              </div>
 
               <div className="flex items-center gap-x-1">
                 {user ? (
@@ -226,7 +188,7 @@ const Nav = () => {
             </div>
           </div>
           <MobileNav open={openNav}>
-            {navList}
+            {/* <NavLists/> */}
             <div className="flex items-center gap-x-1">
               <Button fullWidth variant="text" size="sm" className="">
                 <span>Log In</span>

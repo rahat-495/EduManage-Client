@@ -27,8 +27,8 @@ const YourClasses = () => {
                 {
                     data?.length > 0 && data?.map((classD) => 
                         <Link to={`/yourClasses/subjects/${classD?._id}`} key={classD?._id}>
-                            <Tooltip placement="top-end" content="Click to Show Subjects" animate={{mount: { scale: 1, y: 0 },unmount: { scale: 0, y: 25 },}}>
-                                <div className="border grid grid-cols-1 bg-white duration-500 ease-linear hover:border-teal-500 rounded-lg gap-3 py-3 px-3">
+                            <Tooltip placement="top-end" content="Click to Show Details" animate={{mount: { scale: 1, y: 0 },unmount: { scale: 0, y: 25 },}}>
+                                <div className="border grid grid-cols-1 bg-white duration-500 ease-linear hover:border-teal-500 rounded-md gap-3 py-3 px-3">
                                     <div className="gro flex flex-col items-start gap-2 mt-2">
                                         <h1 className="text-black text-lg font-semibold ">Name : {classD?.className}</h1>
                                         <h1 className="text-black text-lg font-semibold ">Class Teacher : <span className="play text-sm">{classD?.classTeacherName}</span></h1>

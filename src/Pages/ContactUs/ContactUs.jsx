@@ -2,10 +2,10 @@
 import Lottie from "lottie-react";
 import workingData from '../../../public/working.json';
 
-const AdditionalInfo = () => {
+const ContactUs = () => {
     return (
-        <div className='flex flex-col items-center justify-center w-full'>
-            <Lottie 
+        <div className='flex flex-col items-center justify-center w-full min-h-[70vh] overflow-hidden'>
+            <Lottie
                 animationData={workingData} 
                 loop={true} 
                 className="w-2/5 h-2/5"
@@ -15,4 +15,4 @@ const AdditionalInfo = () => {
     );
 };
 
-export default AdditionalInfo;
+export default ContactUs;

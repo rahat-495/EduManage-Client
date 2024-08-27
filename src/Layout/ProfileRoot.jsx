@@ -5,7 +5,6 @@ import Nav from "../Shared/Navbar/Nav";
 import Footer from "../Shared/Footer/Footer";
 
 const ProfileRoot = () => {
-
     return (
         <div className="">
             

@@ -51,7 +51,7 @@ const SchoolsDetails = () => {
                     </div>
                     <div className="grid grid-cols-2 border border-teal-500 my-2 rounded-md w-full py-1 px-3 gap-3">
                         <Link to={`/update/${data?._id}`} className="rounded-lg py-2 text-center ease-in-out border border-teal-500 text-white hover:border-purple-500 capitalize  bg-teal-500 duration-500">Update</Link>
-                        <Link to={`/schoolDetails/viewClasses/${data?._id}`} className="rounded-lg py-2 text-center ease-in-out border border-teal-500 text-white hover:border-purple-500 capitalize  bg-teal-500 duration-500">View Classes</Link>
+                        <Link to={`/viewClasses/${data?._id}`} className="rounded-lg py-2 text-center ease-in-out border border-teal-500 text-white hover:border-purple-500 capitalize  bg-teal-500 duration-500">View Classes</Link>
                     </div>
                 </div>
             </div>

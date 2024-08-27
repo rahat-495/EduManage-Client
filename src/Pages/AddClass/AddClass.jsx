@@ -15,25 +15,26 @@ const AddClass = () => {
     e.preventDefault();
 
     const form = e.target;
-    const className = form.className.value;
+    const gradeName = form.className.value;
     const schoolId = form.schoolId.value;
-    const classNumber = form.classNumber.value;
+    const gradeNumber = form.classNumber.value;
     const totalStudent = form.totalStudent.value;
-    const classType = form.classType.value;
+    const gradeType = form.classType.value;
     const subjects = form.subjects.value;
     const classTeacherName = form.classTeacherName.value;
 
     const subjectsArray = subjects.split(',').map((sub) => sub.trim()) ;
 
     const classData = {
-      className ,
+      gradeName ,
       schoolId ,
-      classNumber ,
+      gradeNumber ,
       totalStudent ,
-      classType ,
+      gradeType ,
       subjectsArray ,
       email : user?.email ,
       classTeacherName ,
+      totalStudents : [] ,
     };
 
     const { data } = await axiosCommon.post("/addClass", classData);
@@ -57,7 +58,7 @@ const AddClass = () => {
   return (
     <div className="min-h-[70vh]">
       <h1 className="play text-center my-16 text-4xl text-white">
-        Add A Class
+        Add A Grade
       </h1>
 
       <div className="flex items-center justify-center flex-col w-full">
@@ -77,7 +78,7 @@ const AddClass = () => {
               className="p-full"
               color="white"
               type={"text"}
-              label={"Class Name"}
+              label={"Grade Name"}
             />
           </div>
 
@@ -88,7 +89,7 @@ const AddClass = () => {
               className="p-full"
               color="white"
               type={"text"}
-              label={"Class NO : Like 1,2,3,4,5..."}
+              label={"Grade NO : Like 1,2,3,4,5..."}
             />
           </div>
 

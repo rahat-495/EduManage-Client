@@ -19,7 +19,6 @@ const MyProfile = () => {
             return data ;
         }
     }) 
-    console.log(userData?.devicesInfo)
 
     return (
         <div className="flex flex-col items-start gap-3 px-5">
@@ -75,50 +74,21 @@ const MyProfile = () => {
                         </thead>
                         <tbody>
                             {
-                                userData?.devicesInfo?.map((device , index) => {
-                                    return (
-                                    <tr key={index} className="bg-[#160E1F]">
-                                        <td>
-                                            <Typography
-                                                variant="small"
-                                                color="blue-gray"
-                                                className="font-normal gro text-lg text-white ml-3"
-                                            >
-                                                {index}
-                                            </Typography>
+                                userData?.devicesInfo?.map((device , index) => 
+                                    <tr key={index} className="bg-[#160E1F] gro text-white">
+                                        <td className="text-base pl-5">
+                                            {index}
                                         </td>
-                                        <td>
-                                            <Typography
-                                                variant="small"
-                                                color="blue-gray"
-                                                className="font-normal"
-                                            >
-                                                {device}
-                                            </Typography>
+                                        <td className="text-base pl-3">
+                                            {device?.deviceName}
                                         </td>
-                                        <td>
-                                        <Typography
-                                            variant="small"
-                                            color="blue-gray"
-                                            className="font-normal"
-                                        >
-                                            
-                                        </Typography>
+                                        <td className="text-base pl-3">
+                                            {device?.loginDate} {device?.loginTime} {device?.loginShift}
                                         </td>
-                                        <td>
-                                        <Typography
-                                            as="a"
-                                            href="#"
-                                            variant="small"
-                                            color="blue-gray"
-                                            className="font-medium"
-                                        >
-                                            Action
-                                        </Typography>
+                                        <td className="text-base pl-3">
+                                            <button className="text-transparent bg-gradient-to-r from-purple-500 to-teal-500 bg-clip-text">Remove</button>
                                         </td>
-                                    </tr>
-                                );
-                            })
+                                    </tr>)
                             }
                         </tbody>
                     </table>

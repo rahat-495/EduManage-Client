@@ -63,7 +63,10 @@ const SignUpC = ({remember , setRemember}) => {
                   devicesInfo : [
                     {
                       deviceName :  deviceInfo?.os?.name +' '+deviceInfo?.os?.version   ,
-                      loginDate :  new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString() + ' ' + new Date().toLocaleTimeString('en-US', { hour: 'numeric', hour12: true }).split(' ')[1] 
+                      loginDate : new Date().toLocaleDateString() ,
+                      loginTime : new Date().toLocaleTimeString() ,
+                      loginShift : new Date().toLocaleTimeString('en-US', { hour: 'numeric', hour12: true }).split(' ')[1] ,
+                      isRemoved : false ,
                     },
                   ],
                 }

@@ -83,6 +83,10 @@ const ProfileNav = () => {
 
     </ul>
 
+    const handleTeacApply = async () => {
+        document.getElementById('my_modal_7').showModal() ;
+    }
+
     return (
         <div className="bg-[#170F21] w-80 min-h-[80vh] rounded-lg px-5 py-10 flex flex-col">
                 
@@ -92,16 +96,23 @@ const ProfileNav = () => {
                     <h1 className="text-[#C7ABFF] gro font-semibold text-lg text-center">{userData?.name}</h1>
                     <h1 className="text-[#bcacce] gro font-semibold text-base text-center">{userData?._id}</h1>
                     <h1 className="text-[#bcacce] gro font-semibold text-base text-center">{userData?.email}</h1>
-                    <Button className="border border-teal-500 w-fit mt-3 capitalize text-sm text-white hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-500">
+                    <Button onClick={() => handleTeacApply()} className="border border-teal-500 w-fit mt-3 capitalize text-sm text-white hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-500">
                         Apply For Teacher
                     </Button>
                 </div>
             </div>
             
             <div className="mt-5">
-                {
-                    navLinks
-                }
+                { navLinks }
+            </div>
+
+            <input type="checkbox" id="my_modal_7" className="modal-toggle" />
+            <div className="modal" role="dialog">
+                <div className="modal-box">
+                    <h3 className="text-lg font-bold">Hello!</h3>
+                    <p className="py-4">This modal works with a hidden checkbox!</p>
+                </div>
+                <label className="modal-backdrop" htmlFor="my_modal_7">Close</label>
             </div>
 
         </div>

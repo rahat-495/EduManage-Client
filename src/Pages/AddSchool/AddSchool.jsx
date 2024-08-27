@@ -54,6 +54,7 @@ const AddSchool = () => {
       principalContact,
       schoolType,
       classes : [] ,
+      totalStudents : [] ,
     };
 
     const { data } = await axiosCommon.post("/addSchool", schoolData);

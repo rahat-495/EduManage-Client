@@ -17,6 +17,9 @@ import ProfileStatic from '../Page/ProfilePages/ProfileStatic/ProfileStatic';
 import MyProfile from '../Page/ProfilePages/MyProfile/MyProfile';
 import AdditionalInfo from '../Page/AdditionalInfo/AdditionalInfo';
 import Address from '../Page/ProfilePages/Address/Address';
+import ContactUs from '../Pages/ContactUs/ContactUs';
+import Schools from '../Pages/Schools/Schools';
+import AddmissionForm from '../Pages/AddmissionForm/AddmissionForm';
 
 const router = createBrowserRouter([
     {
@@ -64,8 +67,20 @@ const router = createBrowserRouter([
                 element : <YourClassSubs/> ,
             },
             {
-                path : '/schoolDetails/viewClasses/:id' ,
+                path : '/viewClasses/:id' ,
                 element : <ViewClassFromS/> ,
+            },
+            {
+                path : '/contact-us' ,
+                element : <ContactUs/> ,
+            },
+            {
+                path : '/schools' ,
+                element : <Schools/> ,
+            },
+            {
+                path : '/addmissionForm/:id' ,
+                element : <AddmissionForm/> ,
             },
         ] 
     },

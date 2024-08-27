@@ -12,7 +12,7 @@ export default {
     require('daisyui'),
   ],
   daisyui: {
-    themes: ["dark"],
+    themes: ["night"],
   },
 }
 
@@ -32,6 +32,6 @@ module.exports = withMT({
     require('daisyui'),
   ],
   daisyui: {
-    themes: ["dark"],
+    themes: ["night"],
   },
 });
