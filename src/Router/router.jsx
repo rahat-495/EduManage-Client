@@ -21,6 +21,9 @@ import ContactUs from '../Pages/ContactUs/ContactUs';
 import Schools from '../Pages/Schools/Schools';
 import AddmissionForm from '../Pages/AddmissionForm/AddmissionForm';
 import AddmissionReq from '../Pages/AddmissionReq/AddmissionReq';
+import UpdateAddmissionFrom from '../Pages/Update/UpdateAddmissionFrom/UpdateAddmissionFrom';
+import SchoolGradesAddReqs from '../Pages/School&GradesAddReqs/SchoolGradesAddReqs';
+import StudentInfo from '../Pages/StudentInfo/StudentInfo';
 
 const router = createBrowserRouter([
     {
@@ -84,8 +87,20 @@ const router = createBrowserRouter([
                 element : <AddmissionForm/> ,
             },
             {
-                path : '/addmissionRequests' ,
-                element : <AddmissionReq/> ,
+                path : '/addmissionRequests' , // for students
+                element : <AddmissionReq/> , // for students
+            },
+            {
+                path : '/updateAddmissionForm/:id' ,
+                element : <UpdateAddmissionFrom/> ,
+            },
+            {
+                path : '/studentInfoForAddmission/:id' , // show the student details
+                element : <StudentInfo/> ,
+            },
+            {
+                path : '/school&GradesAddReqs' , // for teacher
+                element : <SchoolGradesAddReqs/> , // for teacher
             },
         ] 
     },

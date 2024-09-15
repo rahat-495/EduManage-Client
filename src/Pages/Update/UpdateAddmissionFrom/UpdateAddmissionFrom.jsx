@@ -1,33 +1,35 @@
 
-import { useNavigate, useParams } from "react-router-dom";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
-import useAuth from "../../Hooks/useAuth";
-import { useQuery } from "@tanstack/react-query";
 import { Input, Option, Select } from "@material-tailwind/react";
-import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
 import Lottie from "lottie-react";
-import squarLoader from '../../../public/squarLoader.json'
+import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import useAuth from "../../../Hooks/useAuth";
+import loader from '../../../../public/roundedLoader.json'
 
-const AddmissionForm = () => {
-    
+const UpdateAddmissionFrom = () => {
+
     const {id} = useParams() ;
     const {user , loading} = useAuth() ;
     const axiosSecure = useAxiosSecure() ;
     const navigate = useNavigate() ;
 
-    const { data : schoolInfo , isLoading : schoolLoading } = useQuery({
+    const { data : currentData , isLoading : currentDataLoading } = useQuery({
         queryKey : ['schoolInfo' , user?.email] ,
         queryFn : async () => {
-            const {data} = await axiosSecure.get(`/schoolData?id=${id}`) ;
+            const {data} = await axiosSecure.get(`/currentAddissionFormData?id=${id}`) ;
             return data ;
         }
     })
 
     const { data : gradesInfo , isLoading : gradesLoading } = useQuery({
-        queryKey : ['gradesInfo' , user?.email] ,
+        queryKey : ['gradesInfo' , user?.email , currentData?.schoolId] ,
         queryFn : async () => {
-            const {data} = await axiosSecure.get(`/gradesInfo?schoolId=${id}`) ;
-            return data ;
+            if(currentData?.schoolId){
+                const {data} = await axiosSecure.get(`/gradesInfo?schoolId=${currentData?.schoolId}`) ;
+                return data ;
+            }
         }
     })
     
@@ -54,8 +56,8 @@ const AddmissionForm = () => {
             fatherName ,
             motherName ,
             address,
-            schoolName : schoolInfo?.schoolName ,
-            schoolId : schoolInfo?._id ,
+            schoolName : currentData?.schoolName ,
+            schoolId : currentData?.schoolId ,
             grade ,
             schoolJoiningStatus : "pending" ,
             gradeJoiningStatus : "pending" ,
@@ -63,7 +65,7 @@ const AddmissionForm = () => {
 
         Swal.fire({
             title: "Are you sure ?",
-            text: "You won't be able for addmission ?",
+            text: "You won't be able for update addmission ?",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -71,23 +73,22 @@ const AddmissionForm = () => {
             confirmButtonText: "Yes , do it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosSecure.post(`/reqForAddmission` , addmissionInfo)
+                axiosSecure.post(`/updateAddmission?id=${currentData?._id}` , addmissionInfo)
                 .then((res) => {
-                    
-                    if(res?.data?.insertedId){
+                    if(res?.data?.modifiedCount){
                         form.reset() ;
                         navigate('/') ;
 
                         Swal.fire({
-                            title: "Request Sended !",
-                            text: "Request Sended Success Fully !",
+                            title: "Updated",
+                            text: "Addmission Updated Success Fully !",
                             icon: "success"
                         });
                     }
                     else{
                         Swal.fire({
-                            title: "You Are Already Applyed !",
-                            text: "Plz wait for teachers reviwe .",
+                            title: "Something Are Wrong",
+                            text: "Plz Try Again Later !",
                             icon: "warning"
                         });
                     }
@@ -98,10 +99,10 @@ const AddmissionForm = () => {
         
     }
 
-    if(loading || schoolLoading || gradesLoading){
+    if(loading || currentDataLoading || gradesLoading){
         return (
             <div className="min-h-screen flex items-center justify-center mx-auto w-full">
-                <Lottie animationData={squarLoader} loop={true}/>
+                <Lottie animationData={loader} loop={true}/>
             </div>
         )
     }
@@ -116,22 +117,23 @@ const AddmissionForm = () => {
                 <form onSubmit={handleAddmission} className="w-full flex flex-col gap-5">
 
                     <div className="grid grid-cols-2 gap-5">
-                        <Input name="name" defaultValue={user?.displayName} type="text" label="Name" required/>
-                        <Input name="email" value={user?.email} type="email" label="Email" required/>
+                        <Input name="name" defaultValue={currentData?.studentName} type="text" label="Name" required/>
+                        <Input name="email" value={currentData?.studentEmail} type="email" label="Email" required/>
                     </div>
                     
                     <div className="grid grid-cols-1 gap-5">
-                        <Input name="studentNumber" type="number" label="Your Number" required/>
+                        <Input name="studentNumber" defaultValue={currentData?.studentNumber} type="number" label="Your Number" required/>
                     </div>
 
                     <div className="grid grid-cols-2 gap-5">
-                        <Select value={schoolInfo?.schoolName} name="school" label="School" required>
-                            <Option value={schoolInfo?.schoolName}>{schoolInfo?.schoolName}</Option>
+                        <Select value={currentData?.schoolName} name="school" label="School" required>
+                            <Option value={currentData?.schoolName}>{currentData?.schoolName}</Option>
                         </Select>
 
-                        <select name="grade" label="Grades" className="border px-3 py-[10px] cursor-pointer rounded-lg bg-transparent focus:border-white focus:outline-none" required>
+                        <select defaultValue={currentData?.grade} name="grade" label="Grades" className="border px-3 py-[10px] cursor-pointer rounded-lg bg-transparent focus:border-white focus:outline-none" required>
                             <option selected={true} disabled>Grade</option>
-                            {gradesInfo?.length > 0 ? (
+                            {
+                                gradesInfo?.length > 0 ? (
                                 gradesInfo?.map((data) => (
                                     <option className="cursor-pointer" key={data?._id} value={data?._id}>
                                         {data?.gradeNumber}
@@ -142,22 +144,21 @@ const AddmissionForm = () => {
                                         No Grades Available
                                     </option>
                                 )
-                            
                             }
                         </select>
                     </div>
 
                     <div className="grid grid-cols-1 gap-5">
-                        <Input name="parentNumber" type="number" label="Parent Number" required/>
+                        <Input name="parentNumber" defaultValue={currentData?.parentNumber} type="number" label="Parent Number" required/>
                     </div>
 
                     <div className="grid grid-cols-2 gap-5">
-                        <Input name="fatherName" type="text" label="Father Name" required/>
-                        <Input name="motherName" type="text" label="Mother Name" required/>
+                        <Input name="fatherName" defaultValue={currentData?.fatherName} type="text" label="Father Name" required/>
+                        <Input name="motherName" defaultValue={currentData?.motherName} type="text" label="Mother Name" required/>
                     </div>
 
                     <div className="grid grid-cols-1 gap-5">
-                        <Input name="address" type="text" label="Full Address" required/>
+                        <Input name="address" defaultValue={currentData?.address} type="text" label="Full Address" required/>
                     </div>
                     
                     <input type="submit" value={'Apply'} className="btn btn-outline gro"/>
@@ -169,4 +170,4 @@ const AddmissionForm = () => {
     );
 };
 
-export default AddmissionForm;
+export default UpdateAddmissionFrom;

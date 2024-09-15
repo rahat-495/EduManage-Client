@@ -1,3 +1,4 @@
+
 import { Link, NavLink, useLocation } from "react-router-dom";
 import NavLinks from "../NavLinks/NavLinks";
 import { Typography } from "@material-tailwind/react";
@@ -125,8 +126,9 @@ const NavLists = () => {
         >
           <ul
             tabIndex={0}
-            className="dropdown-content mt-10 menu bg-[#1D232A] rounded-box z-[10] w-52 border flex flex-col gap-3"
+            className="dropdown-content text-black mt-10 menu bg-[#0F172A] rounded-box z-[10] w-52 border flex flex-col gap-3"
           >
+
             <Link
               to={"/addSchool"}
               className={`gro font-semibold px-3 py-2 rounded-lg ${
@@ -137,6 +139,7 @@ const NavLists = () => {
             >
               Add School
             </Link>
+
             <Link
               to={"/addClass"}
               className={`gro font-semibold px-3 py-2 rounded-lg ${
@@ -147,6 +150,7 @@ const NavLists = () => {
             >
               Add Class
             </Link>
+
           </ul>
 
           <NavLink

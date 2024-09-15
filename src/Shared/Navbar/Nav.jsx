@@ -44,8 +44,8 @@ const Nav = () => {
   return (
     <div className="sticky top-0 z-10 mx-auto max-w-[1440px]">
       <div className="sticky top-0 z-10">
-        <Navbar className="sticky top-0 z-10 h-max max-w-full bg-[#D1D3D6] shadow-none border-none rounded-none px-4 py-2 lg:px-0 lg:py-2">
-          <div className="flex items-center justify-between text-blue-gray-900">
+        <Navbar className="sticky top-0 z-10 h-max max-w-full bg-opacity-0 backdrop-blur-md shadow-none border-none rounded-none px-4 py-2 lg:px-0 lg:py-2">
+          <div className="flex items-center justify-between text-white">
             <Typography
               as="a"
               className="mr-4 play font-semibold cursor-pointer py-1.5"
