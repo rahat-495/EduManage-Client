@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { Button, Tooltip } from "@material-tailwind/react";
+import Swal from "sweetalert2";
 
 const StudentInfo = () => {
 
@@ -11,13 +12,111 @@ const StudentInfo = () => {
     const {user} = useAuth() ;
     const axiosSecure = useAxiosSecure() ;
 
-    const {data : addmissionData} = useQuery({
+    const {data : addmissionData , refetch} = useQuery({
         queryKey : ['studentAddmissionInfo' , user?.email] ,
         queryFn : async () => {
             const {data} = await axiosSecure.get(`/studentAddmissionInfo?id=${id}`) ;
             return data ;
         }
     })
+
+    const handleSchoolJoinStatus = async () => {
+        const id = addmissionData?._id ;
+
+        Swal.fire({
+            title: "Are you sure ?",
+            text: "You won't be able to join him ?",
+            icon: "warning",
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Accept It" ,
+            showDenyButton: true,
+            showCancelButton: true,
+            denyButtonText: `Reject It`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.patch(`/updateSchoolJoinStatus` , {id , schoolJoiningStatus : 'accepted'})
+                .then((res) => {
+                    if(res?.data?.modifiedCount){
+                        refetch() ;
+                        Swal.fire({
+                            title: "Accepted",
+                            text: "Joining Request are Accepted !",
+                            icon: "success"
+                        });
+                    }
+                    if(res?.data?.status === 'error'){
+                        Swal.fire({
+                            title: "Oops Sorry",
+                            html: "You Can't Accept Him Now Beacause <br/> He Already Joined Another One",
+                            icon: "success"
+                        });
+                    }
+                })
+            } else if (result.isDenied) {
+                axiosSecure.patch(`/updateSchoolJoinStatus` , {id , schoolJoiningStatus : 'rejected'})
+                .then((res) => {
+                    if(res?.data?.modifiedCount){
+                        refetch() ;
+                        Swal.fire({
+                            title: "Rejected",
+                            text: "Joining Request are Rejected !",
+                            icon: "error"
+                        });
+                    }
+                })
+            }
+        });
+    }
+
+    const handleGradeJoinStatus = async () => {
+        const id = addmissionData?._id ;
+        
+        Swal.fire({
+            title: "Are you sure ?",
+            text: "You won't be able to join him ?",
+            icon: "warning",
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Accept It" ,
+            showDenyButton: true,
+            showCancelButton: true,
+            denyButtonText: `Reject It`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.patch(`/updateGradeJoinStatus` , {id , gradeJoiningStatus : 'accepted'})
+                .then((res) => {
+                    if(res?.data?.modifiedCount){
+                        refetch() ;
+                        Swal.fire({
+                            title: "Accepted",
+                            text: "Joining Request are Accepted !",
+                            icon: "success"
+                        });
+                    }
+                    if(res?.data?.status === 'error'){
+                        Swal.fire({
+                            title: "Oops Sorry",
+                            html: "You Can't Accept Him Now Beacause <br/> He Already Joined Another One",
+                            icon: "success"
+                        });
+                    }
+                })
+            } else if (result.isDenied) {
+                axiosSecure.patch(`/updateGradeJoinStatus` , {id , gradeJoiningStatus : 'rejected'})
+                .then((res) => {
+                    if(res?.data?.modifiedCount){
+                        refetch() ;
+                        Swal.fire({
+                            title: "Rejected",
+                            text: "Joining Request are Rejected !",
+                            icon: "error"
+                        });
+                    }
+                })
+            }
+        });
+    }
 
     return (
         <div className="min-h-[70vh] flex flex-col items-center gap-5 mt-10">
@@ -50,9 +149,9 @@ const StudentInfo = () => {
                 </div>
                 <div className="flex gap-10 w-full mt-5">
 
-                    <Button className={`capitalize gro w-full text-sm bg-white shadow-none ${addmissionData?.schoolJoiningStatus === 'pending' && 'text-orange-700'}  ${addmissionData?.schoolJoiningStatus === 'accepted' && 'text-green-700'} border`}>School Status : {addmissionData?.schoolJoiningStatus}</Button>
+                    <Button onClick={handleSchoolJoinStatus} className={`capitalize gro w-full text-sm bg-white shadow-none ${addmissionData?.schoolJoiningStatus === 'rejected' && 'text-red-700'} ${addmissionData?.schoolJoiningStatus === 'pending' && 'text-orange-700'}  ${addmissionData?.schoolJoiningStatus === 'accepted' && 'text-green-700'} border`}>School Status : {addmissionData?.schoolJoiningStatus}</Button>
 
-                    <Button className={`capitalize gro w-full text-sm bg-white shadow-none ${addmissionData?.gradeJoiningStatus === 'pending' && 'text-orange-700'}  ${addmissionData?.gradeJoiningStatus === 'accepted' && 'text-green-700'} border`}>Grade Status : {addmissionData?.gradeJoiningStatus}</Button>
+                    <Button onClick={handleGradeJoinStatus} className={`capitalize gro w-full text-sm bg-white shadow-none ${addmissionData?.gradeJoiningStatus === 'rejected' && 'text-red-700'} ${addmissionData?.gradeJoiningStatus === 'pending' && 'text-orange-700'}  ${addmissionData?.gradeJoiningStatus === 'accepted' && 'text-green-700'} border`}>Grade Status : {addmissionData?.gradeJoiningStatus}</Button>
 
                 </div>
             </div>

@@ -12,7 +12,7 @@ const ProfileRoot = () => {
                 <Nav/>
             </div>
 
-            <div className="flex items-start justify-between my-14 gap-6 max-w-[1440px] mx-auto overflow-x-hidden">
+            <div className="flex items-start justify-between my-14 gap-6 max-w-[1440px] mx-auto overflow-hidden">
 
                 <div className="">
                         <ProfileNav/>

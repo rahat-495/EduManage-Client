@@ -11,7 +11,7 @@ const Root = () => {
                 <Nav/>
             </div>
 
-            <div className="max-w-[1440px] mx-auto overflow-x-hidden">
+            <div className="max-w-[1440px] mx-auto overflow-hidden">
                 <Outlet/>
             </div>
 

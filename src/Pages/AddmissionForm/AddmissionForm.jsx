@@ -59,6 +59,7 @@ const AddmissionForm = () => {
             grade ,
             schoolJoiningStatus : "pending" ,
             gradeJoiningStatus : "pending" ,
+            isjoined : false ,
         }
 
         Swal.fire({
