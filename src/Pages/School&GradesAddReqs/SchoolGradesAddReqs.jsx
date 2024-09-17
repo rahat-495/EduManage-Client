@@ -9,7 +9,7 @@ import { Button, Card, Tooltip, Typography } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const TABLE_HEAD = ["No .", "Image", "Student Name", "Student Email" , "Student Number" , "School Status" , "Grade Status" , "View"];
+const TABLE_HEAD = ["No .", "Image", "Student Name", "Student Email" , "Student Number" , "School Status" , "Grade Status" , "Status" , "View"];
 
 const SchoolGradesAddReqs = () => {
 
@@ -48,11 +48,11 @@ const SchoolGradesAddReqs = () => {
                             icon: "success"
                         });
                     }
-                    if(res?.data?.status === 'error'){
+                    if(res?.data?.status === 'warning'){
                         Swal.fire({
-                            title: "Oops Sorry",
-                            html: "You Can't Accept Him Now Beacause <br/> He Already Joined Another One",
-                            icon: "warning"
+                            title: "Oops",
+                            html: "You Already Joined Him !",
+                            icon: "error"
                         });
                     }
                 })
@@ -64,6 +64,13 @@ const SchoolGradesAddReqs = () => {
                         Swal.fire({
                             title: "Rejected",
                             text: "Joining Request are Rejected !",
+                            icon: "success"
+                        });
+                    }
+                    else if(res?.data?.status === 'error'){
+                        Swal.fire({
+                            title: "Oops Sorry",
+                            html: "You Can't Reject Him Now Beacause <br/> You Already Joined Him",
                             icon: "error"
                         });
                     }
@@ -88,7 +95,6 @@ const SchoolGradesAddReqs = () => {
                 axiosSecure.patch(`/updateGradeJoinStatus` , {id , gradeJoiningStatus : 'accepted'})
                 .then((res) => {
                     if(res?.data?.modifiedCount){
-                        console.log(res.data)
                         refetch() ;
                         Swal.fire({
                             title: "Accepted",
@@ -96,11 +102,11 @@ const SchoolGradesAddReqs = () => {
                             icon: "success"
                         });
                     }
-                    if(res?.data?.status === 'error'){
+                    if(res?.data?.status === 'warning'){
                         Swal.fire({
-                            title: "Oops Sorry",
-                            html: "You Can't Accept Him Now Beacause <br/> He Already Joined Another One",
-                            icon: "success"
+                            title: "Oops",
+                            html: "You Already Joined Him !",
+                            icon: "error"
                         });
                     }
                 })
@@ -112,6 +118,46 @@ const SchoolGradesAddReqs = () => {
                         Swal.fire({
                             title: "Rejected",
                             text: "Joining Request are Rejected !",
+                            icon: "success"
+                        });
+                    }
+                    else if(res?.data?.status === 'error'){
+                        Swal.fire({
+                            title: "Oops Sorry",
+                            html: "You Can't Reject Him Now Beacause <br/> You Already Joined Him",
+                            icon: "error"
+                        });
+                    }
+                })
+            }
+        });
+    }
+
+    const handleAllJoinStatusP = (id) => {
+        Swal.fire({
+            title: "Are you sure ?",
+            text: "You won't be change into pending ?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, do it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.patch(`/changeAllJoinStatusP` , {id})
+                .then((res) => { 
+                    if(res?.data?.modifiedCount > 0){
+                        refetch() ;
+                        Swal.fire({
+                            title: "Status Changed !",
+                            text: "Status Changed To Pending Successfull !",
+                            icon: "success"
+                        });
+                    }
+                    else{
+                        Swal.fire({
+                            title: "Oops",
+                            text: "Status Can't Change !",
                             icon: "error"
                         });
                     }
@@ -217,6 +263,11 @@ const SchoolGradesAddReqs = () => {
                                                         }}>
                                                             <Button onClick={() => handleGradeJoinStatus(data?._id)} className={`capitalize gro text-sm bg-white shadow-none ${data?.   gradeJoiningStatus === 'rejected' && 'text-red-700'} ${data?.gradeJoiningStatus === 'pending' && 'text-orange-700'}  ${data?.gradeJoiningStatus === 'accepted' && 'text-green-700'} border`}>{data?.gradeJoiningStatus}</Button>
                                                         </Tooltip>
+                                                    </Typography>
+                                                </td>
+                                                <td className="p-4">
+                                                    <Typography variant="small" color="blue-gray" className="font-normal gro">
+                                                        <Button onClick={() => handleAllJoinStatusP(data?._id)} className={`capitalize gro text-sm bg-white shadow-none text-black border`}>Set Status Pending</Button>
                                                     </Typography>
                                                 </td>
                                                 <td className="p-4">

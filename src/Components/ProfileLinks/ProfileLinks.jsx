@@ -113,7 +113,7 @@ const ProfileLinks = () => {
     return (
       <div className="my-5 flex flex-col gap-1">
         <NavLink
-          to={"/addmissionRequests"}
+          to={"/myAddmissionRequests"}
           className={({ isActive, isPending }) =>
             isPending
               ? ""
@@ -126,7 +126,7 @@ const ProfileLinks = () => {
             as="p"
             className="p-1 font-normal hover:text-purple-500 hover:border-b-purple-500 pb-3 px-3 duration-300 ease-in-out cursor-pointer text-sm gro "
           >
-            Addmission Requests
+            My Addmission Requests
           </Typography>
         </NavLink>
   

@@ -20,10 +20,10 @@ import Address from '../Page/ProfilePages/Address/Address';
 import ContactUs from '../Pages/ContactUs/ContactUs';
 import Schools from '../Pages/Schools/Schools';
 import AddmissionForm from '../Pages/AddmissionForm/AddmissionForm';
-import AddmissionReq from '../Pages/AddmissionReq/AddmissionReq';
 import UpdateAddmissionFrom from '../Pages/Update/UpdateAddmissionFrom/UpdateAddmissionFrom';
 import SchoolGradesAddReqs from '../Pages/School&GradesAddReqs/SchoolGradesAddReqs';
 import StudentInfo from '../Pages/StudentInfo/StudentInfo';
+import MyAddmissionReq from '../Pages/MyAddmissionReq/MyAddmissionReq';
 
 const router = createBrowserRouter([
     {
@@ -87,8 +87,8 @@ const router = createBrowserRouter([
                 element : <AddmissionForm/> ,
             },
             {
-                path : '/addmissionRequests' , // for students
-                element : <AddmissionReq/> , // for students
+                path : '/myAddmissionRequests' , // for students
+                element : <MyAddmissionReq/> , // for students
             },
             {
                 path : '/updateAddmissionForm/:id' ,

@@ -1,14 +1,14 @@
 
 import { Button, Card, Tooltip, Typography } from "@material-tailwind/react";
-import useAuth from "../../Hooks/useAuth";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import Swal from 'sweetalert2'
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import useAuth from "../../Hooks/useAuth";
 
 const TABLE_HEAD = ["No", "Name", "Father Name", "Mother Name", "Student Number" , "Parent Number" , "Address" , "School Name" , "Status" , "Action"];
  
-const AddmissionReq = () => {
+const MyAddmissionReq = () => {
 
     const {user} = useAuth() ;
     const axiosSecure = useAxiosSecure() ;
@@ -119,17 +119,17 @@ const AddmissionReq = () => {
                                         </td>
 
                                         <td className="p-4">
-                                            <Typography className="capitalize gro bg-transparent text-orange-600 font-semibold">{data?.schoolJoiningStatus === 'pending' || data?.gradeJoiningStatus === 'pending' ? "Pending" : "Accepted"}</Typography>
+                                            <Typography className={`capitalize gro bg-transparent font-semibold ${data?.schoolJoiningStatus === 'accepted' && data?.gradeJoiningStatus === 'accepted' && 'text-green-700'} ${data?.schoolJoiningStatus === 'pending' && data?.gradeJoiningStatus === 'pending' && 'text-orange-700'} ${data?.schoolJoiningStatus === 'rejected' && data?.gradeJoiningStatus === 'rejected' && 'text-red-700'}`}>{data?.schoolJoiningStatus}</Typography>
                                         </td>
 
                                         <td className="p-4">
                                             {
                                                 data?.schoolJoiningStatus !== 'pending' && data?.gradeJoiningStatus !== 'pending' ?
-                                                <Button onClick={handleCantUpdate} className="capitalize gro bg-transparent text-black shadow-none hover:shadow-none border hover:border-purple-500 duration-300">
+                                                <Button onClick={handleCantUpdate} className="capitalize w-full gro bg-transparent text-black shadow-none hover:shadow-none border hover:border-purple-500 duration-300">
                                                     Cant Update
                                                 </Button>:
-                                                <Link to={`/updateAddmissionForm/${data?._id}`}>
-                                                    <Button className="capitalize gro bg-transparent text-black shadow-none hover:shadow-none border hover:border-purple-500 duration-300">
+                                                <Link className="w-full" to={`/updateAddmissionForm/${data?._id}`}>
+                                                    <Button className="capitalize w-full gro bg-transparent text-black shadow-none hover:shadow-none border hover:border-purple-500 duration-300">
                                                         Update
                                                     </Button>
                                                 </Link> 
@@ -149,4 +149,4 @@ const AddmissionReq = () => {
     );
 };
 
-export default AddmissionReq;
+export default MyAddmissionReq;
