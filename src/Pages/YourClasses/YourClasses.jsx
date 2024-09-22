@@ -30,13 +30,13 @@ const YourClasses = () => {
                             <Tooltip placement="top-end" content="Click to Show Details" animate={{mount: { scale: 1, y: 0 },unmount: { scale: 0, y: 25 },}}>
                                 <div className="border grid grid-cols-1 bg-white duration-500 ease-linear hover:border-teal-500 rounded-md gap-3 py-3 px-3">
                                     <div className="gro flex flex-col items-start gap-2 mt-2">
-                                        <h1 className="text-black text-lg font-semibold ">Name : {classD?.className}</h1>
+                                        <h1 className="text-black text-lg font-semibold ">Name : {classD?.gradeName}</h1>
                                         <h1 className="text-black text-lg font-semibold ">Class Teacher : <span className="play text-sm">{classD?.classTeacherName}</span></h1>
                                         <p className="text-black font-semibold">Class ID : {classD?._id}</p>
                                         <p className="text-black font-semibold">School ID : {classD?.schoolId}</p>
-                                        <p className="text-black font-semibold">Class Type : {classD?.classType}</p>
+                                        <p className="text-black font-semibold">Class Type : {classD?.gradeType}</p>
                                         <div className="flex items-center justify-between gap-28">
-                                            <p className="text-black font-semibold">Class No : {classD?.classNumber}<sup>th</sup></p>
+                                            <p className="text-black font-semibold">Class No : {classD?.gradeNumber}<sup>th</sup></p>
                                             <p className="text-black font-semibold">Students: {classD?.totalStudent}</p>
                                         </div>
                                         <p className="text-black font-semibold">Subjects : {classD?.subjectsArray?.map((sub , index) => <span className="mx-1" key={index}>{sub}</span>)}</p>
