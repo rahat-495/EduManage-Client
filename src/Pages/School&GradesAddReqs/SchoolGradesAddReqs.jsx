@@ -55,6 +55,13 @@ const SchoolGradesAddReqs = () => {
                             icon: "error"
                         });
                     }
+                    if(res?.data?.status === 'alreadyJoined'){
+                        Swal.fire({
+                            title: "Already Joined",
+                            html: "He Already Joined Another One !",
+                            icon: "warning"
+                        });
+                    }
                 })
             } else if (result.isDenied) {
                 axiosSecure.patch(`/updateSchoolJoinStatus` , {id , schoolJoiningStatus : 'rejected'})
@@ -67,11 +74,18 @@ const SchoolGradesAddReqs = () => {
                             icon: "success"
                         });
                     }
-                    else if(res?.data?.status === 'error'){
+                    if(res?.data?.status === 'error'){
                         Swal.fire({
                             title: "Oops Sorry",
                             html: "You Can't Reject Him Now Beacause <br/> You Already Joined Him",
                             icon: "error"
+                        });
+                    }
+                    if(res?.data?.status === 'alreadyJoined'){
+                        Swal.fire({
+                            title: "Already Joined",
+                            html: "He Already Joined Another One !",
+                            icon: "warning"
                         });
                     }
                 })
@@ -109,6 +123,13 @@ const SchoolGradesAddReqs = () => {
                             icon: "error"
                         });
                     }
+                    if(res?.data?.status === 'alreadyJoined'){
+                        Swal.fire({
+                            title: "Already Joined",
+                            html: "He Already Joined Another One !",
+                            icon: "warning"
+                        });
+                    }
                 })
             } else if (result.isDenied) {
                 axiosSecure.patch(`/updateGradeJoinStatus` , {id , gradeJoiningStatus : 'rejected'})
@@ -121,11 +142,18 @@ const SchoolGradesAddReqs = () => {
                             icon: "success"
                         });
                     }
-                    else if(res?.data?.status === 'error'){
+                    if(res?.data?.status === 'error'){
                         Swal.fire({
                             title: "Oops Sorry",
                             html: "You Can't Reject Him Now Beacause <br/> You Already Joined Him",
                             icon: "error"
+                        });
+                    }
+                    if(res?.data?.status === 'alreadyJoined'){
+                        Swal.fire({
+                            title: "Already Joined",
+                            html: "He Already Joined Another One !",
+                            icon: "warning"
                         });
                     }
                 })

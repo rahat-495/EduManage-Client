@@ -25,6 +25,7 @@ import SchoolGradesAddReqs from '../Pages/School&GradesAddReqs/SchoolGradesAddRe
 import StudentInfo from '../Pages/StudentInfo/StudentInfo';
 import MyAddmissionReq from '../Pages/MyAddmissionReq/MyAddmissionReq';
 import AllStudents from '../Pages/AllStudents/AllStudents';
+import JoinedStudentInfo from '../Pages/JoinedStudentInfo/JoinedStudentInfo';
 
 const router = createBrowserRouter([
     {
@@ -106,6 +107,10 @@ const router = createBrowserRouter([
             {
                 path : '/allStudents' , // for teacher
                 element : <AllStudents/> , // for teacher
+            },
+            {
+                path : '/joinedStudentInfo/:id' , // for teacher
+                element : <JoinedStudentInfo/> , // for teacher
             },
         ] 
     },
