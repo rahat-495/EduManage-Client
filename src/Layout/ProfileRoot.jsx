@@ -8,7 +8,7 @@ const ProfileRoot = () => {
     return (
         <div className="">
             
-            <div className="sticky top-0 z-50 bg-[#D1D3D6]">
+            <div className="sticky top-0 z-50 bg-opacity-0 backdrop-blur-md">
                 <Nav/>
             </div>
 

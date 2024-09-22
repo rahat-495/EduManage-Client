@@ -24,6 +24,7 @@ import UpdateAddmissionFrom from '../Pages/Update/UpdateAddmissionFrom/UpdateAdd
 import SchoolGradesAddReqs from '../Pages/School&GradesAddReqs/SchoolGradesAddReqs';
 import StudentInfo from '../Pages/StudentInfo/StudentInfo';
 import MyAddmissionReq from '../Pages/MyAddmissionReq/MyAddmissionReq';
+import AllStudents from '../Pages/AllStudents/AllStudents';
 
 const router = createBrowserRouter([
     {
@@ -101,6 +102,10 @@ const router = createBrowserRouter([
             {
                 path : '/school&GradesAddReqs' , // for teacher
                 element : <SchoolGradesAddReqs/> , // for teacher
+            },
+            {
+                path : '/allStudents' , // for teacher
+                element : <AllStudents/> , // for teacher
             },
         ] 
     },
