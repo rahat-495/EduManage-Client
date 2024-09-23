@@ -5,7 +5,7 @@ import useAuth from "../../Hooks/useAuth";
 import { Link } from "react-router-dom";
 import { Tooltip } from "@material-tailwind/react";
 
-const YourClasses = () => {
+const MyClasses = () => {
 
     const axiosSecure = useAxiosSecure() ;
     const {user} = useAuth() ;
@@ -21,7 +21,7 @@ const YourClasses = () => {
     return (
         <div className="min-h-[70vh]">
             
-            <h1 className="gro text-4xl text-center my-10">All Classes</h1>
+            <h1 className="gro text-4xl text-center my-10">My Classes</h1>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                 {
@@ -52,4 +52,4 @@ const YourClasses = () => {
     );
 };
 
-export default YourClasses;
+export default MyClasses;

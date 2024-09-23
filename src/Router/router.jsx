@@ -7,7 +7,6 @@ import SignUp from '../Pages/Register/SignUp';
 import AddSchool from '../Pages/AddSchool/AddSchool';
 import AddClass from '../Pages/AddClass/AddClass';
 import YourSchools from '../Pages/YourSchools/YourSchools';
-import YourClasses from '../Pages/YourClasses/YourClasses';
 import SchoolsDetails from '../Pages/SchoolsDetails/SchoolsDetails';
 import UpdateSchool from '../Pages/Update/UpdateSchool/UpdateSchool';
 import YourClassSubs from '../Pages/YourClassSubs/YourClassSubs';
@@ -26,6 +25,8 @@ import StudentInfo from '../Pages/StudentInfo/StudentInfo';
 import MyAddmissionReq from '../Pages/MyAddmissionReq/MyAddmissionReq';
 import AllStudents from '../Pages/AllStudents/AllStudents';
 import JoinedStudentInfo from '../Pages/JoinedStudentInfo/JoinedStudentInfo';
+import MyClasses from '../Pages/MyClasses/MyClasses';
+import ClassMates from '../Pages/ClassMates/ClassMates';
 
 const router = createBrowserRouter([
     {
@@ -57,8 +58,8 @@ const router = createBrowserRouter([
                 element : <YourSchools/> ,
             },
             {
-                path : '/yourClasses' ,
-                element : <YourClasses/> ,
+                path : '/myClasses' ,
+                element : <MyClasses/> ,
             },
             {
                 path : '/schoolsDetails/:id' ,
@@ -91,6 +92,10 @@ const router = createBrowserRouter([
             {
                 path : '/myAddmissionRequests' , // for students
                 element : <MyAddmissionReq/> , // for students
+            },
+            {
+                path : '/classMates' , // for students
+                element : <ClassMates/> , // for students
             },
             {
                 path : '/updateAddmissionForm/:id' ,
