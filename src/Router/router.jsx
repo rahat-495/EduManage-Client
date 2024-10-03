@@ -27,6 +27,7 @@ import AllStudents from '../Pages/AllStudents/AllStudents';
 import JoinedStudentInfo from '../Pages/JoinedStudentInfo/JoinedStudentInfo';
 import MyClasses from '../Pages/MyClasses/MyClasses';
 import ClassMates from '../Pages/ClassMates/ClassMates';
+import YourClasses from '../Pages/YourClasses/YourClasses';
 
 const router = createBrowserRouter([
     {
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
             {
                 path : '/myClasses' ,
                 element : <MyClasses/> ,
+            },
+            {
+                path : '/yourClasses' ,
+                element : <YourClasses/> ,
             },
             {
                 path : '/schoolsDetails/:id' ,
@@ -143,4 +148,4 @@ const router = createBrowserRouter([
     },
 ])
 
-export default router;
+export default router ;
