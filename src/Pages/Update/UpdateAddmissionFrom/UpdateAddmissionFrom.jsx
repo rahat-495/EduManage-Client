@@ -45,6 +45,7 @@ const UpdateAddmissionFrom = () => {
         const motherName = form.motherName.value ;
         const grade = form.grade.value ;
         const address = form.address.value ;
+        const gender = form.gender.value ;
         
         const addmissionInfo = {
             studentName ,
@@ -56,6 +57,7 @@ const UpdateAddmissionFrom = () => {
             fatherName ,
             motherName ,
             address,
+            gender ,
             schoolName : currentData?.schoolName ,
             schoolId : currentData?.schoolId ,
             grade ,
@@ -110,19 +112,26 @@ const UpdateAddmissionFrom = () => {
     return (
         <div className="min-h-[70vh] my-10">
             
-            <h1 className="text-white gro text-4xl font-semibold text-center my-14">Addmission Form</h1>
+            <h1 className="text-white gro text-4xl font-semibold text-center my-14">Update Form</h1>
             
             <div className="flex items-center justify-center gap-5 flex-col w-full">
 
                 <form onSubmit={handleAddmission} className="w-full flex flex-col gap-5">
 
-                    <div className="grid grid-cols-2 gap-5">
+                    <div className="grid grid-cols-1 gap-5">
                         <Input name="name" defaultValue={currentData?.studentName} type="text" label="Name" required/>
-                        <Input name="email" value={currentData?.studentEmail} type="email" label="Email" required/>
                     </div>
                     
-                    <div className="grid grid-cols-1 gap-5">
+                    <div className="grid grid-cols-2 gap-5">
                         <Input name="studentNumber" defaultValue={currentData?.studentNumber} type="number" label="Your Number" required/>
+                        <select name="gender" label="gender" className="border px-3 py-[10px] cursor-pointer rounded-lg bg-transparent focus:border-white focus:outline-none" required>
+                            <option value={'male'}>Male</option>
+                            <option value={'female'}>Female</option>
+                        </select>
+                    </div>
+
+                    <div className="grid grid-cols-1 gap-5">
+                        <Input name="email" value={currentData?.studentEmail} type="email" label="Email" required/>
                     </div>
 
                     <div className="grid grid-cols-2 gap-5">

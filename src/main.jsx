@@ -12,14 +12,14 @@ import { store } from "./Redux/store";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <ThemeProvider>
-      <AuthProvider>
-        <Provider store={store}>
+    <Provider store={store}>
+      <ThemeProvider>
+        <AuthProvider>
           <QueryClientProvider client={new QueryClient()}>
             <RouterProvider router={router} />
           </QueryClientProvider>
-        </Provider>
-      </AuthProvider>
-    </ThemeProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </Provider>
   </React.StrictMode>
 );

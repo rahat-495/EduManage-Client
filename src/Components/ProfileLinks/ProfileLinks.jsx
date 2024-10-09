@@ -2,9 +2,11 @@
 import { Typography } from "@material-tailwind/react";
 import { NavLink } from "react-router-dom";
 import useRole from "../../Hooks/useRole";
+import { useSelector } from "react-redux";
 
 const ProfileLinks = () => {
 
+  const currentUserData = useSelector(state => state.user) ;
   const {role} = useRole() ;
 
   if(role === 'admin'){
@@ -131,41 +133,46 @@ const ProfileLinks = () => {
     return (
       <div className="my-5 flex flex-col gap-1">
 
-        <NavLink
-          to={"/myClasses"}
-          className={({ isActive, isPending }) =>
-            isPending
-              ? ""
-              : isActive
-              ? "font-bold border-b border-purple-500 transition-all text-purple-500 ease-in-out duration-300"
-              : "text-white border-b hover:border-b-purple-500"
-          }
-        >
-          <Typography
-            as="p"
-            className="p-1 font-normal hover:text-purple-500 hover:border-b-purple-500 pb-3 px-3 duration-300 ease-in-out cursor-pointer text-sm gro "
-          >
-            My Classes
-          </Typography>
-        </NavLink>
+        {
+          currentUserData?.isjoined && 
+          <>
+            <NavLink
+              to={"/myClasses"}
+              className={({ isActive, isPending }) =>
+                isPending
+                  ? ""
+                  : isActive
+                  ? "font-bold border-b border-purple-500 transition-all text-purple-500 ease-in-out duration-300"
+                  : "text-white border-b hover:border-b-purple-500"
+              }
+            >
+              <Typography
+                as="p"
+                className="p-1 font-normal hover:text-purple-500 hover:border-b-purple-500 pb-3 px-3 duration-300 ease-in-out cursor-pointer text-sm gro "
+              >
+                My Classes
+              </Typography>
+            </NavLink>
 
-        <NavLink
-          to={"/classMates"}
-          className={({ isActive, isPending }) =>
-            isPending
-              ? ""
-              : isActive
-              ? "font-bold border-b border-purple-500 transition-all text-purple-500 ease-in-out duration-300"
-              : "text-white border-b hover:border-b-purple-500"
-          }
-        >
-          <Typography
-            as="p"
-            className="p-1 font-normal hover:text-purple-500 hover:border-b-purple-500 pb-3 px-3 duration-300 ease-in-out cursor-pointer text-sm gro "
-          >
-            Class Mates
-          </Typography>
-        </NavLink>
+            <NavLink
+              to={"/classMates"}
+              className={({ isActive, isPending }) =>
+                isPending
+                  ? ""
+                  : isActive
+                  ? "font-bold border-b border-purple-500 transition-all text-purple-500 ease-in-out duration-300"
+                  : "text-white border-b hover:border-b-purple-500"
+              }
+            >
+              <Typography
+                as="p"
+                className="p-1 font-normal hover:text-purple-500 hover:border-b-purple-500 pb-3 px-3 duration-300 ease-in-out cursor-pointer text-sm gro "
+              >
+                Class Mates
+              </Typography>
+            </NavLink>
+          </>
+        }
         
         <NavLink
           to={"/myAddmissionRequests"}

@@ -43,6 +43,7 @@ const AddmissionForm = () => {
         const motherName = form.motherName.value ;
         const grade = form.grade.value ;
         const address = form.address.value ;
+        const gender = form.gender.value ;
         
         const addmissionInfo = {
             studentName ,
@@ -54,6 +55,7 @@ const AddmissionForm = () => {
             fatherName ,
             motherName ,
             address,
+            gender ,
             schoolName : schoolInfo?.schoolName ,
             schoolId : schoolInfo?._id ,
             grade ,
@@ -116,13 +118,21 @@ const AddmissionForm = () => {
 
                 <form onSubmit={handleAddmission} className="w-full flex flex-col gap-5">
 
-                    <div className="grid grid-cols-2 gap-5">
+                    <div className="grid grid-cols-1 gap-5">
                         <Input name="name" defaultValue={user?.displayName} type="text" label="Name" required/>
-                        <Input name="email" value={user?.email} type="email" label="Email" required/>
                     </div>
                     
-                    <div className="grid grid-cols-1 gap-5">
+                    <div className="grid grid-cols-2 gap-5">
                         <Input name="studentNumber" type="number" label="Your Number" required/>
+
+                        <select name="gender" label="gender" className="border px-3 py-[10px] cursor-pointer rounded-lg bg-transparent focus:border-white focus:outline-none" required>
+                            <option value={'male'}>Male</option>
+                            <option value={'female'}>Female</option>
+                        </select>
+                    </div>
+
+                    <div className="grid grid-cols-1 gap-5">
+                        <Input name="email" value={user?.email} type="email" label="Email" required/>
                     </div>
 
                     <div className="grid grid-cols-2 gap-5">

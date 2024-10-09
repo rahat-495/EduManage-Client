@@ -14,8 +14,7 @@ const initialState = {
     role: "",
     isBlock: false,
     isFired: false,
-    isJoinedASchool: "",
-    isJoinedAGrade: "",
+    isjoined : '' ,
     applyForTeacher: "",
     schools: [],
     classes: [],
@@ -44,8 +43,7 @@ export const userSlice = createSlice({
             state.role = action.payload?.role;
             state.isBlock = action.payload?.isBlock;
             state.isFired = action.payload?.isFired;
-            state.isJoinedASchool = action.payload?.isJoinedASchool;
-            state.isJoinedAGrade = action.payload?.isJoinedAGrade;
+            state.isjoined = action.payload?.isjoined;
             state.applyForTeacher = action.payload?.applyForTeacher;
             state.schools = action.payload?.schools;
             state.classes = action.payload?.classes;
