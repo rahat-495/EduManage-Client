@@ -37,7 +37,7 @@ const Login = () => {
         <div className="mx-auto flex items-center justify-center flex-col min-h-screen">
             <div className="bg-white rounded-lg my-10">
                 
-                <Card className="w-96 gro pt-11 shadow-none border my-20 lg:my-0">
+                <Card className="w-96 gro pt-1 shadow-none border my-20 lg:my-0">
             
                 <Tabs value="login" className="">
 

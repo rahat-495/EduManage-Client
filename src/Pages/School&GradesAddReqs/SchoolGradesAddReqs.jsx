@@ -279,7 +279,7 @@ const SchoolGradesAddReqs = () => {
                                                             mount: { scale: 1, y: 0 },
                                                             unmount: { scale: 0, y: 25 },
                                                         }}>
-                                                            <Button onClick={() => handleSchoolJoinStatus(data?._id)} className={`capitalize gro text-sm bg-white shadow-none ${data?.schoolJoiningStatus === 'pending' && 'text-orange-700'}  ${data?.   schoolJoiningStatus === 'accepted' && 'text-green-700'} ${data?.   schoolJoiningStatus === 'rejected' && 'text-red-700'} border`}>{data?.schoolJoiningStatus}</Button>
+                                                            <Button onClick={() => handleSchoolJoinStatus(data?._id)} className={`capitalize gro w-3/4 text-sm bg-white shadow-none ${data?.schoolJoiningStatus === 'pending' && 'text-orange-700'}  ${data?.   schoolJoiningStatus === 'accepted' && 'text-green-700'} ${data?.   schoolJoiningStatus === 'rejected' && 'text-red-700'} border`}>{data?.schoolJoiningStatus}</Button>
                                                         </Tooltip>
                                                     </Typography>
                                                 </td>
@@ -289,7 +289,7 @@ const SchoolGradesAddReqs = () => {
                                                             mount: { scale: 1, y: 0 },
                                                             unmount: { scale: 0, y: 25 },
                                                         }}>
-                                                            <Button onClick={() => handleGradeJoinStatus(data?._id)} className={`capitalize gro text-sm bg-white shadow-none ${data?.   gradeJoiningStatus === 'rejected' && 'text-red-700'} ${data?.gradeJoiningStatus === 'pending' && 'text-orange-700'}  ${data?.gradeJoiningStatus === 'accepted' && 'text-green-700'} border`}>{data?.gradeJoiningStatus}</Button>
+                                                            <Button onClick={() => handleGradeJoinStatus(data?._id)} className={`capitalize gro w-3/4 text-sm bg-white shadow-none ${data?.   gradeJoiningStatus === 'rejected' && 'text-red-700'} ${data?.gradeJoiningStatus === 'pending' && 'text-orange-700'}  ${data?.gradeJoiningStatus === 'accepted' && 'text-green-700'} border`}>{data?.gradeJoiningStatus}</Button>
                                                         </Tooltip>
                                                     </Typography>
                                                 </td>

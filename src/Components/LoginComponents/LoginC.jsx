@@ -8,9 +8,12 @@ import { ToastContainer , toast } from "react-toastify";
 import { FcGoogle } from "react-icons/fc";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import UAParser from 'ua-parser-js';
+import { useDispatch } from "react-redux";
+import { setUser } from "../../Redux/userSlice";
 
 const LoginC = ({location}) => {
 
+    const dispatch = useDispatch() ;
     const axiosSecure = useAxiosSecure() ;
     const { signIn , googleLogin } = useAuth() ;
     const navigate = useNavigate() ;
@@ -42,6 +45,8 @@ const LoginC = ({location}) => {
               role : "student" ,
               isBlock : false ,
               isFired : false ,
+              isJoinedASchool : '' ,
+              isJoinedAGrade : '' ,
               applyForTeacher : "No" ,
               schools : [] ,
               classes : [] ,
@@ -59,7 +64,7 @@ const LoginC = ({location}) => {
 
             axiosSecure.put('/createUser' , userInfo)
             .then((result) => {
-              console.log(result) ;
+              dispatch(setUser(result?.data)) ;
             })
   
             setTimeout(() => {
@@ -102,6 +107,8 @@ const LoginC = ({location}) => {
           role : "student" ,
           isBlock : false ,
           isFired : false ,
+          isJoinedASchool : '' ,
+          isJoinedAGrade : '' ,
           applyForTeacher : "No" ,
           schools : [] ,
           classes : [] ,
@@ -119,7 +126,7 @@ const LoginC = ({location}) => {
 
         axiosSecure.put('/createUser' , userInfo)
         .then((result) => {
-          console.log(result) ;
+          dispatch(setUser(result?.data)) ;
         })
 
         setTimeout(() => {

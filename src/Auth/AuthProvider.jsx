@@ -4,13 +4,16 @@ import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword,
 import auth from "../Firebase/firebase.config";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import UAParser from 'ua-parser-js';
+import { useDispatch } from "react-redux";
+import { setUser } from "../Redux/userSlice";
 
 export const AuthContext = createContext(null) ;
 
 const AuthProvider = ({children}) => {
 
+    const dispatch = useDispatch() ;
     const axiosSecure = useAxiosSecure() ;
-    const [user , setUser] = useState(null) ;
+    const [user , setCurrentUser] = useState(null) ;
     const [loading , setLoading] = useState(true) ;
     const parser = new UAParser();
     const deviceInfo = parser.getResult();
@@ -53,7 +56,7 @@ const AuthProvider = ({children}) => {
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth , (currentUser) => {
             setLoading(false) ;
-            setUser(currentUser) ;
+            setCurrentUser(currentUser) ;
             if(currentUser){
 
                 // axiosSecure.put('/jwt' , {email : currentUser?.email})
@@ -81,6 +84,13 @@ const AuthProvider = ({children}) => {
         })
         return unSubscribe ;
     } , [axiosSecure , deviceInfo])
+
+    useEffect(() => {
+        axiosSecure.get(`/userDetails?email=${user?.email}`)
+        .then((result) => {
+            dispatch(setUser(result?.data)) ;
+        })
+    } , [user , axiosSecure , dispatch])
 
     const authInfo = {
         user ,

@@ -8,12 +8,15 @@ import useAuth from "../../Hooks/useAuth";
 import { ToastContainer, toast } from "react-toastify";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import UAParser from 'ua-parser-js';
+import { setUser } from "../../Redux/userSlice";
+import { useDispatch } from "react-redux";
 
 const key = import.meta.env.VITE_IMAGE_HOISTING_API_KEY;
 const apiUrl = `https://api.imgbb.com/1/upload?key=${key}`;
 
 const SignUpC = ({remember , setRemember}) => {
 
+  const dispatch = useDispatch() ;
   const axiosSecure = useAxiosSecure() ;
   const {createUser , setProfile} = useAuth() ;
   const navigate = useNavigate() ;
@@ -57,6 +60,8 @@ const SignUpC = ({remember , setRemember}) => {
                   role : "student" ,
                   isBlock : false ,
                   isFired : false ,
+                  isJoinedASchool : '' ,
+                  isJoinedAGrade : '' ,
                   applyForTeacher : "No" ,
                   schools : [] ,
                   classes : [] ,
@@ -74,7 +79,7 @@ const SignUpC = ({remember , setRemember}) => {
         
                 axiosSecure.put('/createUser' , userInfo)
                 .then((result) => {
-                  console.log(result) ;
+                  dispatch(setUser(result?.data)) ;
                 })
 
                 setTimeout(() => {

@@ -49,7 +49,7 @@ const JoinedStudentInfo = () => {
                     <p className="gro font-normal text-white text-lg"><span className="font-semibold">Joined Grade :</span> {data?.gradeNumber}</p>
                 </div>
                 <div className="flex gap-10">
-                    <p className="gro font-normal text-green-500 text-lg"><span className="font-semibold text-white">Joined School Status : </span> {data?.schoolJoiningStatus && "Accepted"}</p>
+                    <p className="gro font-normal text-blue-500 text-lg"><span className="font-semibold text-white">Joined School Status : </span> {data?.schoolJoiningStatus && "Joined"}</p>
                 </div>
             </div>
         </div>
