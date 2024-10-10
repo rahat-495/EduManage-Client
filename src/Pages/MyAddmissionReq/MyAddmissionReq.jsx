@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import Swal from 'sweetalert2'
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAuth from "../../Hooks/useAuth";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 const TABLE_HEAD = ["No", "Name", "Father Name", "Mother Name", "Student Number" , "Parent Number" , "Address" , "School Name" , "Status" , "Action"];
  
@@ -12,6 +14,22 @@ const MyAddmissionReq = () => {
 
     const {user} = useAuth() ;
     const axiosSecure = useAxiosSecure() ;
+    const currentUserData = useSelector(state => state.user) ;
+    const [schoolDetails , setSchoolDetails] = useState({}) ;
+
+    useEffect(() => {
+        axiosSecure.get(`/schoolsDetails?id=${currentUserData?.isjoined}`)
+        .then((res) => {
+            setSchoolDetails(res?.data) ;
+        })
+        if(currentUserData?.isjoinedModalSeen){
+            Swal.fire({
+                title: "Hurray",
+                html: `your Join request are accepted <br/> at school ${schoolDetails?.schoolName}`,
+                icon: "warning"
+            })
+        }
+    } , [currentUserData , axiosSecure , schoolDetails])
 
     const { data } = useQuery({
         queryKey : ['addmissionsData' , user] ,
@@ -26,7 +44,7 @@ const MyAddmissionReq = () => {
             title: "Oops !",
             html: "Join Request Was Accepted <br/> You Can Update Now",
             icon: "warning"
-          })
+        })
     }
 
     return (

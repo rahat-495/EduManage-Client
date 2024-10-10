@@ -61,6 +61,7 @@ const SignUpC = ({remember , setRemember}) => {
                   isBlock : false ,
                   isFired : false ,
                   isjoined : '' ,
+                  isjoinedModalSeen : false ,
                   applyForTeacher : "No" ,
                   schools : [] ,
                   classes : [] ,

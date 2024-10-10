@@ -15,7 +15,8 @@ const initialState = {
     isBlock: false,
     isFired: false,
     isjoined : '' ,
-    applyForTeacher: "",
+    isjoinedModalSeen : false ,
+    applyForTeacher: "No",
     schools: [],
     classes: [],
     removedDevice: [],
@@ -48,6 +49,8 @@ export const userSlice = createSlice({
             state.schools = action.payload?.schools;
             state.classes = action.payload?.classes;
             state.removedDevice = action.payload?.removedDevice;
+            state.isjoined = action.payload?.isjoined ;
+            state.isjoinedModalSeen = action.payload?.isjoinedModalSeen ;
             state.devicesInfo = [
                 {
                     deviceName: deviceInfo?.os?.name + " " + deviceInfo?.os?.version,
