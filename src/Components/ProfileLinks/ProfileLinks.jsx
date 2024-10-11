@@ -1,13 +1,12 @@
 
 import { Typography } from "@material-tailwind/react";
 import { NavLink } from "react-router-dom";
-import useRole from "../../Hooks/useRole";
 import { useSelector } from "react-redux";
 
 const ProfileLinks = () => {
 
   const currentUserData = useSelector(state => state.user) ;
-  const {role} = useRole() ;
+  const role = useSelector(state => state?.user?.role) ;
 
   if(role === 'admin'){
     return (

@@ -18,7 +18,7 @@ const AddmissionForm = () => {
     const { data : schoolInfo , isLoading : schoolLoading } = useQuery({
         queryKey : ['schoolInfo' , user?.email] ,
         queryFn : async () => {
-            const {data} = await axiosSecure.get(`/schoolData?id=${id}`) ;
+            const {data} = await axiosSecure.get(`/schoolsDetails?id=${id}`) ;
             return data ;
         }
     })
@@ -26,7 +26,7 @@ const AddmissionForm = () => {
     const { data : gradesInfo , isLoading : gradesLoading } = useQuery({
         queryKey : ['gradesInfo' , user?.email] ,
         queryFn : async () => {
-            const {data} = await axiosSecure.get(`/gradesInfo?schoolId=${id}`) ;
+            const {data} = await axiosSecure.get(`/classesData?schoolId=${id}`) ;
             return data ;
         }
     })

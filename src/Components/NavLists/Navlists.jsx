@@ -4,13 +4,13 @@ import NavLinks from "../NavLinks/NavLinks";
 import { Typography } from "@material-tailwind/react";
 import { useState } from "react";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
-import useRole from "../../Hooks/useRole";
+import { useSelector } from "react-redux";
 
 const NavLists = () => {
 
   const [dropdown, setDropDown] = useState(false);
   const { pathname } = useLocation();
-  const { role } = useRole();
+  const role = useSelector(state => state?.user?.role) ;
 
   if (role === "admin") {
     return (
@@ -71,7 +71,7 @@ const NavLists = () => {
           onMouseEnter={() => setDropDown(!dropdown)}
           onMouseLeave={() => setDropDown(!dropdown)}
           className={`p-1 font-normal gro dropdown dropdown-hover ${
-            pathname === "/addClass" && "underline font-semibold"
+            pathname === "/addGrade" && "underline font-semibold"
           }`}
         >
           <ul
@@ -91,9 +91,9 @@ const NavLists = () => {
             </Link>
 
             <Link
-              to={"/addClass"}
+              to={"/addGrade"}
               className={`gro font-semibold px-3 py-2 rounded-lg ${
-                pathname === "/addClass"
+                pathname === "/addGrade"
                   ? "bg-white"
                   : "hover:text-black hover:bg-white text-white"
               }`}

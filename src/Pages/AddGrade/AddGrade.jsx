@@ -5,7 +5,7 @@ import useAuth from "../../Hooks/useAuth";
 import useAxiosCommon from "../../Hooks/useAxiosCommon";
 import { useNavigate } from 'react-router-dom';
 
-const AddClass = () => {
+const AddGrade = () => {
 
   const { user } = useAuth();
   const navigate = useNavigate() ;
@@ -154,4 +154,4 @@ const AddClass = () => {
   );
 };
 
-export default AddClass;
+export default AddGrade;

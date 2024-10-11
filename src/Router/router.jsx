@@ -5,7 +5,6 @@ import Home from '../Pages/Home/Home';
 import Login from '../Pages/Login/Login';
 import SignUp from '../Pages/Register/SignUp';
 import AddSchool from '../Pages/AddSchool/AddSchool';
-import AddClass from '../Pages/AddClass/AddClass';
 import YourSchools from '../Pages/YourSchools/YourSchools';
 import SchoolsDetails from '../Pages/SchoolsDetails/SchoolsDetails';
 import UpdateSchool from '../Pages/Update/UpdateSchool/UpdateSchool';
@@ -28,6 +27,7 @@ import JoinedStudentInfo from '../Pages/JoinedStudentInfo/JoinedStudentInfo';
 import MyClasses from '../Pages/MyClasses/MyClasses';
 import ClassMates from '../Pages/ClassMates/ClassMates';
 import YourClasses from '../Pages/YourClasses/YourClasses';
+import AddGrade from '../Pages/AddGrade/AddGrade';
 
 const router = createBrowserRouter([
     {
@@ -51,8 +51,8 @@ const router = createBrowserRouter([
                 element : <AddSchool/> ,
             },
             {
-                path : '/addClass' ,
-                element : <AddClass/> ,
+                path : '/addGrade' ,
+                element : <AddGrade/> ,
             },
             {
                 path : '/yourSchools' ,

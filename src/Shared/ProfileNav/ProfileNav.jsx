@@ -1,25 +1,16 @@
 
 import { Button, Typography } from "@material-tailwind/react";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
-import useAuth from "../../Hooks/useAuth";
-import { useQuery } from "@tanstack/react-query";
 import { NavLink, useLocation } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { SlLocationPin } from "react-icons/sl";
+import { useSelector } from "react-redux";
+import useAuth from "../../Hooks/useAuth";
 
 const ProfileNav = () => {
 
     const {pathname} = useLocation() ;
-    const axiosSecure = useAxiosSecure() ;
+    const userData = useSelector(state => state?.user) ;
     const {user} = useAuth() ;
-
-    const {data : userData} = useQuery({
-        queryKey : ['userinfo' , user?.email] ,
-        queryFn : async () => {
-            const {data} = await axiosSecure.get(`/userData?email=${user?.email}`) ;
-            return data ;
-        }
-    }) 
 
     const navLinks = <ul className="flex flex-col items-start gap-3">
 
@@ -91,7 +82,7 @@ const ProfileNav = () => {
         <div className="bg-[#170F21] w-80 min-h-[80vh] rounded-lg px-5 py-10 flex flex-col">
                 
             <div className="flex flex-col items-center justify-center gap-5 border-dashed border-b pb-5 border-[#412E4D]">
-                <img className="w-20 h-20 rounded-full p-1 border-teal-500 border" src={userData?.image} alt="" />
+                <img className="w-20 h-20 rounded-full p-1 border-teal-500 border" src={userData?.image ? userData?.image : user?.photoURL} alt="" />
                 <div className="flex flex-col items-center justify-center">
                     <h1 className="text-[#C7ABFF] gro font-semibold text-lg text-center">{userData?.name}</h1>
                     <h1 className="text-[#bcacce] gro font-semibold text-base text-center">{userData?._id}</h1>

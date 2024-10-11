@@ -27,7 +27,7 @@ const UpdateAddmissionFrom = () => {
         queryKey : ['gradesInfo' , user?.email , currentData?.schoolId] ,
         queryFn : async () => {
             if(currentData?.schoolId){
-                const {data} = await axiosSecure.get(`/gradesInfo?schoolId=${currentData?.schoolId}`) ;
+                const {data} = await axiosSecure.get(`/classesData?schoolId=${currentData?.schoolId}`) ;
                 return data ;
             }
         }
@@ -75,7 +75,7 @@ const UpdateAddmissionFrom = () => {
             confirmButtonText: "Yes , do it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosSecure.post(`/updateAddmission?id=${currentData?._id}` , addmissionInfo)
+                axiosSecure.put(`/updateAddmission?id=${currentData?._id}` , addmissionInfo)
                 .then((res) => {
                     if(res?.data?.modifiedCount){
                         form.reset() ;

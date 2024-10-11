@@ -18,15 +18,15 @@ const initialState = {
     isjoinedModalSeen : false ,
     applyForTeacher: "No",
     schools: [],
-    classes: [],
+    grades: [],
     removedDevice: [],
     devicesInfo: [
         {
-        deviceName: deviceInfo?.os?.name + " " + deviceInfo?.os?.version,
-        loginDate: new Date().toLocaleDateString(),
-        loginTime: new Date().toLocaleTimeString(),
-        loginShift: new Date().toLocaleTimeString("en-US", { hour: "numeric", hour12: true }).split(" ")[1],
-        isRemoved: false,
+            deviceName: deviceInfo?.os?.name + " " + deviceInfo?.os?.version,
+            loginDate: new Date().toLocaleDateString(),
+            loginTime: new Date().toLocaleTimeString(),
+            loginShift: new Date().toLocaleTimeString("en-US", { hour: "numeric", hour12: true }).split(" ")[1],
+            isRemoved: false,
         },
     ],
 };
@@ -47,7 +47,7 @@ export const userSlice = createSlice({
             state.isjoined = action.payload?.isjoined;
             state.applyForTeacher = action.payload?.applyForTeacher;
             state.schools = action.payload?.schools;
-            state.classes = action.payload?.classes;
+            state.grades = action.payload?.grades;
             state.removedDevice = action.payload?.removedDevice;
             state.isjoined = action.payload?.isjoined ;
             state.isjoinedModalSeen = action.payload?.isjoinedModalSeen ;

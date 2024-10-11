@@ -53,12 +53,12 @@ const AddSchool = () => {
       principalName,
       principalContact,
       schoolType,
-      classes : [] ,
+      grades : [] ,
       totalStudents : [] ,
     };
 
     const { data } = await axiosCommon.post("/addSchool", schoolData);
-    if(data.insertedId){
+    if(data._id){
         form.reset() ;
         Swal.fire({
             title: "School Added !",

@@ -1,4 +1,5 @@
 
+/* eslint-disable react-hooks/exhaustive-deps */
 import { createContext, useEffect, useState } from "react";
 import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import auth from "../Firebase/firebase.config";
@@ -58,34 +59,37 @@ const AuthProvider = ({children}) => {
             setLoading(false) ;
             setCurrentUser(currentUser) ;
             if(currentUser){
-
                 // axiosSecure.put('/jwt' , {email : currentUser?.email})
                 // .then((result) => {
                 //     console.log(result)
                 // })
-
-                const userInfo = {
-                    email : currentUser?.email ,
-                    devicesInfo : {
-                        deviceName : deviceInfo?.os?.name +' '+deviceInfo?.os?.version ,
-                        loginDate : new Date().toLocaleDateString() ,
-                        loginTime : new Date().toLocaleTimeString() ,
-                        loginShift : new Date().toLocaleTimeString('en-US', { hour: 'numeric', hour12: true }).split(' ')[1] ,
-                        isRemoved : false ,
-                    },
-                }
-
-                axiosSecure.put('/updateDevice' , userInfo)
-                .then((result) => {
-                    return result ;
-                })
-
             }
         })
         return unSubscribe ;
-    } , [axiosSecure , deviceInfo])
+    } , [])
 
     useEffect(() => {
+        if(user){
+            const userInfo = {
+                email : user?.email ,
+                devicesInfo : {
+                    deviceName : deviceInfo?.os?.name +' '+deviceInfo?.os?.version ,
+                    loginDate : new Date().toLocaleDateString() ,
+                    loginTime : new Date().toLocaleTimeString() ,
+                    loginShift : new Date().toLocaleTimeString('en-US', { hour: 'numeric', hour12: true }).split(' ')[1] ,
+                    isRemoved : false ,
+                },
+            }
+    
+            axiosSecure.put('/updateDevice' , userInfo)
+            .then((result) => {
+                return result ;
+            })
+        }
+    } , [])
+
+    useEffect(() => {
+        if(!user) return ;
         axiosSecure.get(`/userDetails?email=${user?.email}`)
         .then((result) => {
             dispatch(setUser(result?.data)) ;

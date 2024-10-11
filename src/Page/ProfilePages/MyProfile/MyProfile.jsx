@@ -1,31 +1,13 @@
 
-import { useQuery } from "@tanstack/react-query";
 import { FaRegPenToSquare } from "react-icons/fa6";
-import useAuth from "../../../Hooks/useAuth";
-import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { Card, Typography } from "@material-tailwind/react";
-import Lottie from "lottie-react";
-import loader from '../../../../public/roundedLoader.json'
+import { useSelector } from "react-redux";
 
 const TABLE_HEAD = ["Serial", "Platform", "Date", "Action"];
 
 const MyProfile = () => {
 
-    const axiosSecure = useAxiosSecure() ;
-    const {user} = useAuth() ;
-
-    const {data : userData , isLoading} = useQuery({
-        queryKey : ['userinfo' , user?.email] ,
-        queryFn : async () => {
-            const {data} = await axiosSecure.get(`/userData?email=${user?.email}`) ;
-            return data ;
-        }
-    }) 
-    console.log(userData)
-
-    if(isLoading){
-        <Lottie animationData={loader} loop={true}/>
-    }
+    const userData = useSelector(state => state?.user) ;
 
     return (
         <div className="flex flex-col items-start gap-3 px-5">
