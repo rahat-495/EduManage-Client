@@ -65,6 +65,23 @@ const UpdateAddmissionFrom = () => {
             gradeJoiningStatus : "pending" ,
         }
 
+        const validateNumber = /^(?:\+88|01)?[13-9]\d{8}$/;
+        if(!validateNumber.test(studentNumber)){
+            return Swal.fire({
+                title: "Invalid Number",
+                html: "Student Number ins't valid <br/> plz entar a valid bangladesh number !",
+                icon: "warning"
+            });
+        }
+        
+        if(!validateNumber.test(parentNumber)){
+            return Swal.fire({
+                title: "Invalid Number",
+                html: "Parent Number ins't valid <br/> plz entar a valid bangladesh number !",
+                icon: "warning"
+            });
+        }
+
         Swal.fire({
             title: "Are you sure ?",
             text: "You won't be able for update addmission ?",

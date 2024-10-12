@@ -49,7 +49,7 @@ const LoginC = ({location}) => {
               isjoinedModalSeen : false ,
               applyForTeacher : "No" ,
               schools : [] ,
-              classes : [] ,
+              grades : [] ,
               removedDevice : [] ,
               devicesInfo : [
                 {
@@ -111,7 +111,7 @@ const LoginC = ({location}) => {
           isjoinedModalSeen : false ,
           applyForTeacher : "No" ,
           schools : [] ,
-          classes : [] ,
+          grades : [] ,
           removedDevice : [] ,
           devicesInfo : [
             {

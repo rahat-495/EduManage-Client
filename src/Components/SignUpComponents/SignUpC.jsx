@@ -64,7 +64,7 @@ const SignUpC = ({remember , setRemember}) => {
                   isjoinedModalSeen : false ,
                   applyForTeacher : "No" ,
                   schools : [] ,
-                  classes : [] ,
+                  grades : [] ,
                   removedDevice : [] ,
                   devicesInfo : [
                     {

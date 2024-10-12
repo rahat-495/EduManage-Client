@@ -45,6 +45,8 @@ const AddmissionForm = () => {
         const address = form.address.value ;
         const gender = form.gender.value ;
         
+        const gradeData = gradesInfo?.find((data) => data?._id === grade)
+
         const addmissionInfo = {
             studentName ,
             studentUid : user?.uid ,
@@ -59,9 +61,27 @@ const AddmissionForm = () => {
             schoolName : schoolInfo?.schoolName ,
             schoolId : schoolInfo?._id ,
             grade ,
+            gradeNumber : gradeData?.gradeNumber,
             schoolJoiningStatus : "pending" ,
             gradeJoiningStatus : "pending" ,
             isjoined : false ,
+        }
+
+        const validateNumber = /^(?:\+88|01)?[13-9]\d{8}$/;
+        if(!validateNumber.test(studentNumber)){
+            return Swal.fire({
+                title: "Invalid Number",
+                html: "Student Number ins't valid <br/> plz entar a valid bangladesh number !",
+                icon: "warning"
+            });
+        }
+
+        if(!validateNumber.test(parentNumber)){
+            return Swal.fire({
+                title: "Invalid Number",
+                html: "Parent Number ins't valid <br/> plz entar a valid bangladesh number !",
+                icon: "warning"
+            });
         }
 
         Swal.fire({
@@ -77,7 +97,7 @@ const AddmissionForm = () => {
                 axiosSecure.post(`/reqForAddmission` , addmissionInfo)
                 .then((res) => {
                     
-                    if(res?.data?.insertedId){
+                    if(res?.data?._id){
                         form.reset() ;
                         navigate('/') ;
 

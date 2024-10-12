@@ -55,7 +55,25 @@ const AddSchool = () => {
       schoolType,
       grades : [] ,
       totalStudents : [] ,
+      availableGrades : [] ,
     };
+
+    const validateNumber = /^(?:\+88|01)?[13-9]\d{8}$/;
+    if(!validateNumber.test(phone)){
+        return Swal.fire({
+            title: "Invalid Number",
+            html: "Phone Number ins't valid <br/> plz entar a valid bangladesh number !",
+            icon: "warning"
+        });
+    }
+
+    if(!validateNumber.test(principalContact)){
+        return Swal.fire({
+            title: "Invalid Number",
+            html: "Princial Number ins't valid <br/> plz entar a valid bangladesh number !",
+            icon: "warning"
+        });
+    }
 
     const { data } = await axiosCommon.post("/addSchool", schoolData);
     if(data._id){

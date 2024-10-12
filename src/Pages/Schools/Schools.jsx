@@ -15,8 +15,8 @@ const Schools = () => {
     const { data : schoolsData } = useQuery({
         queryKey: ["allSchools", user?.email],
         queryFn: async () => {
-        const { data } = await axiosSecure.get(`/allSchools`);
-        return data;
+          const { data } = await axiosSecure.get(`/allSchools`);
+          return data;
         },
     });
   
@@ -89,16 +89,18 @@ const Schools = () => {
                         <div tabIndex={0} role="button" className="ml-5">Hover Here</div>
                         <div tabIndex={0} className="dropdown-content bg-[#1D232A] text-white w-max menu -ml-8 border rounded-box z-[10] p-2">
                             {
+                              classesData?.length !== 0 ?
                                 classesData?.map((classData) => 
-                                <div key={classData?._id}>
-                                    <Tooltip placement={'left-end'} content={classData?.gradeName} animate={{
-                                        mount: { scale: 1, y: 0 },
-                                        unmount: { scale: 0, y: 25 },
-                                    }}>
-                                        <p className="border mt-1 cursor-pointer rounded p-1"> {classData?.gradeName?.length > 14 ? classData?.gradeName?.slice(0,14) + '...' : classData?.gradeName}</p>
-                                    </Tooltip>
-                                </div>
-                                )
+                                  <div key={classData?._id}>
+                                      <Tooltip placement={'left-end'} content={classData?.gradeName} animate={{
+                                          mount: { scale: 1, y: 0 },
+                                          unmount: { scale: 0, y: 25 },
+                                      }}>
+                                          <p className="border mt-1 cursor-pointer rounded p-1"> {classData?.gradeName?.length > 14 ? classData?.gradeName?.slice(0,14) + '...' : classData?.gradeName}</p>
+                                      </Tooltip>
+                                  </div>
+                                ) :
+                                "Grades Not available"
                             }
                         </div>
                     </div>
@@ -107,14 +109,17 @@ const Schools = () => {
                 <div className="text-black font-semibold flex items-center gap-5 justify-between">
                     <span>Available Grades :</span>
                     <div className="flex items-center gap-3">
-                        {   
+                        {   school?.availableGrades?.length > 0 ? 
                             school?.availableGrades?.map((data , index) => 
                               <Tooltip key={index} content={school?.availableGrades?.join(',')}>
                                 <span className="flex items-center justify-center">
-                                    {data.slice(0,15)}
+                                    {data}
                                     {index < data?.length && ','}
                                 </span>
                               </Tooltip>
+                            ):
+                            (
+                              "Grades Unavailable"
                             )
                         }
                     </div>
