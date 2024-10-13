@@ -8,7 +8,7 @@ const TABLE_HEAD = ["Serial", "Platform", "Date", "Action"];
 const MyProfile = () => {
 
     const userData = useSelector(state => state?.user) ;
-
+// console.log(userData?.devicesInfo)
     return (
         <div className="flex flex-col items-start gap-3 px-5">
 

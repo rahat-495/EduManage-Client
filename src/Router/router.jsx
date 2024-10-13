@@ -8,7 +8,6 @@ import AddSchool from '../Pages/AddSchool/AddSchool';
 import YourSchools from '../Pages/YourSchools/YourSchools';
 import SchoolsDetails from '../Pages/SchoolsDetails/SchoolsDetails';
 import UpdateSchool from '../Pages/Update/UpdateSchool/UpdateSchool';
-import YourClassSubs from '../Pages/YourClassSubs/YourClassSubs';
 import ViewClassFromS from '../Pages/ViewClassFromS/ViewClassFromS';
 import ProfileRoot from '../Layout/ProfileRoot';
 import ProfileStatic from '../Page/ProfilePages/ProfileStatic/ProfileStatic';
@@ -28,6 +27,7 @@ import MyClasses from '../Pages/MyClasses/MyClasses';
 import ClassMates from '../Pages/ClassMates/ClassMates';
 import YourClasses from '../Pages/YourClasses/YourClasses';
 import AddGrade from '../Pages/AddGrade/AddGrade';
+import YourGradeDetails from '../Pages/YourGradeDetails/YourGradeDetails';
 
 const router = createBrowserRouter([
     {
@@ -63,7 +63,7 @@ const router = createBrowserRouter([
                 element : <MyClasses/> ,
             },
             {
-                path : '/yourClasses' ,
+                path : '/yourGrades' ,
                 element : <YourClasses/> ,
             },
             {
@@ -75,8 +75,8 @@ const router = createBrowserRouter([
                 element : <UpdateSchool/> ,
             },
             {
-                path : '/yourClasses/subjects/:id' ,
-                element : <YourClassSubs/> ,
+                path : '/yourGrades/details/:id' ,
+                element : <YourGradeDetails/> ,
             },
             {
                 path : '/viewClasses/:id' ,

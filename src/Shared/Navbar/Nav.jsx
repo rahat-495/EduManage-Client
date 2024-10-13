@@ -72,10 +72,9 @@ const Nav = () => {
 
                       <MenuList className="p-0 -ml-24 bg-transparent border-none rounded-2xl">
                         <div className="border border-purple-500 menu p-2 shadow bg-[#0F172A] rounded-box w-60">
-                          <img
-                              className="w-[45px] border border-teal-500 h-[45px] rounded-full hidden lg:flex mx-auto mt-2 mb-1"
+                            <Avatar
+                              className="cursor-pointer w-[45px] border border-teal-500 h-[45px] rounded-full hidden lg:flex mx-auto"
                               src={user?.photoURL}
-                              alt=""
                             />
                             <h1 className="mx-1 text-[#f5f6fa] p-1 text-center rounded-md font-semibold">
                               {user?.displayName}

@@ -4,7 +4,7 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAuth from "../../Hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 
-const YourClassSubs = () => {
+const YourGradeDetails = () => {
 
     const {id} = useParams() ;
     const axiosSecure = useAxiosSecure() ;
@@ -17,7 +17,7 @@ const YourClassSubs = () => {
             return data ;
         }
     })
-    console.log(data?.subjectsArray)
+    console.log(data)
 
     return (
         <div className="min-h-[70vh]">
@@ -34,4 +34,4 @@ const YourClassSubs = () => {
     );
 };
 
-export default YourClassSubs;
+export default YourGradeDetails;

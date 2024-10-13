@@ -48,6 +48,7 @@ const AddGrade = () => {
       email : user?.email ,
       classTeacherName ,
       totalStudents : [] ,
+      subjectsId : [] ,
     };
 
     const { data } = await axiosSecure.post("/addClass", classData);

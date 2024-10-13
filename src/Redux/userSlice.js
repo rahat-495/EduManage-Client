@@ -51,15 +51,7 @@ export const userSlice = createSlice({
             state.removedDevice = action.payload?.removedDevice;
             state.isjoined = action.payload?.isjoined ;
             state.isjoinedModalSeen = action.payload?.isjoinedModalSeen ;
-            state.devicesInfo = [
-                {
-                    deviceName: deviceInfo?.os?.name + " " + deviceInfo?.os?.version,
-                    loginDate: new Date().toLocaleDateString(),
-                    loginTime: new Date().toLocaleTimeString(),
-                    loginShift: new Date().toLocaleTimeString("en-US", { hour: "numeric", hour12: true }).split(" ")[1],
-                    isRemoved: false,
-                },
-            ];
+            state.devicesInfo = action?.payload?.devicesInfo ;
         },
     }
 })

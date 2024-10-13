@@ -15,7 +15,7 @@ const ProfileRoot = () => {
             <div className="flex items-start justify-between my-14 gap-6 max-w-[1440px] mx-auto overflow-hidden">
 
                 <div className="">
-                        <ProfileNav/>
+                    <ProfileNav/>
                 </div>
 
                 <div className="bg-[#170F21] w-full min-h-[60vh] rounded-lg px-5 py-10">

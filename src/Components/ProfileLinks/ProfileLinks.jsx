@@ -72,7 +72,7 @@ const ProfileLinks = () => {
         </NavLink>
   
         <NavLink
-          to={"/yourClasses"}
+          to={"/yourGrades"}
           className={({ isActive, isPending }) =>
             isPending
               ? ""

@@ -1,12 +1,13 @@
 
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Card, Tooltip, Typography } from "@material-tailwind/react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import Swal from 'sweetalert2'
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAuth from "../../Hooks/useAuth";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const TABLE_HEAD = ["No", "Name", "Father Name", "Mother Name", "Student Number" , "Parent Number" , "Address" , "School Name" , "Status" , "Action"];
  
@@ -14,22 +15,13 @@ const MyAddmissionReq = () => {
 
     const {user} = useAuth() ;
     const axiosSecure = useAxiosSecure() ;
-    const currentUserData = useSelector(state => state.user) ;
-    const [schoolDetails , setSchoolDetails] = useState({}) ;
+    const userDetails = useSelector(state => state.user) ;
 
     useEffect(() => {
-        axiosSecure.get(`/schoolsDetails?id=${currentUserData?.isjoined}`)
-        .then((res) => {
-            setSchoolDetails(res?.data) ;
-        })
-        if(currentUserData?.isjoinedModalSeen){
-            Swal.fire({
-                title: "Hurray",
-                html: `your Join request are accepted <br/> at school ${schoolDetails?.schoolName}`,
-                icon: "warning"
-            })
+        if(userDetails?.isjoined && !userDetails?.isjoinedModalSeen && userDetails?._id){
+            document.getElementById('congrassModal').showModal() ;
         }
-    } , [currentUserData , axiosSecure , schoolDetails])
+    } , [user , userDetails])
 
     const { data } = useQuery({
         queryKey : ['addmissionsData' , user] ,
@@ -39,12 +31,27 @@ const MyAddmissionReq = () => {
         }
     })
 
+    const {mutateAsync} = useMutation({
+        mutationFn : async () => {
+            const data = await axiosSecure.patch(`/updateIsSeenModal` , {_id : userDetails?._id}) ;
+            return data ;
+        },
+        onSuccess : () => {
+            window.location.reload() ;
+        }
+    })
+
     const handleCantUpdate = () => {
         Swal.fire({
             title: "Oops !",
             html: "Join Request Was Accepted <br/> You Can Update Now",
             icon: "warning"
         })
+    }
+
+    const handleIsjoinedModalSeen = async () => {
+        const {data} = await mutateAsync() ;
+        console.log(data) ;
     }
 
     return (
@@ -162,6 +169,23 @@ const MyAddmissionReq = () => {
                 </Card>
 
             </div>
+
+            <dialog id="congrassModal" className="modal">
+                <div className="modal-box bg-[#0F172A]">
+
+                    <div className="gro flex flex-col items-center justify-center text-center gap-1">
+                        <h3 className="font-bold text-2xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-[#00FFB2] text-center">Congratulation</h3>
+                        <p className="py-4 text-lg text-center text-[#C7ABFF]">Congratulation your addmission was accepted !</p>
+                    </div>
+
+                    <div className="modal-action w-full flex items-center justify-center">
+                        <form method="dialog" className="w-full">
+                            <button onClick={handleIsjoinedModalSeen} className="btn w-full bg-gradient-to-r from-purple-400 to-[#00FFB2] text-[#dccaff]">Close</button>
+                        </form>
+                    </div>
+
+                </div>
+            </dialog>
 
         </div>
     );

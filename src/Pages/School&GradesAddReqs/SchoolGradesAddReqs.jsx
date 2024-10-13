@@ -182,10 +182,10 @@ const SchoolGradesAddReqs = () => {
                             icon: "success"
                         });
                     }
-                    else{
+                    else if(!res?.data?.success){
                         Swal.fire({
                             title: "Oops",
-                            text: "Status Can't Change !",
+                            text: res?.data?.message,
                             icon: "error"
                         });
                     }

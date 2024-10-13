@@ -86,7 +86,7 @@ const AuthProvider = ({children}) => {
                 return result ;
             })
         }
-    } , [])
+    } , [user , axiosSecure , deviceInfo])
 
     useEffect(() => {
         if(!user) return ;

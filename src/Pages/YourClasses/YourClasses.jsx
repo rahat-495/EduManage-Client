@@ -26,8 +26,8 @@ const YourClasses = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                 {
                     data?.length > 0 && data?.map((classD) => 
-                        <Link to={`/yourClasses/subjects/${classD?._id}`} key={classD?._id}>
-                            <Tooltip placement="top-end" content="Click to Show Details" animate={{mount: { scale: 1, y: 0 },unmount: { scale: 0, y: 25 },}}>
+                        <Link to={`/yourGrades/details/${classD?._id}`} key={classD?._id}>
+                            <Tooltip placement="top-end" content="click to show more..." animate={{mount: { scale: 1, y: 0 },unmount: { scale: 0, y: 25 },}}>
                                 <div className="border grid grid-cols-1 bg-white duration-500 ease-linear hover:border-teal-500 rounded-md gap-3 py-3 px-3">
                                     <div className="gro flex flex-col items-start gap-2 mt-2">
                                         <h1 className="text-black text-lg font-semibold ">Name : {classD?.gradeName}</h1>
