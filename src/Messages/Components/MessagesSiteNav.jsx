@@ -18,13 +18,19 @@ const MessagesSiteNav = () => {
         }
     })
 
+    const handleSearch = async (e) => {
+        e.preventDefault() ;
+        const search = e.target.search.value ;
+        console.log(search) ;
+    } 
+
     return (
         <div className="bg-[#170F21] w-64 min-h-[80vh] rounded-l-lg flex flex-col">
             
             <h1 className=" border-b rounded-tl-lg px-5 py-2 text-xl mx-2">Chats</h1>
 
-            <form className="mt-3 px-2 relative">
-                <input type="text" className="bg-transparent border border-b-[#00FFB2] border-gray-700 outline-none border-b-2 rounded-[4px] w-full py-1 pr-6 pl-1 gro" placeholder="Search Users..."/>
+            <form onSubmit={handleSearch} className="mt-3 px-2 relative">
+                <input name="search" type="text" className="bg-transparent border border-b-[#00FFB2] border-gray-700 outline-none border-b-2 rounded-[4px] w-full py-1 pr-6 pl-1 gro" placeholder="Search Users..."/>
                 <button className="absolute top-[10px] right-[14px]"><BiSearchAlt className=""/></button>
             </form>
 

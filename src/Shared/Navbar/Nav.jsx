@@ -68,22 +68,26 @@ const Nav = () => {
 
                     <Menu>
 
-                      <Link to={'/message'}>
-                        <Tooltip
-                          placement="bottom-center"
-                          content={pathname?.includes('/message') ? "" : "Messages"}
-                          animate={{
-                            mount: { scale: 1, y: 0 },
-                            unmount: { scale: 0, y: -25 },
-                          }}
-                          className={"bg-transparent"}
-                          >
-                            <Avatar
-                              className="cursor-pointer w-[42px] h-[42px] rounded-full hidden lg:flex lg:mr-3"
-                              src={messageLogo}
-                            />
-                        </Tooltip>
-                      </Link>
+                      {
+                        pathname?.includes('/message') ?
+                        <></>:
+                        <Link to={'/message'}>
+                          <Tooltip
+                            placement="bottom-center"
+                            content={pathname?.includes('/message') ? "" : "Messages"}
+                            animate={{
+                              mount: { scale: 1, y: 0 },
+                              unmount: { scale: 0, y: -25 },
+                            }}
+                            className={"bg-transparent"}
+                            >
+                              <Avatar
+                                className="cursor-pointer w-[42px] h-[42px] rounded-full hidden lg:flex lg:mr-3"
+                                src={messageLogo}
+                              />
+                          </Tooltip>
+                        </Link>
+                      }
                       
                       <MenuHandler>
                         <Avatar
