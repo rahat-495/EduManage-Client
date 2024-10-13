@@ -28,6 +28,8 @@ import ClassMates from '../Pages/ClassMates/ClassMates';
 import YourClasses from '../Pages/YourClasses/YourClasses';
 import AddGrade from '../Pages/AddGrade/AddGrade';
 import YourGradeDetails from '../Pages/YourGradeDetails/YourGradeDetails';
+import MessageRoot from '../Layout/MessageRoot';
+import MessageStatic from '../Messages/MessageStatic/MessageStatic';
 
 const router = createBrowserRouter([
     {
@@ -143,6 +145,16 @@ const router = createBrowserRouter([
             {
                 path : 'address' ,
                 element : <Address/> ,
+            },
+        ]
+    },
+    {
+        path : '/message' ,
+        element : <MessageRoot/> ,
+        children : [
+            {
+                path : '/message',
+                element : <MessageStatic/>
             },
         ]
     },

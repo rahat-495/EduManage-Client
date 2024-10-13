@@ -85,8 +85,8 @@ const ProfileNav = () => {
                 <img className="w-20 h-20 rounded-full p-1 border-teal-500 border" src={userData?.image ? userData?.image : user?.photoURL} alt="" />
                 <div className="flex flex-col items-center justify-center">
                     <h1 className="text-[#C7ABFF] gro font-semibold text-lg text-center">{userData?.name}</h1>
-                    <h1 className="text-[#bcacce] gro font-semibold text-base text-center">{userData?._id}</h1>
                     <h1 className="text-[#bcacce] gro font-semibold text-base text-center">{userData?.email}</h1>
+                    <h1 className="text-[#bcacce] gro font-semibold text-base text-center">{userData?._id}</h1>
                     <Button onClick={() => handleTeacApply()} className="border border-teal-500 w-fit mt-3 capitalize text-sm text-white hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-500">
                         Apply For Teacher
                     </Button>

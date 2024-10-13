@@ -11,6 +11,7 @@ const NavLists = () => {
   const [dropdown, setDropDown] = useState(false);
   const { pathname } = useLocation();
   const role = useSelector(state => state?.user?.role) ;
+  const userData = useSelector(state => state?.user) ;
 
   if (role === "admin") {
     return (
@@ -157,20 +158,23 @@ const NavLists = () => {
           </NavLink>
         </Typography>
 
-        <Typography as="li" className="p-1 font-normal gro">
-          <NavLink
-            to={"/schools"}
-            className={({ isActive, isPending }) =>
-              isPending
-                ? "pending"
-                : isActive
-                ? "font-semibold underline transition-all ease-in-out duration-300"
-                : ""
-            }
-          >
-            <NavLinks path={"/schools"} label={"Schools"} />
-          </NavLink>
-        </Typography>
+        {
+          !userData?.isjoined &&
+          <Typography as="li" className="p-1 font-normal gro">
+            <NavLink
+              to={"/schools"}
+              className={({ isActive, isPending }) =>
+                isPending
+                  ? "pending"
+                  : isActive
+                  ? "font-semibold underline transition-all ease-in-out duration-300"
+                  : ""
+              }
+            >
+              <NavLinks path={"/schools"} label={"Schools"} />
+            </NavLink>
+          </Typography>
+        }
 
         <Typography as="li" className="p-1 font-normal gro">
           <NavLink

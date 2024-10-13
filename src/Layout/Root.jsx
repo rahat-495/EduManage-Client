@@ -27,12 +27,10 @@ const Root = () => {
         if(userDetails?.isjoined && !userDetails?.isjoinedModalSeen){
             document.getElementById('congrassModal').showModal() ;
         }
-        console.log(userDetails?.isjoined , userDetails?.isjoinedModalSeen)
     } , [])
 
     const handleIsjoinedModalSeen = async () => {
-        const {data} = await mutateAsync() ;
-        console.log(data) ;
+        await mutateAsync() ;
     }
 
     return (

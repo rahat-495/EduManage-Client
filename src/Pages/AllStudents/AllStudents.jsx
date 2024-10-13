@@ -46,8 +46,8 @@ const AllStudents = () => {
                             }
                         >
                             <Link to={`/joinedStudentInfo/${data?._id}`}>
-                                <div className="border rounded-md p-1 duration-300 w-[125px] h-[125px] hover:p-0">
-                                    <img src={data?.studentImage} alt="" className="w-[115px] h-[115px] mx-auto rounded-md cursor-pointer duration-300 hover:w-full hover:h-full"/>
+                                <div className="border rounded-full p-1 duration-300 w-[125px] h-[125px] hover:p-0">
+                                    <img src={data?.studentImage} alt="" className="w-[115px] h-[115px] mx-auto rounded-full cursor-pointer duration-300 hover:w-full hover:h-full"/>
                                 </div>
                             </Link>
                         </Tooltip>
