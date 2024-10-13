@@ -18,7 +18,7 @@ const MessageRoot = () => {
                     <MessagesSiteNav/>
                 </div>
 
-                <div className="bg-[#170F21] w-full min-h-[80vh] rounded-r-lg px-5 py-10">
+                <div className="bg-[#170F21] w-full min-h-[80vh] rounded-r-lg">
                     <Outlet/>
                 </div>
 

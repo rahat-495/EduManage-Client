@@ -1,11 +1,11 @@
 
-/* eslint-disable react-hooks/exhaustive-deps */
+
 import { createContext, useEffect, useState } from "react";
 import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import auth from "../Firebase/firebase.config";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import UAParser from 'ua-parser-js';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../Redux/userSlice";
 
 export const AuthContext = createContext(null) ;
@@ -18,6 +18,7 @@ const AuthProvider = ({children}) => {
     const [loading , setLoading] = useState(true) ;
     const parser = new UAParser();
     const deviceInfo = parser.getResult();
+    const userData = useSelector(state => state?.user) ;
 
     const createUser = (email , pass) => {
         setLoading(true) ;
@@ -51,6 +52,7 @@ const AuthProvider = ({children}) => {
     
     const logOut = () => {
         setLoading(true) ;
+        localStorage.removeItem("token") ;
         return signOut(auth) ;
     }
 
@@ -58,15 +60,15 @@ const AuthProvider = ({children}) => {
         const unSubscribe = onAuthStateChanged(auth , (currentUser) => {
             setLoading(false) ;
             setCurrentUser(currentUser) ;
-            if(currentUser){
-                // axiosSecure.put('/jwt' , {email : currentUser?.email})
-                // .then((result) => {
-                //     console.log(result)
-                // })
+            if(currentUser && userData?.role){
+                axiosSecure.post('/jwt' , {email : currentUser?.email , role : userData?.role})
+                .then((result) => {
+                    localStorage.setItem('token' , result?.data?.token) ;
+                })
             }
         })
         return unSubscribe ;
-    } , [])
+    } , [axiosSecure , userData])
 
     useEffect(() => {
         if(user){
