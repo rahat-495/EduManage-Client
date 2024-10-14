@@ -30,6 +30,7 @@ import AddGrade from '../Pages/AddGrade/AddGrade';
 import YourGradeDetails from '../Pages/YourGradeDetails/YourGradeDetails';
 import MessageRoot from '../Layout/MessageRoot';
 import MessageStatic from '../Messages/MessageStatic/MessageStatic';
+import MessagePage from '../Messages/MessagePage/MessagePage';
 
 const router = createBrowserRouter([
     {
@@ -155,6 +156,10 @@ const router = createBrowserRouter([
             {
                 path : '/message',
                 element : <MessageStatic/>
+            },
+            {
+                path : '/message/:studentUid',
+                element : <MessagePage/>
             },
         ]
     },
