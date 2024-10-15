@@ -17,12 +17,14 @@ import useAuth from "../../Hooks/useAuth";
 import NavLists from "../../Components/NavLists/Navlists";
 import ProfileLinks from "../../Components/ProfileLinks/ProfileLinks";
 import messageLogo from '../../../public/images/messageLogo.png'
+import { useSelector } from "react-redux";
 
 const Nav = () => {
 
   const {pathname} = useLocation() ;
   const { user , logOut } = useAuth();
   const [openNav, setOpenNav] = useState(false);
+  const userData = useSelector(state => state?.user) ;
   
   useEffect(() => {
     if(pathname.includes('/profile')){
@@ -74,7 +76,7 @@ const Nav = () => {
                         <Link to={'/message'}>
                           <Tooltip
                             placement="bottom-center"
-                            content={pathname?.includes('/message') ? "" : "Messages"}
+                            content={pathname?.includes('/message') ? "" : "Chats"}
                             animate={{
                               mount: { scale: 1, y: 0 },
                               unmount: { scale: 0, y: -25 },
@@ -92,7 +94,7 @@ const Nav = () => {
                       <MenuHandler>
                         <Avatar
                           className="cursor-pointer w-[40px] border border-teal-500 h-[40px] rounded-full hidden lg:flex"
-                          src={user?.photoURL}
+                          src={userData?.image}
                         />
                       </MenuHandler>
 
@@ -100,7 +102,7 @@ const Nav = () => {
                         <div className="border border-purple-500 menu p-2 shadow bg-[#0F172A] rounded-box w-60">
                             <Avatar
                               className="cursor-pointer w-[45px] border border-teal-500 h-[45px] rounded-full hidden lg:flex mx-auto"
-                              src={user?.photoURL}
+                              src={userData?.image}
                             />
                             <h1 className="mx-1 text-[#f5f6fa] p-1 text-center rounded-md font-semibold">
                               {user?.displayName}
