@@ -5,10 +5,12 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { Avatar } from "@material-tailwind/react";
 import { useState } from "react";
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 const MessagesSiteNav = () => {
 
+    const navigate = useNavigate() ;
     const axiosSecure = useAxiosSecure() ;
     const [search , setSearch] = useState("") ;
     const userData = useSelector(state => state?.user) ;
@@ -53,7 +55,16 @@ const MessagesSiteNav = () => {
         const {data} = await axiosSecure.post(`/conversation` , conversationData)
         if(data?._id){
             refetch() ;
+            navigate(`/message/${receiverData?.studentUid}`) ;
             document.getElementById("searchUsersModal").close() ;
+        }
+        else{
+            document.getElementById("searchUsersModal").close() ;
+            Swal.fire({
+                title: "Oops!",
+                text: "You Already Start Conversation With Him !",
+                icon: "warning"
+            });
         }
     }
 
@@ -67,20 +78,20 @@ const MessagesSiteNav = () => {
                 <button className="absolute top-[10px] right-[14px]"><BiSearchAlt className=""/></button>
             </form>
 
-            <div className="flex flex-col items-start gap-4 px-2 mt-5 w-full">
+            <div className="flex flex-col items-start gap-4 px-2 mt-5 w-full overflow-y-auto h-[65vh]">
                 {
                     conversations?.length > 0 ?
-                    conversations?.map((user) => <Link to={`/message/${user?.receiver}`} key={user?._id} className="w-full">
+                    conversations?.map((user) => <Link to={`/message/${userData?.studentUid === user?.receiver ? user?.sender : user?.receiver}`} key={user?._id} className="w-full">
                         <div className="flex items-start gap-3 hover:bg-[#241833] w-full rounded-md cursor-pointer p-1 duration-200">
-                            <Avatar src={user?.receiverImage}/>
+                            <Avatar src={userData?.studentUid === user?.receiver ? user?.senderImage : user?.receiverImage}/>
                             <div className="flex flex-col gro">
-                                <p className="capitalize">{user?.receiverName}</p>
-                                <p className="">{user?.receiverEmail?.length > 16 ? user?.receiverEmail : user?.receiverEmail?.slice(0,20)+"..."}</p>
+                                <p className="capitalize">{userData?.studentUid === user?.receiver ? user?.senderName : user?.receiverName}</p>
+                                <p className="">{userData?.studentUid === user?.receiver ? user?.senderEmail?.length > 16 ? user?.senderEmail : user?.senderEmail?.slice(0,20)+"..." : user?.receiverEmail?.length > 16 ? user?.receiverEmail : user?.receiverEmail?.slice(0,20)+"..." }</p>
                             </div>
                         </div>
                     </Link>):
                     <div className="w-full mt-64">
-                        <p className="gro font-semibold text-center">No Conversation Found Yet !</p>
+                        <p className="gro font-semibold text-center">No Conversation Start Yet !</p>
                     </div>
                 }
             </div>
@@ -90,18 +101,16 @@ const MessagesSiteNav = () => {
 
                     <div className="gro flex flex-col gap-2">
                         {
-                            students?.length > 0 ? students?.map((data) => <Link onClick={() => handleConversation(data)} to={`/message/${data?.studentUid}`} key={data?._id}>
-                                <div className="flex border-b duration-300 text-white hover:text-[#C7ABFF] hover:border-[#C7ABFF] hover:rounded rounded-none p-2 gap-3 cursor-pointer">
-                                    <Avatar src={data?.image} className="border border-[#C7ABFF]"/>
-                                    <div className="flex flex-col gro ">
-                                        <p className="capitalize">{data?.name}</p>
-                                        <p className="">{data?.email}</p>
-                                    </div>
+                            students?.length > 0 ? students?.map((data) => <div key={data?._id} onClick={() => handleConversation(data)} className="flex border-b duration-300 text-white hover:text-[#C7ABFF] hover:border-[#C7ABFF] hover:rounded rounded-none p-2 gap-3 cursor-pointer">
+                                <Avatar src={data?.image} className="border border-[#C7ABFF]"/>
+                                <div className="flex flex-col gro ">
+                                    <p className="capitalize">{data?.name}</p>
+                                    <p className="">{data?.email}</p>
                                 </div>
-                            </Link>) :
+                            </div>) :
                             <div className="w-full">
                                 <p className="gro font-semibold text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-[#00FFB2] text-4xl mb-3">Oops</p>
-                                <p className="gro font-semibold text-center text-[#C7ABFF]">No Students Found In This Name !</p>
+                                <p className="gro font-semibold text-center text-[#C7ABFF]">No Students Found In This Name / Email !</p>
                             </div>
                         }
                     </div>

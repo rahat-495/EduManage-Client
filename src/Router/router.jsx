@@ -158,7 +158,7 @@ const router = createBrowserRouter([
                 element : <MessageStatic/>
             },
             {
-                path : '/message/:studentUid',
+                path : '/message/:receiverUid',
                 element : <MessagePage/>
             },
         ]
