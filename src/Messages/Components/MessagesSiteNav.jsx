@@ -5,12 +5,13 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { Avatar } from "@material-tailwind/react";
 import { useState } from "react";
-import {Link, useNavigate} from 'react-router-dom'
+import {Link, useLocation, useNavigate} from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 const MessagesSiteNav = () => {
 
     const navigate = useNavigate() ;
+    const {pathname} = useLocation() ;
     const axiosSecure = useAxiosSecure() ;
     const [search , setSearch] = useState("") ;
     const userData = useSelector(state => state?.user) ;
@@ -81,12 +82,17 @@ const MessagesSiteNav = () => {
             <div className="flex flex-col items-start gap-4 px-2 mt-5 w-full overflow-y-auto h-[65vh]">
                 {
                     conversations?.length > 0 ?
-                    conversations?.map((user) => <Link to={`/message/${userData?.studentUid === user?.receiver ? user?.sender : user?.receiver}`} key={user?._id} className="w-full">
-                        <div className="flex items-start gap-3 hover:bg-[#241833] w-full rounded-md cursor-pointer p-1 duration-200">
+                    conversations?.map((user) => <Link to={`/message/${userData?.studentUid === user?.receiver ? user?.sender : user?.receiver}`} key={user?._id} className={`w-full`}>
+                        <div className={`flex items-start gap-3 hover:bg-[#241833] w-full rounded-md cursor-pointer p-1 duration-200 `}>
                             <Avatar src={userData?.studentUid === user?.receiver ? user?.senderImage : user?.receiverImage}/>
                             <div className="flex flex-col gro">
                                 <p className="capitalize">{userData?.studentUid === user?.receiver ? user?.senderName : user?.receiverName}</p>
-                                <p className="">{userData?.studentUid === user?.receiver ? user?.senderEmail?.length > 16 ? user?.senderEmail : user?.senderEmail?.slice(0,20)+"..." : user?.receiverEmail?.length > 16 ? user?.receiverEmail : user?.receiverEmail?.slice(0,20)+"..." }</p>
+                                <p className="text-base">
+                                    {   !user?.lastMessage ?
+                                        userData?.studentUid === user?.receiver ? user?.senderEmail?.length > 16 ? user?.senderEmail : user?.senderEmail?.slice(0,20)+"..." : user?.receiverEmail?.length > 16 ? user?.receiverEmail : user?.receiverEmail?.slice(0,20)+"..."  :
+                                        user?.lastMessage?.length > 16 ? user?.lastMessage.slice(0 , 16)+"..." : user?.lastMessage
+                                    }
+                                </p>
                             </div>
                         </div>
                     </Link>):

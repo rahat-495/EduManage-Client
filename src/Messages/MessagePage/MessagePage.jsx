@@ -28,9 +28,10 @@ const MessagePage = () => {
       return{
         ...preve ,
         sender : currentUser?.studentUid ,
+        receiver : receiverUid
       }
     })
-  } , [currentUser])
+  } , [currentUser , receiverUid])
 
   const {data : receiverData} = useQuery({
     queryKey : ['getReceiverDetails' , receiverUid] ,
@@ -50,7 +51,7 @@ const MessagePage = () => {
 
   const handleSubmitMessage = async (e) => {
     e.preventDefault() ;
-    if(currentUser?.studentUid && receiverUid){
+    if(message?.sender && message?.receiver){
       const {data} = await axiosSecure.post(`/createMessage` , message) ;
       if(data?._id){
         refetch() ;
@@ -60,7 +61,7 @@ const MessagePage = () => {
   }
   
   return (
-    <div className="flex flex-col items-start justify-between w-full h-[80vh]"> 
+    <div className="flex flex-col items-start justify-between w-full min-h-[80vh]"> 
 
       <div className="w-full border-b border-[#483064] flex items-start justify-between px-3 rounded-tr-lg">
 
@@ -80,12 +81,19 @@ const MessagePage = () => {
 
       </div>
 
-      <div className="w-full h-[70vh] overflow-y-auto flex items-start justify-between">
+      <div className="w-full h-[65vh] overflow-y-auto flex flex-col items-start px-6 py-3">
         
         {
-          messages?.map((data) => <div key={data?._id}>
-
-          </div>)
+          messages?.length > 0 ?
+          messages?.map((data) => <div key={data?._id} className={`w-full mb-1 ${currentUser?.studentUid === data?.sender ? "flex items-end justify-end" : ""}`}>
+            {
+              data?.text &&
+              <p className={`inline-block max-w-xs ${currentUser?.studentUid === data?.sender ? "rounded-l-md rounded-br-md px-3 py-1 bg-[#3b3b3b] text-white" : "rounded-r-md rounded-bl-md px-3 py-1 bg-[#3c3c58] text-white"}`}>{data?.text}</p>
+            }
+          </div>):
+          <div className="flex flex-col items-center justify-center gro h-[75vh] w-full">
+            <h1 className="font-bold text-4xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-[#00FFB2] text-center mt-3">No chats start yeat !</h1>
+          </div>
         }
 
       </div>

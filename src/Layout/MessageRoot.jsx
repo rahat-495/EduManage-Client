@@ -14,7 +14,7 @@ const MessageRoot = () => {
 
             <div className="flex items-start justify-between my-14 max-w-[1440px] gap-1 mx-auto overflow-hidden">
 
-                <div className="">
+                <div className="min-h-[80vh]">
                     <MessagesSiteNav/>
                 </div>
 
