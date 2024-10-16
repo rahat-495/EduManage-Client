@@ -1,12 +1,11 @@
 
 import { Outlet } from "react-router-dom";
 import Nav from "../Shared/Navbar/Nav";
-import Footer from "../Shared/Footer/Footer";
 import MessagesSiteNav from "../Messages/Components/MessagesSiteNav";
 
 const MessageRoot = () => {
     return (
-        <div className="">
+        <div className="min-h-screen">
             
             <div className="sticky top-0 z-50 bg-opacity-0 backdrop-blur-md">
                 <Nav/>
@@ -22,10 +21,6 @@ const MessageRoot = () => {
                     <Outlet/>
                 </div>
 
-            </div>
-
-            <div className="">
-                <Footer/>
             </div>
             
         </div>

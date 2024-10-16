@@ -1,5 +1,6 @@
 
-import { Avatar, Button } from "@material-tailwind/react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { Avatar, Button, Menu, MenuHandler, MenuItem, MenuList } from "@material-tailwind/react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
@@ -10,6 +11,8 @@ import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import useAuth from "../../Hooks/useAuth";
+import { MdPhotoLibrary } from "react-icons/md";
+import { IoVideocam } from "react-icons/io5";
 
 const MessagePage = () => {
 
@@ -19,6 +22,7 @@ const MessagePage = () => {
   const {socket , setSocket} = useAuth() ;
   const currentUser = useSelector(state => state?.user) ;
   const [newMessage , setNewMessage] = useState({}) ;
+  const [messages , setMessages] = useState([]) ;
   const [message , setMessage] = useState({
     text : "" ,
     imageUrl : "" ,
@@ -36,17 +40,30 @@ const MessagePage = () => {
     }
   })
 
-  const {data : messages , refetch} = useQuery({
-    queryKey : ['messages' , receiverUid , currentUser , newMessage] ,
-    queryFn : async () => {
-      const {data} = await axiosSecure.get(`/messages?receiver=${receiverUid}&sender=${currentUser?.studentUid}`) ;
-      return data ;
-    }
-  })
+  const getMessages = () => {
+    axiosSecure.get(`/messages?receiver=${receiverUid}&sender=${currentUser?.studentUid}`) 
+    .then((res) => {
+      setMessages(res?.data) ;
+    })
+  }
+
+  useEffect(() => {
+    getMessages() ;
+  } , [receiverUid , currentUser , newMessage , axiosSecure])
+
+  useEffect(() => {
+    setNewMessage((preve) => {
+      return{
+        ...preve ,
+        sender : currentUser?.studentUid ,
+        receiver : receiverUid ,
+      }
+    })
+  } , [receiverUid , currentUser])
 
   useEffect(() => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  } , [messages])
+  } , [newMessage])
 
   useEffect(() => {
     setSocket(io('http://localhost:5555')) ;
@@ -63,7 +80,14 @@ const MessagePage = () => {
     
     socket?.on("getMessage" , (message) => {
       if(message?.message?.text){
-        setNewMessage(message?.message) ;
+        setNewMessage(() => {
+          return{
+            ...message?.message ,
+            sender : currentUser?.studentUid ,
+            receiver : receiverUid ,
+          }
+        }) ;
+        setMessages([...messages , message?.message]) ;
       }
     })
     
@@ -72,7 +96,7 @@ const MessagePage = () => {
       return users ;
     })
 
-  } , [socket , currentUser])
+  } , [socket , currentUser , messages])
 
   useEffect(() => {
     setMessage((preve) => {
@@ -86,28 +110,31 @@ const MessagePage = () => {
 
   useEffect(() => {
     if(newMessage?.text || newMessage?.imageUrl || newMessage?.videoUrl || newMessage?.sender || newMessage?.receiver ){
-      refetch() ;
+      getMessages() ;
     }
-  } , [newMessage , refetch])
+  } , [newMessage])
 
   const handleSubmitMessage = async (e) => {
     e.preventDefault() ;
     if(message?.sender && message?.receiver){
 
       socket?.emit("sendMessage" , {message}) ;
+
       if(newMessage?.receiver === message?.receiver){
         axiosSecure.post(`/createMessage` , message)
         .then((res) => {
           if(res?.data?._id){
             e.target.reset() ;
-            refetch() ;
+            getMessages() ;
           }
         })
       }
 
     }
   }
-  
+
+  console.log(newMessage?.sender , newMessage?.receiver)
+
   return (
     <div className="flex flex-col items-start justify-between w-full min-h-[80vh]"> 
 
@@ -147,7 +174,26 @@ const MessagePage = () => {
       </div>
 
       <div className="w-full h-12 border-t border-[#483064] flex items-center justify-between px-1 rounded-br-lg py-1 gap-2">
-        <Button className="text-white bg-transparent hover:bg-[#2f1f41] duration-300 h-full p-0 w-10 flex items-center justify-center text-xl"><PiLinkSimpleBold /></Button>
+
+        <Menu placement="top-start">
+          <MenuHandler>
+            <Button className="text-white bg-transparent hover:bg-[#2f1f41] duration-300 h-full p-0 w-10 flex items-center justify-center text-xl"><PiLinkSimpleBold /></Button>
+          </MenuHandler>
+          <MenuList className="p-1 border border-[#b077f1] gro">
+            
+            <MenuItem className="">
+              <label htmlFor="image" className="cursor-pointer flex items-center justify-start gap-5 text-black font-semibold w-full"><MdPhotoLibrary className="text-lg"/> Image </label>
+              <input type="file" className="hidden" id="image" name="image" accept="image/*"/>
+            </MenuItem>
+
+            <MenuItem className="">
+              <label htmlFor="video" className="cursor-pointer flex items-center justify-start gap-5 text-black font-semibold w-full"><IoVideocam className="text-lg"/> Video </label>
+              <input type="file" className="hidden" id="video" name="video" accept="video/*"/>
+            </MenuItem>
+
+          </MenuList>
+        </Menu>
+
         <form onSubmit={handleSubmitMessage} className="w-full h-full flex gap-2">
           <input 
             onChange={(e) => setMessage((preve) => {
