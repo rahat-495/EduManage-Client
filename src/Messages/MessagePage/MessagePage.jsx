@@ -7,13 +7,18 @@ import { HiOutlineDotsVertical } from "react-icons/hi";
 import { RiSendPlaneLine } from "react-icons/ri";
 import { PiLinkSimpleBold } from "react-icons/pi";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { io } from "socket.io-client";
+import useAuth from "../../Hooks/useAuth";
 
 const MessagePage = () => {
 
+  const messageEndRef = useRef(null) ;
   const { receiverUid } = useParams() ;
   const axiosSecure = useAxiosSecure() ;
+  const {socket , setSocket} = useAuth() ;
   const currentUser = useSelector(state => state?.user) ;
+  const [newMessage , setNewMessage] = useState({}) ;
   const [message , setMessage] = useState({
     text : "" ,
     imageUrl : "" ,
@@ -22,6 +27,52 @@ const MessagePage = () => {
     sender : currentUser?.studentUid ,
     receiver : receiverUid ,
   })
+  
+  const {data : receiverData} = useQuery({
+    queryKey : ['getReceiverDetails' , receiverUid] ,
+    queryFn : async () => {
+      const {data} = await axiosSecure.get(`/receiverDetails?studentUid=${receiverUid}`) ;
+      return data ;
+    }
+  })
+
+  const {data : messages , refetch} = useQuery({
+    queryKey : ['messages' , receiverUid , currentUser , newMessage] ,
+    queryFn : async () => {
+      const {data} = await axiosSecure.get(`/messages?receiver=${receiverUid}&sender=${currentUser?.studentUid}`) ;
+      return data ;
+    }
+  })
+
+  useEffect(() => {
+    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  } , [messages])
+
+  useEffect(() => {
+    setSocket(io('http://localhost:5555')) ;
+  } , [setSocket])
+
+  useEffect(() => {
+
+    socket?.emit("addUser" , currentUser?.studentUid) ;
+
+    socket?.on("getUsers" , (users) => {
+      // console.log("active users" , users) ;
+      return users ;
+    })
+    
+    socket?.on("getMessage" , (message) => {
+      if(message?.message?.text){
+        setNewMessage(message?.message) ;
+      }
+    })
+    
+    socket?.on("disconnect" , (users) => {
+      // console.log(users) ;
+      return users ;
+    })
+
+  } , [socket , currentUser])
 
   useEffect(() => {
     setMessage((preve) => {
@@ -33,30 +84,27 @@ const MessagePage = () => {
     })
   } , [currentUser , receiverUid])
 
-  const {data : receiverData} = useQuery({
-    queryKey : ['getReceiverDetails' , receiverUid] ,
-    queryFn : async () => {
-      const {data} = await axiosSecure.get(`/receiverDetails?studentUid=${receiverUid}`) ;
-      return data ;
+  useEffect(() => {
+    if(newMessage?.text || newMessage?.imageUrl || newMessage?.videoUrl || newMessage?.sender || newMessage?.receiver ){
+      refetch() ;
     }
-  })
-
-  const {data : messages , refetch} = useQuery({
-    queryKey : ['messages' , receiverUid , currentUser] ,
-    queryFn : async () => {
-      const {data} = await axiosSecure.get(`/messages?receiver=${receiverUid}&sender=${currentUser?.studentUid}`) ;
-      return data ;
-    }
-  })
+  } , [newMessage , refetch])
 
   const handleSubmitMessage = async (e) => {
     e.preventDefault() ;
     if(message?.sender && message?.receiver){
-      const {data} = await axiosSecure.post(`/createMessage` , message) ;
-      if(data?._id){
-        refetch() ;
-        e.target.reset() ;
+
+      socket?.emit("sendMessage" , {message}) ;
+      if(newMessage?.receiver === message?.receiver){
+        axiosSecure.post(`/createMessage` , message)
+        .then((res) => {
+          if(res?.data?._id){
+            e.target.reset() ;
+            refetch() ;
+          }
+        })
       }
+
     }
   }
   
@@ -81,11 +129,11 @@ const MessagePage = () => {
 
       </div>
 
-      <div className="w-full h-[65vh] overflow-y-auto flex flex-col items-start px-6 py-3">
+      <div id="scrollDiv" className="w-full h-[65vh] overflow-y-auto flex flex-col items-start px-6 py-3">
         
         {
           messages?.length > 0 ?
-          messages?.map((data) => <div key={data?._id} className={`w-full mb-1 ${currentUser?.studentUid === data?.sender ? "flex items-end justify-end" : ""}`}>
+          messages?.map((data) => <div ref={messageEndRef} key={data?._id} className={`w-full mb-1 ${currentUser?.studentUid === data?.sender ? "flex items-end justify-end" : ""}`}>
             {
               data?.text &&
               <p className={`inline-block max-w-xs ${currentUser?.studentUid === data?.sender ? "rounded-l-md rounded-br-md px-3 py-1 bg-[#3b3b3b] text-white" : "rounded-r-md rounded-bl-md px-3 py-1 bg-[#3c3c58] text-white"}`}>{data?.text}</p>

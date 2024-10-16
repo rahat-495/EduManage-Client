@@ -94,7 +94,7 @@ const Nav = () => {
                       <MenuHandler>
                         <Avatar
                           className="cursor-pointer w-[40px] border border-teal-500 h-[40px] rounded-full hidden lg:flex"
-                          src={userData?.image}
+                          src={userData?.image ? userData?.image : user?.photoURL}
                         />
                       </MenuHandler>
 
@@ -102,7 +102,7 @@ const Nav = () => {
                         <div className="border border-purple-500 menu p-2 shadow bg-[#0F172A] rounded-box w-60">
                             <Avatar
                               className="cursor-pointer w-[45px] border border-teal-500 h-[45px] rounded-full hidden lg:flex mx-auto"
-                              src={userData?.image}
+                              src={userData?.image ? userData?.image : user?.photoURL}
                             />
                             <h1 className="mx-1 text-[#f5f6fa] p-1 text-center rounded-md font-semibold">
                               {user?.displayName}

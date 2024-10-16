@@ -19,7 +19,8 @@ const AuthProvider = ({children}) => {
     const parser = new UAParser();
     const deviceInfo = parser.getResult();
     const userData = useSelector(state => state?.user) ;
-
+    const [socket , setSocket] = useState(null) ;
+    
     const createUser = (email , pass) => {
         setLoading(true) ;
         return createUserWithEmailAndPassword(auth , email , pass) ;
@@ -100,10 +101,12 @@ const AuthProvider = ({children}) => {
 
     const authInfo = {
         user ,
-        logOut,
+        socket,
+        logOut ,
         signIn ,
         loading ,
-        setProfile,
+        setSocket ,
+        setProfile ,
         createUser ,
         githubLogin ,
         googleLogin ,
