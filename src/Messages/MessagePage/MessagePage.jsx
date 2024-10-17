@@ -79,11 +79,6 @@ const MessagePage = () => {
   useEffect(() => {
 
     socket?.emit("addUser" , currentUser?.studentUid) ;
-
-    socket?.on("getUsers" , (users) => {
-      // console.log("active users" , users) ;
-      return users ;
-    })
     
     socket?.on("getMessage" , (message) => {
       if(message?.message?.text || message?.message?.imageUrl || message?.message?.videoUrl){
@@ -223,7 +218,7 @@ const MessagePage = () => {
 
       </div>
 
-      <div id="scrollDiv" className="w-full h-[65vh] overflow-y-auto flex flex-col items-start px-6 py-3">
+      <div id="scrollDiv" className="w-full h-[69vh] overflow-y-auto flex flex-col items-start px-6 py-3 scrollbar-thin scrollbar-thumb-[#483064] scrollbar-track-transparent">
         
         {
           messages?.length > 0 ?
@@ -231,17 +226,26 @@ const MessagePage = () => {
             
             {
               data?.text &&
-              <p className={`inline-block max-w-xs ${currentUser?.studentUid === data?.sender ? "rounded-l-md rounded-br-md px-3 py-1 bg-[#3b3b3b] text-white" : "rounded-r-md rounded-bl-md px-3 py-1 bg-[#3c3c58] text-white"}`}>{data?.text}</p>
+              <div className={`flex flex-col my-1 ${currentUser?.studentUid === data?.sender ? "text-end" : ""}`}>
+                <p className={`inline-block max-w-xs ${currentUser?.studentUid === data?.sender ? "rounded-l-md rounded-br-md px-3 py-1 bg-[#3b3b3b] text-white" : "rounded-r-md w-fit rounded-bl-md px-3 py-1 bg-[#3c3c58] text-white"}`}>{data?.text}</p>
+                <p className="text-[10px]">{new Date(data?.createdAt).getHours()} : {new Date(data?.createdAt).getMinutes()} : {new Date(data?.createdAt).getSeconds()}</p>
+              </div>
             }
 
             {
               data?.imageUrl &&
-              <img src={data?.imageUrl} alt="image" className={`inline-block max-w-xs w-48 h-48 ${currentUser?.studentUid === data?.sender ? "rounded-lg bg-[#3b3b3b] text-white" : "bg-[#3c3c58] text-white rounded-lg"}`}/>
+              <div className={`flex flex-col my-3 ${currentUser?.studentUid === data?.sender ? "text-end" : ""}`}>
+                <img src={data?.imageUrl} alt="image" className={`inline-block max-w-xs w-48 h-48 ${currentUser?.studentUid === data?.sender ? "rounded-lg bg-[#3b3b3b] text-white" : "bg-[#3c3c58] text-white rounded-lg"}`}/>
+                <p className="text-[10px]">{new Date(data?.createdAt).getHours()} : {new Date(data?.createdAt).getMinutes()} : {new Date(data?.createdAt).getSeconds()}</p>
+              </div>
             }
 
             {
               data?.videoUrl &&
-              <video src={data?.videoUrl} controls className={`inline-block max-w-xs ${currentUser?.studentUid === data?.sender ? "rounded-lg bg-[#3b3b3b] text-white" : "bg-[#3c3c58] text-white rounded-lg"}`}></video>
+              <div className={`flex flex-col my-3 ${currentUser?.studentUid === data?.sender ? "text-end" : ""}`}>
+                <video src={data?.videoUrl} controls className={`inline-block max-w-xs ${currentUser?.studentUid === data?.sender ? "rounded-lg bg-[#3b3b3b] text-white" : "bg-[#3c3c58] text-white rounded-lg"}`}></video>
+                <p className="text-[10px]">{new Date(data?.createdAt).getHours()} : {new Date(data?.createdAt).getMinutes()} : {new Date(data?.createdAt).getSeconds()}</p>
+              </div>
             }
 
           </div>):

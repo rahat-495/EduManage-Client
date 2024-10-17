@@ -38,6 +38,7 @@
     "styled-components": "^6.1.11",
     "sweetalert2": "^11.12.4",
     "swiper": "^11.1.4",
+    "tailwind-scrollbar": "^3.1.0",
     "ua-parser-js": "^1.0.38",
     "use-react-countries": "^2.0.1"
   },
