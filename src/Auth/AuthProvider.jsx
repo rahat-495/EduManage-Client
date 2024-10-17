@@ -7,6 +7,7 @@ import useAxiosSecure from "../Hooks/useAxiosSecure";
 import UAParser from 'ua-parser-js';
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../Redux/userSlice";
+import { io } from "socket.io-client";
 
 export const AuthContext = createContext(null) ;
 
@@ -56,6 +57,10 @@ const AuthProvider = ({children}) => {
         localStorage.removeItem("token") ;
         return signOut(auth) ;
     }
+
+    useEffect(() => {
+        setSocket(io('http://localhost:5555')) ;
+    } , [setSocket])
 
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth , (currentUser) => {

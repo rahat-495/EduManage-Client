@@ -13,6 +13,10 @@ import { io } from "socket.io-client";
 import useAuth from "../../Hooks/useAuth";
 import { MdPhotoLibrary } from "react-icons/md";
 import { IoVideocam } from "react-icons/io5";
+import loader from '../../../public/roundedLoader.json'
+import axios from "axios";
+import Lottie from "lottie-react";
+import { FiCornerRightDown } from "react-icons/fi";
 
 const MessagePage = () => {
 
@@ -23,6 +27,9 @@ const MessagePage = () => {
   const currentUser = useSelector(state => state?.user) ;
   const [newMessage , setNewMessage] = useState({}) ;
   const [messages , setMessages] = useState([]) ;
+  const [image , setImage] = useState("") ;
+  const [video , setVideo] = useState("") ;
+  const [loading , setLoading] = useState(false) ;
   const [message , setMessage] = useState({
     text : "" ,
     imageUrl : "" ,
@@ -79,7 +86,7 @@ const MessagePage = () => {
     })
     
     socket?.on("getMessage" , (message) => {
-      if(message?.message?.text){
+      if(message?.message?.text || message?.message?.imageUrl || message?.message?.videoUrl){
         setNewMessage(() => {
           return{
             ...message?.message ,
@@ -115,25 +122,85 @@ const MessagePage = () => {
   } , [newMessage])
 
   const handleSubmitMessage = async (e) => {
-    e.preventDefault() ;
+    if(e){
+      e.preventDefault() ;
+    }
     if(message?.sender && message?.receiver){
-
       socket?.emit("sendMessage" , {message}) ;
-
-      if(newMessage?.receiver === message?.receiver){
+      if(newMessage?.receiver === message?.receiver && message?.text || message?.imageUrl || message?.videoUrl){
         axiosSecure.post(`/createMessage` , message)
         .then((res) => {
           if(res?.data?._id){
-            e.target.reset() ;
+            if(e){
+              e.target.reset() ;
+            }
+            setMessage({
+              text : "" ,
+              imageUrl : "" ,
+              videoUrl : "" ,
+              seen : false ,
+              sender : currentUser?.studentUid ,
+              receiver : receiverUid ,
+            })
+            setImage("");
+            setVideo("");
             getMessages() ;
           }
         })
+        console.log(message)
       }
-
     }
   }
 
-  console.log(newMessage?.sender , newMessage?.receiver)
+  const handleUploadImage = async (e) => {
+    document.getElementById('customModalForUpload').showModal()
+    const file = e.target.files[0] ;
+    if(file){
+      const formData = new FormData() ;
+      formData.append('file' , file) ;
+      formData.append('upload_preset', 'eduManage');
+      setLoading(true) ;
+      const {data} = await axios.post(import.meta.env.VITE_UPLOADING_ANYTHING_URL , formData) ;
+      setImage(data?.url) ;
+      setLoading(false) ;
+    }
+  }
+  
+  const handleUploadVideo = async (e) => {
+    document.getElementById('customModalForUpload').showModal() ;
+    const file = e.target.files[0] ;
+    if(file){
+      const formData = new FormData() ;
+      formData.append('file' , file) ;
+      formData.append('upload_preset', 'eduManage');
+      setLoading(true) ;
+      const {data} = await axios.post(import.meta.env.VITE_UPLOADING_ANYTHING_URL , formData) ;
+      setVideo(data?.url) ;
+      setLoading(false) ;
+    }
+  }
+
+  const handleImageSend = async () => {
+    setMessage((preve) => {
+      return{
+        ...preve ,
+        text : "" ,
+        imageUrl : image
+      }
+    }) ;
+    document.getElementById('customModalForUpload').close() ;
+  }
+
+  const handleVideoSend = async () => {
+    setMessage((preve) => {
+      return{
+        ...preve ,
+        text : "" ,
+        videoUrl : video
+      }
+    }) ;
+    document.getElementById('customModalForUpload').close() ;
+  }
 
   return (
     <div className="flex flex-col items-start justify-between w-full min-h-[80vh]"> 
@@ -160,11 +227,23 @@ const MessagePage = () => {
         
         {
           messages?.length > 0 ?
-          messages?.map((data) => <div ref={messageEndRef} key={data?._id} className={`w-full mb-1 ${currentUser?.studentUid === data?.sender ? "flex items-end justify-end" : ""}`}>
+          messages?.map((data) => <div ref={messageEndRef} key={data?._id} className={`w-full mb-1 ${currentUser?.studentUid === data?.sender ? "flex flex-col items-end justify-end gap-3" : "flex flex-col gap-3"}`}>
+            
             {
               data?.text &&
               <p className={`inline-block max-w-xs ${currentUser?.studentUid === data?.sender ? "rounded-l-md rounded-br-md px-3 py-1 bg-[#3b3b3b] text-white" : "rounded-r-md rounded-bl-md px-3 py-1 bg-[#3c3c58] text-white"}`}>{data?.text}</p>
             }
+
+            {
+              data?.imageUrl &&
+              <img src={data?.imageUrl} alt="image" className={`inline-block max-w-xs w-48 h-48 ${currentUser?.studentUid === data?.sender ? "rounded-lg bg-[#3b3b3b] text-white" : "bg-[#3c3c58] text-white rounded-lg"}`}/>
+            }
+
+            {
+              data?.videoUrl &&
+              <video src={data?.videoUrl} controls className={`inline-block max-w-xs ${currentUser?.studentUid === data?.sender ? "rounded-lg bg-[#3b3b3b] text-white" : "bg-[#3c3c58] text-white rounded-lg"}`}></video>
+            }
+
           </div>):
           <div className="flex flex-col items-center justify-center gro h-[75vh] w-full">
             <h1 className="font-bold text-4xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-[#00FFB2] text-center mt-3">No chats start yeat !</h1>
@@ -173,22 +252,46 @@ const MessagePage = () => {
 
       </div>
 
+      {
+        image &&
+        <div className="w-full h-12 border-t border-[#483064] flex items-center justify-between px-1 rounded-br-lg py-1 gap-2">
+          <img className="h-full w-12 rounded ml-2 opacity-70" src={image} alt="" />
+          <p className="flex items-center gap-3 mr-3">Click Here To Send <FiCornerRightDown className="text-xl"/></p>
+        </div>
+      }
+
+      {
+        video &&
+        <div className="w-full h-16 border-t border-[#483064] flex items-center justify-between px-1 rounded-br-lg py-1 gap-2">
+          <video className="h-12 w-fit rounded ml-2 opacity-50" src={video} alt="video"></video>
+          <p className="flex items-center gap-3 mr-3">Click Here To Send <FiCornerRightDown className="text-xl"/></p>
+        </div>
+      }
+
       <div className="w-full h-12 border-t border-[#483064] flex items-center justify-between px-1 rounded-br-lg py-1 gap-2">
 
-        <Menu placement="top-start">
+        <Menu 
+          placement="top-start" 
+          dismiss={{
+            itemPress: false,
+          }}  
+          animate={{
+            mount: { y: 0 },
+            unmount: { y: 50 },
+          }}>
           <MenuHandler>
             <Button className="text-white bg-transparent hover:bg-[#2f1f41] duration-300 h-full p-0 w-10 flex items-center justify-center text-xl"><PiLinkSimpleBold /></Button>
           </MenuHandler>
           <MenuList className="p-1 border border-[#b077f1] gro">
             
-            <MenuItem className="">
-              <label htmlFor="image" className="cursor-pointer flex items-center justify-start gap-5 text-black font-semibold w-full"><MdPhotoLibrary className="text-lg"/> Image </label>
-              <input type="file" className="hidden" id="image" name="image" accept="image/*"/>
+            <MenuItem className="py-0 h-9">
+              <label htmlFor="image" className="cursor-pointer flex items-center justify-start gap-5 text-black font-semibold w-full h-full"><MdPhotoLibrary className="text-lg"/> Image </label>
+              <input onChange={(e) => handleUploadImage(e)} type="file" className="hidden" id="image" name="image" accept="image/*"/>
             </MenuItem>
 
-            <MenuItem className="">
-              <label htmlFor="video" className="cursor-pointer flex items-center justify-start gap-5 text-black font-semibold w-full"><IoVideocam className="text-lg"/> Video </label>
-              <input type="file" className="hidden" id="video" name="video" accept="video/*"/>
+            <MenuItem className="py-0 h-9">
+              <label htmlFor="video" className="cursor-pointer flex items-center justify-start gap-5 text-black font-semibold w-full h-full"><IoVideocam className="text-lg"/> Video </label>
+              <input onChange={(e) => handleUploadVideo(e)} type="file" className="hidden" id="video" name="video" accept="video/*"/>
             </MenuItem>
 
           </MenuList>
@@ -206,6 +309,44 @@ const MessagePage = () => {
           <button className="w-10 flex items-center justify-center rounded text-xl hover:bg-[#2f1f41] duration-300"><RiSendPlaneLine /></button>
         </form>
       </div>
+
+      <dialog id="customModalForUpload" className="modal">
+        <div className="modal-box bg-[#010313] p-10">
+
+          <form method="dialog">
+            <button onClick={() => {
+              setImage("");
+              setVideo("");
+            }} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+          </form>
+
+          <div className="w-full flex flex-col items-center justify-center">
+            
+            {
+              loading &&
+              <Lottie animationData={loader} loop={true}/>
+            }
+
+            {
+              video &&
+              <div className="flex flex-col gap-3">
+                <video className="w-full rounded-lg" controls src={video}></video>
+                <button onClick={handleVideoSend} className="btn w-full bg-gradient-to-r from-purple-400 to-[#00FFB2] text-[#dccaff]">Continue</button>
+              </div>
+            }
+
+            {
+              image &&
+              <div className="flex flex-col gap-3">
+                <img className="w-full rounded-lg" src={image} alt="image" />
+                <button onClick={handleImageSend} className="btn w-full bg-gradient-to-r from-purple-400 to-[#00FFB2] text-[#dccaff]">Continue</button>
+              </div>
+            }
+
+          </div>
+
+        </div>
+      </dialog>
 
     </div>
   );
