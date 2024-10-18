@@ -17,6 +17,7 @@ import loader from '../../../public/roundedLoader.json'
 import axios from "axios";
 import Lottie from "lottie-react";
 import { FiCornerRightDown } from "react-icons/fi";
+import Swal from "sweetalert2";
 
 const MessagePage = () => {
 
@@ -164,13 +165,24 @@ const MessagePage = () => {
     document.getElementById('customModalForUpload').showModal() ;
     const file = e.target.files[0] ;
     if(file){
+      const maxSize = 25 * 1024 * 1024;
       const formData = new FormData() ;
       formData.append('file' , file) ;
       formData.append('upload_preset', 'eduManage');
-      setLoading(true) ;
-      const {data} = await axios.post(import.meta.env.VITE_UPLOADING_ANYTHING_URL , formData) ;
-      setVideo(data?.url) ;
-      setLoading(false) ;
+      if(file.size <= maxSize){
+        setLoading(true) ;
+        const {data} = await axios.post(import.meta.env.VITE_UPLOADING_ANYTHING_URL , formData) ;
+        setVideo(data?.url) ;
+        setLoading(false) ;
+      }
+      else{
+        document.getElementById('customModalForUpload').close() ;
+        Swal.fire({
+          title: "Oops Sorry !",
+          html: "You can't send more than 25 mb <br/> size video rigth now !",
+          icon: "error"
+        });
+      }
     }
   }
 

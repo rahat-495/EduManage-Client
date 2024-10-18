@@ -99,8 +99,6 @@ const MessagesSiteNav = () => {
                                     <div className="absolute w-2 h-2 bg-[#00FF00] rounded-full bottom-1 right-0"></div>:
                                     <div className="absolute w-2 h-2 bg-[#808080] rounded-full bottom-1 right-0"></div>
                                 }
-                                {
-                                }
                             </div>
                             <div className="flex flex-col gro">
                                 <p className="capitalize">{userData?.studentUid === user?.receiver ? user?.senderName : user?.receiverName}</p>
