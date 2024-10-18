@@ -65,6 +65,7 @@ const SignUpC = ({remember , setRemember}) => {
                   applyForTeacher : "No" ,
                   schools : [] ,
                   grades : [] ,
+                  isOnline : false,
                   removedDevice : [] ,
                   devicesInfo : [
                     {

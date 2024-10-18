@@ -94,7 +94,6 @@ const MessagePage = () => {
     })
     
     socket?.on("disconnect" , (users) => {
-      // console.log(users) ;
       return users ;
     })
 

@@ -50,6 +50,8 @@ const MessagesSiteNav = () => {
             receiverName : receiverData?.name , 
             receiverEmail : receiverData?.email , 
             receiverImage : receiverData?.image , 
+            isSenderOnline : false ,
+            isReceiverOnline : false ,
             participants : [ userData?.studentUid , receiverData?.studentUid ] ,
             lastMessage : "" ,
         }
@@ -86,7 +88,20 @@ const MessagesSiteNav = () => {
                         isPending ? "pending w-full" : isActive ? "active w-full bg-[#241833] rounded-md" : "w-full"
                       }>
                         <div className={`flex items-start gap-3 hover:bg-[#241833] w-full rounded-md cursor-pointer p-1 duration-200 `}>
-                            <Avatar src={userData?.studentUid === user?.receiver ? user?.senderImage : user?.receiverImage}/>
+                            <div className="relative">
+                                <Avatar src={userData?.studentUid === user?.receiver ? user?.senderImage : user?.receiverImage}/>
+                                {
+                                    userData?.studentUid === user?.sender?
+                                    user?.isReceiverOnline ?
+                                    <div className="absolute w-2 h-2 bg-[#00FF00] rounded-full bottom-1 right-0"></div>:
+                                    <div className="absolute w-2 h-2 bg-[#808080] rounded-full bottom-1 right-0"></div>:
+                                    user?.isSenderOnline ?
+                                    <div className="absolute w-2 h-2 bg-[#00FF00] rounded-full bottom-1 right-0"></div>:
+                                    <div className="absolute w-2 h-2 bg-[#808080] rounded-full bottom-1 right-0"></div>
+                                }
+                                {
+                                }
+                            </div>
                             <div className="flex flex-col gro">
                                 <p className="capitalize">{userData?.studentUid === user?.receiver ? user?.senderName : user?.receiverName}</p>
                                 <p className="text-base">

@@ -63,6 +63,10 @@ const AuthProvider = ({children}) => {
     } , [setSocket])
 
     useEffect(() => {
+        socket?.emit("addUser" , userData?.studentUid) ;
+    } , [userData , socket])
+
+    useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth , (currentUser) => {
             setLoading(false) ;
             setCurrentUser(currentUser) ;

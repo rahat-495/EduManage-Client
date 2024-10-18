@@ -50,6 +50,7 @@ const LoginC = ({location}) => {
               applyForTeacher : "No" ,
               schools : [] ,
               grades : [] ,
+              isOnline : false,
               removedDevice : [] ,
               devicesInfo : [
                 {
@@ -112,6 +113,7 @@ const LoginC = ({location}) => {
           applyForTeacher : "No" ,
           schools : [] ,
           grades : [] ,
+          isOnline : false,
           removedDevice : [] ,
           devicesInfo : [
             {
