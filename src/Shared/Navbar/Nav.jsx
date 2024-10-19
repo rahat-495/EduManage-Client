@@ -9,8 +9,9 @@ import {
   Avatar,
   MenuList,
   Tooltip,
+  Drawer,
 } from "@material-tailwind/react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import NavLists from "../../Components/NavLists/Navlists";
@@ -20,10 +21,14 @@ import { useSelector } from "react-redux";
 import { MdLogout } from "react-icons/md";
 
 const Nav = () => {
+
   const { pathname } = useLocation();
   const { user, logOut } = useAuth();
   const [openNav, setOpenNav] = useState(false);
   const userData = useSelector((state) => state?.user);
+  const [openRight, setOpenRight] = React.useState(false);
+  const openDrawerRight = () => setOpenRight(true);
+  const closeDrawerRight = () => setOpenRight(false);
 
   useEffect(() => {
     if (pathname.includes("/profile")) {
@@ -53,7 +58,7 @@ const Nav = () => {
               as="a"
               className="mr-4 play font-semibold cursor-pointer py-1.5 hidden lg:flex"
             >
-              <span className="gro text-xl font-medium"></span> EduManage
+              EduManage
             </Typography>
 
             <div className="flex items-center justify-between w-full gap-4 gro lg:justify-normal lg:w-auto">
@@ -197,73 +202,86 @@ const Nav = () => {
               </IconButton>
 
               {user ? (
-                  <Menu>
+                  <React.Fragment>
+                  <div className="flex-wrap gap-4 ml-auto flex lg:hidden">
+                    <button onClick={openDrawerRight}>
+                      <img src={ userData?.image ? userData?.image : user?.photoURL} alt="" className="cursor-pointer w-[40px] border border-teal-500 h-[40px] rounded-full flex lg:hidden"/>
+                    </button>
+                  </div>
 
-                    {/* {pathname?.includes("/message") ? (
-                      <></>
-                    ) : (
-                      <Link to={"/message"}>
-                        <Tooltip
-                          placement="bottom-center"
-                          content={
-                            pathname?.includes("/message") ? "" : "Chats"
-                          }
-                          animate={{
-                            mount: { scale: 1, y: 0 },
-                            unmount: { scale: 0, y: -25 },
-                          }}
-                          className={"bg-transparent"}
+                  <Drawer
+                    placement="right"
+                    open={openRight}
+                    onClose={closeDrawerRight}
+                    className="flex flex-col bg-[#010313] lg:hidden min-h-screen pt-1 pb-3 w-3/5 fixed top-0 rounded-bl"
+                  >
+                    <div className="mb-6 flex items-center justify-between bg-[#010313]">
+
+                      <Typography
+                        as="a"
+                        className="mr-4 play font-medium cursor-pointer ml-2 py-1.5 flex lg:hidden"
+                      >
+                        EduManage
+                      </Typography>
+
+                      <IconButton
+                        variant="text"
+                        color="blue-gray"
+                        onClick={closeDrawerRight}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={2}
+                          stroke="currentColor"
+                          className="h-5 w-5"
                         >
-                          <Avatar
-                            className="cursor-pointer w-[42px] h-[42px] rounded-full hidden lg:flex lg:mr-3"
-                            src={messageLogo}
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M6 18L18 6M6 6l12 12"
                           />
-                        </Tooltip>
-                      </Link>
-                    )} */}
+                        </svg>
+                      </IconButton>
+                    </div>
 
-                    <MenuHandler>
+                    <div className="menu p-2 shadow w-full h-full flex flex-col">
                       <Avatar
-                        className="cursor-pointer w-[40px] border border-teal-500 h-[40px] rounded-full flex ml-auto mr-2 lg:hidden"
-                        src={userData?.image ? userData?.image : user?.photoURL}
-                      />
-                    </MenuHandler>
+                            className="cursor-pointer w-[45px] border border-teal-500 h-[45px] rounded-full flex lg:hidden mx-auto"
+                            src={
+                              userData?.image ? userData?.image : user?.photoURL
+                            }
+                          />
+                          <h1 className="mx-1 text-[#f5f6fa] p-1 text-center rounded-md font-semibold">
+                            {user?.displayName}
+                          </h1>
+                          <h1 className="mx-1 text-[#f5f6fa] p-1 text-center rounded-md font-semibold">
+                            {user?.email}
+                          </h1>
+                          <h1 className="mx-1 text-[#f5f6fa] p-1 text-center rounded-md font-semibold">
+                            {user?.uid.slice(0, 20) + "..."}
+                          </h1>
+                          <Link
+                            to={"/profile"}
+                            className="rounded-lg py-2 text-center border border-teal-500 text-white hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-1000"
+                          >
+                            View Profile
+                          </Link>
 
-                    <MenuList className="p-0 -ml-24 bg-transparent border-none rounded-2xl">
-                      <div className="border border-purple-500 menu p-2 shadow bg-[#0F172A] rounded-box w-60">
-                        <Avatar
-                          className="cursor-pointer w-[45px] border border-teal-500 h-[45px] rounded-full flex lg:hidden mx-auto"
-                          src={
-                            userData?.image ? userData?.image : user?.photoURL
-                          }
-                        />
-                        <h1 className="mx-1 text-[#f5f6fa] p-1 text-center rounded-md font-semibold">
-                          {user?.displayName}
-                        </h1>
-                        <h1 className="mx-1 text-[#f5f6fa] p-1 text-center rounded-md font-semibold">
-                          {user?.email}
-                        </h1>
-                        <h1 className="mx-1 text-[#f5f6fa] p-1 text-center rounded-md font-semibold">
-                          {user?.uid.slice(0, 20) + "..."}
-                        </h1>
-                        <Link
-                          to={"/profile"}
-                          className="rounded-lg py-2 text-center border border-teal-500 text-white hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-1000"
-                        >
-                          View Profile
-                        </Link>
+                          <ProfileLinks />
 
-                        <ProfileLinks />
+                        </div>
+                          <Button
+                            onClick={() => logOut()}
+                            className="border flex items-center mx-2 py-2 justify-center gap-3 border-teal-500 text-white hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-500"
+                          >
+                            Log Out <MdLogout className="text-lg font-bold" />
+                          </Button>
 
-                        <Button
-                          onClick={() => logOut()}
-                          className="border flex items-center justify-center gap-3 border-teal-500 text-white hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-500"
-                        >
-                          Log Out <MdLogout className="text-lg font-bold" />
-                        </Button>
-                      </div>
-                    </MenuList>
-                  </Menu>
+                  </Drawer>
+
+                </React.Fragment>
               ) : (
                 <Typography
                   as="a"
@@ -277,7 +295,6 @@ const Nav = () => {
 
           <MobileNav open={openNav} className="px-2">
             <NavLists />
-
             {user ? (
               <div className=""></div>
             ) : (

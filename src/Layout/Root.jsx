@@ -34,7 +34,7 @@ const Root = () => {
     }
 
     return (
-        <div className="">
+        <div className="overflow-hidden lg:overflow-visible">
 
             <div className="sticky top-0 z-50 bg-opacity-0 backdrop-blur-md">
                 <Nav/>

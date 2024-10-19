@@ -3,11 +3,11 @@ import { Button, Input } from "@material-tailwind/react";
 
 const ContactUs = () => {
     return (
-        <div className="my-28">
+        <div className="mb-10 lg:my-28 mx-3">
             
             <h1 className="gro text-4xl text-white text-center mb-16">Contact Us</h1>   
 
-            <div className="grid grid-cols-9 gap-10">
+            <div className="flex flex-col-reverse gap-5 lg:grid lg:grid-cols-9 lg:gap-10">
                 <div className="col-span-4 flex flex-col gap-5">
                     <Input color="white" className="text-white" label="Name" type="text" />
                     <Input color="white" className="text-white" label="Email" type="email" />
