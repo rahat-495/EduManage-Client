@@ -31,6 +31,7 @@ const MessagePage = () => {
   const [image , setImage] = useState("") ;
   const [video , setVideo] = useState("") ;
   const [loading , setLoading] = useState(false) ;
+  const [messagesLoading , setMessagesLoading] = useState(false) ;
   const [message , setMessage] = useState({
     text : "" ,
     imageUrl : "" ,
@@ -40,7 +41,7 @@ const MessagePage = () => {
     receiver : receiverUid ,
   })
   
-  const {data : receiverData} = useQuery({
+  const {data : receiverData , isLoading} = useQuery({
     queryKey : ['getReceiverDetails' , receiverUid] ,
     queryFn : async () => {
       const {data} = await axiosSecure.get(`/receiverDetails?studentUid=${receiverUid}`) ;
@@ -49,9 +50,11 @@ const MessagePage = () => {
   })
 
   const getMessages = () => {
+    setMessagesLoading(true) ;
     axiosSecure.get(`/messages?receiver=${receiverUid}&sender=${currentUser?.studentUid}`) 
     .then((res) => {
       setMessages(res?.data) ;
+      setMessagesLoading(false) ;
     })
   }
 
@@ -83,6 +86,7 @@ const MessagePage = () => {
     
     socket?.on("getMessage" , (message) => {
       if(message?.message?.text || message?.message?.imageUrl || message?.message?.videoUrl){
+        console.log(message?.message)
         setNewMessage(() => {
           return{
             ...message?.message ,
@@ -91,6 +95,7 @@ const MessagePage = () => {
           }
         }) ;
         setMessages([...messages , message?.message]) ;
+        console.log(newMessage)
       }
     })
     
@@ -105,7 +110,7 @@ const MessagePage = () => {
       return{
         ...preve ,
         sender : currentUser?.studentUid ,
-        receiver : receiverUid
+        receiver : receiverUid ,
       }
     })
   } , [currentUser , receiverUid])
@@ -121,8 +126,8 @@ const MessagePage = () => {
       e.preventDefault() ;
     }
     if(message?.sender && message?.receiver){
-      socket?.emit("sendMessage" , {message}) ;
       if(newMessage?.receiver === message?.receiver && message?.text || message?.imageUrl || message?.videoUrl){
+        socket?.emit("sendMessage" , {message}) ;
         axiosSecure.post(`/createMessage` , message)
         .then((res) => {
           if(res?.data?._id){
@@ -142,7 +147,6 @@ const MessagePage = () => {
             getMessages() ;
           }
         })
-        console.log(message)
       }
     }
   }
@@ -209,17 +213,29 @@ const MessagePage = () => {
   }
 
   return (
-    <div className="flex flex-col items-start justify-between w-full min-h-[80vh]"> 
+    <div className={`flex flex-col items-start justify-between w-full min-h-[80vh] ${messagesLoading && "flex flex-col items-center justify-center"}`}> 
 
-      <div className="w-full border-b border-[#483064] flex items-start justify-between px-3 rounded-tr-lg">
+      <div className={`w-full border-b border-[#483064] flex items-start justify-between px-3 rounded-tr-lg`}>
 
-        <div className="flex items-start gap-3 w-full rounded-md p-1">
+        {
+          !isLoading ?
+          <div className="flex items-start gap-3 w-full rounded-md p-1">
             <Avatar src={receiverData?.image} className=""/>
             <div className="flex flex-col gro">
-                <p className="capitalize">{receiverData?.name}</p>
-                <p className="">{receiverData?.email}</p>
+              <p className="capitalize">{receiverData?.name}</p>
+              <p className="">{receiverData?.email}</p>
             </div>
-        </div>
+          </div>:
+          <div className="flex w-60 flex-col p-1 gap-4">
+            <div className="flex items-center gap-4">
+              <div className="skeleton h-12 w-12 shrink-0 rounded-full bg-[#241833]"></div>
+              <div className="flex flex-col gap-4">
+                <div className="skeleton h-4 w-20 bg-[#241833]"></div>
+                <div className="skeleton h-4 w-28 bg-[#241833]"></div>
+              </div>
+            </div>
+          </div>
+        }
 
         <div className="my-auto">
           <Button className="rounded-md p-0 w-10 h-10 flex items-center justify-center bg-transparent hover:bg-[#2f1f41]">
@@ -228,10 +244,11 @@ const MessagePage = () => {
         </div>
 
       </div>
-
-      <div id="scrollDiv" className="w-full h-[69vh] overflow-y-auto flex flex-col items-start px-6 py-3 scrollbar-thin scrollbar-thumb-[#483064] scrollbar-track-transparent">
+      
+      <div id="scrollDiv" className={`w-full h-[69vh] overflow-y-auto flex flex-col items-start px-6 py-3 scrollbar-thin scrollbar-thumb-[#483064] scrollbar-track-transparent ${messagesLoading && "flex flex-col items-center justify-center"}`}>
         
         {
+          !messagesLoading ?
           messages?.length > 0 ?
           messages?.map((data) => <div ref={messageEndRef} key={data?._id} className={`w-full mb-1 ${currentUser?.studentUid === data?.sender ? "flex flex-col items-end justify-end gap-3" : "flex flex-col gap-3"}`}>
             
@@ -262,6 +279,9 @@ const MessagePage = () => {
           </div>):
           <div className="flex flex-col items-center justify-center gro h-[75vh] w-full">
             <h1 className="font-bold text-4xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-[#00FFB2] text-center mt-3">No chats start yeat !</h1>
+          </div>:
+          <div className="w-[30%] h-[30%] flex items-center justify-center">
+            <Lottie animationData={loader} loop={true}/>
           </div>
         }
 
@@ -320,6 +340,15 @@ const MessagePage = () => {
                 text : e.target.value ,
               }
             })} 
+            onPaste={(e) => {
+              const pastedText = e.clipboardData.getData('text') ;
+              setMessage((preve) => {
+                return{
+                  ...preve,
+                  text : pastedText ,
+                }
+              })
+            }}
             type="text" name="text" placeholder="Type a message" className="bg-transparent gro font-normal w-full h-full rounded outline-none px-3 duration-300 focus:bg-[#2f1f41]"/>
           <button className="w-10 flex items-center justify-center rounded text-xl hover:bg-[#2f1f41] duration-300"><RiSendPlaneLine /></button>
         </form>

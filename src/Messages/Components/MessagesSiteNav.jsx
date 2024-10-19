@@ -9,6 +9,8 @@ import { useState } from "react";
 import {NavLink, useNavigate} from 'react-router-dom'
 import Swal from 'sweetalert2'
 
+const usersSkelatonArr = [1,2,3,4,5,6,7,8] ;
+
 const MessagesSiteNav = () => {
 
     const navigate = useNavigate() ;
@@ -16,7 +18,7 @@ const MessagesSiteNav = () => {
     const [search , setSearch] = useState("") ;
     const userData = useSelector(state => state?.user) ;
 
-    const {data : conversations , refetch} = useQuery({
+    const {data : conversations , refetch , isLoading} = useQuery({
         queryKey : ['conversations' , userData?.email] ,
         queryFn : async () => {
             const {data} = await axiosSecure.get(`/conversations?uid=${userData?.studentUid}`) ;
@@ -83,6 +85,16 @@ const MessagesSiteNav = () => {
 
             <div className="flex flex-col items-start gap-4 px-2 mt-5 w-full overflow-y-auto h-[65vh]">
                 {
+                    isLoading ?
+                    usersSkelatonArr?.map((user) => <div key={user} className="flex w-60 flex-col p-1 gap-4">
+                        <div className="flex items-center gap-4">
+                            <div className="skeleton h-12 w-12 shrink-0 rounded-full bg-[#241833]"></div>
+                            <div className="flex flex-col gap-4">
+                                <div className="skeleton h-4 w-20 bg-[#241833]"></div>
+                                <div className="skeleton h-4 w-28 bg-[#241833]"></div>
+                            </div>
+                        </div>
+                    </div>):
                     conversations?.length > 0 ?
                     conversations?.map((user) => <NavLink to={`/message/${userData?.studentUid === user?.receiver ? user?.sender : user?.receiver}`} key={user?._id} className={({ isActive, isPending }) =>
                         isPending ? "pending w-full" : isActive ? "active w-full bg-[#241833] rounded-md" : "w-full"
@@ -102,10 +114,10 @@ const MessagesSiteNav = () => {
                             </div>
                             <div className="flex flex-col gro">
                                 <p className="capitalize">{userData?.studentUid === user?.receiver ? user?.senderName : user?.receiverName}</p>
-                                <p className="text-base">
+                                <p className="text-base flex items-center">
                                     {   !user?.lastMessage ?
                                         userData?.studentUid === user?.receiver ? user?.senderEmail?.length > 16 ? user?.senderEmail : user?.senderEmail?.slice(0,20)+"..." : user?.receiverEmail?.length > 16 ? user?.receiverEmail : user?.receiverEmail?.slice(0,20)+"..."  :
-                                        user?.lastMessage?.length > 12 ? user?.lastMessage.slice(0 , 12)+"..." : user?.lastMessage
+                                        user?.sender === userData?.studentUid ? user?.lastMessage?.length > 12 ? " You → " + user?.lastMessage.slice(0 , 12)+"..." : user?.receiverName?.slice(0,4) + " → " + user?.lastMessage?.slice(0,13) : "You" + " → " + user?.lastMessage?.slice(0,13)
                                     }
                                 </p>
                             </div>
