@@ -86,7 +86,6 @@ const MessagePage = () => {
     
     socket?.on("getMessage" , (message) => {
       if(message?.message?.text || message?.message?.imageUrl || message?.message?.videoUrl){
-        console.log(message?.message)
         setNewMessage(() => {
           return{
             ...message?.message ,
@@ -95,7 +94,6 @@ const MessagePage = () => {
           }
         }) ;
         setMessages([...messages , message?.message]) ;
-        console.log(newMessage)
       }
     })
     

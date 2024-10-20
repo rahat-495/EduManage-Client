@@ -20,6 +20,7 @@ import ProfileLinks from "../../Components/ProfileLinks/ProfileLinks";
 import messageLogo from "../../../public/images/messageLogo.png";
 import { useSelector } from "react-redux";
 import { MdLogout } from "react-icons/md";
+import MessagesSiteNav from "../../Messages/Components/MessagesSiteNav";
 
 const Nav = () => {
 
@@ -208,34 +209,15 @@ const Nav = () => {
 
               {user ? (
                 <React.Fragment>
-                  <div className="flex-wrap gap-4 ml-auto flex lg:hidden">
+                  <div className="flex-wrap gap-4 ml-auto flex lg:hidden rounded-xl">
 
-                  {pathname?.includes("/message") ? (
+                  {
                     <Avatar
                       onClick={openDrawer}  
                       className="cursor-pointer w-[42px] h-[42px] rounded-full flex lg:hidden lg:mr-3"
                       src={messageLogo}
                     />
-                  ) : (
-                    <Link to={"/message"}>
-                      <Tooltip
-                        placement="bottom-center"
-                        content={
-                          pathname?.includes("/message") ? "" : "Chats"
-                        }
-                        animate={{
-                          mount: { scale: 1, y: 0 },
-                          unmount: { scale: 0, y: -25 },
-                        }}
-                        className={"bg-transparent"}
-                      >
-                        <Avatar
-                          className="cursor-pointer w-[42px] h-[42px] rounded-full flex lg:hidden lg:mr-3"
-                          src={messageLogo}
-                        />
-                      </Tooltip>
-                    </Link>
-                  )}
+                  }
 
                     <button onClick={openDrawerRight}>
                       <img
@@ -250,10 +232,10 @@ const Nav = () => {
                     placement="right"
                     open={openRight}
                     onClose={closeDrawerRight}
-                    className="flex flex-col bg-[#010313] border-l-[1.5px] border-y-[1.5px] border-[#4802c8] lg:hidden min-h-screen pt-1 pb-9 w-3/5 fixed top-0 rounded-l-xl"
+                    className="flex flex-col bg-[#010313] border-l-[1.5px] border-y-[1.5px] border-purple-500 lg:hidden min-h-screen pt-1 pb-9 w-3/5 fixed top-0 rounded-l-xl"
                   >
 
-                    <div className="mb-6 flex items-center justify-between bg-[#010313]">
+                    <div className="mb-6 flex items-center justify-between bg-[#010313] rounded-xl">
                       <Typography
                         as="a"
                         className="mr-4 play font-medium cursor-pointer ml-2 py-1.5 flex lg:hidden"
@@ -358,9 +340,9 @@ const Nav = () => {
       </div>
 
       <React.Fragment>
-        <Drawer open={open} onClose={closeDrawer} className="p-1 bg-[#170F21] min-h-screen rounded-r-lg border-r border-y">
+        <Drawer open={open} onClose={closeDrawer} className="p-1 bg-[#170F21] min-h-screen rounded-r-lg border-purple-500 border-r border-y">
 
-          <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center justify-between">
             <IconButton variant="text" color="white" onClick={closeDrawer}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -379,6 +361,7 @@ const Nav = () => {
             </IconButton>
           </div>
 
+          <MessagesSiteNav isResponsive={"moblie"} closeDrawer={closeDrawer}/>
           
         </Drawer>
       </React.Fragment>

@@ -13,11 +13,11 @@ const MessageRoot = () => {
 
             <div className="flex flex-col lg:flex-row items-start justify-between my-14 max-w-[1440px] gap-1 mx-3 lg:mx-auto overflow-hidden">
 
-                <div className=" lg:min-h-[80vh]">
+                <div className="lg:min-h-[80vh]">
                     <MessagesSiteNav/>
                 </div>
 
-                <div className="bg-[#170F21] w-full min-h-[80vh] rounded-lg lg:rounded-r-lg">
+                <div className="bg-[#170F21] w-full min-h-[80vh] rounded-lg lg:rounded-l-none lg:rounded-r-lg">
                     <Outlet/>
                 </div>
 

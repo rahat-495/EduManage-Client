@@ -11,7 +11,7 @@ import Swal from 'sweetalert2'
 
 const usersSkelatonArr = [1,2,3,4,5,6,7,8] ;
 
-const MessagesSiteNav = () => {
+const MessagesSiteNav = ({isResponsive , closeDrawer}) => {
 
     const navigate = useNavigate() ;
     const axiosSecure = useAxiosSecure() ;
@@ -74,9 +74,9 @@ const MessagesSiteNav = () => {
     }
 
     return (
-        <div className="bg-[#170F21] w-64 min-h-[80vh] rounded-l-lg hidden flex-col lg:flex">
+        <div className={`bg-[#170F21] w-64 min-h-[80vh] rounded-l-lg ${isResponsive === "moblie" ? "flex w-full" : "hidden"} flex-col lg:flex`}>
             
-            <h1 className="border-[#483064] border-b rounded-tl-lg px-2 py-3 text-xl mx-2 my-1">Chats</h1>
+            <h1 className={`border-[#483064] border-b rounded-tl-lg px-2 py-3 text-xl mx-2 my-1 ${isResponsive === "moblie" ? "" : ""}`}>Chats</h1>
 
             <form onSubmit={handleSearch} className="mt-3 px-2 relative">
                 <input onChange={(e) => setSearch(e.target.value)} name="search" type="text" className="bg-transparent border border-b-[#00FFB2] border-gray-700 outline-none border-b-2 rounded-[4px] w-full py-1 pr-6 pl-1 gro" placeholder="Name / Email"/>
@@ -96,7 +96,7 @@ const MessagesSiteNav = () => {
                         </div>
                     </div>):
                     conversations?.length > 0 ?
-                    conversations?.map((user) => <NavLink to={`/message/${userData?.studentUid === user?.receiver ? user?.sender : user?.receiver}`} key={user?._id} className={({ isActive, isPending }) =>
+                    conversations?.map((user) => <NavLink onClick={closeDrawer} to={`/message/${userData?.studentUid === user?.receiver ? user?.sender : user?.receiver}`} key={user?._id} className={({ isActive, isPending }) =>
                         isPending ? "pending w-full" : isActive ? "active w-full bg-[#241833] rounded-md" : "w-full"
                       }>
                         <div className={`flex items-start gap-3 hover:bg-[#241833] w-full rounded-md cursor-pointer p-1 duration-200 `}>
