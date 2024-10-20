@@ -10,14 +10,14 @@ const MyProfile = () => {
     const userData = useSelector(state => state?.user) ;
 // console.log(userData?.devicesInfo)
     return (
-        <div className="flex flex-col items-start gap-3 px-5">
+        <div className="flex flex-col items-start gap-3 lg:px-5">
 
             <div className="flex items-center justify-between w-full pb-5 border-dashed mb-3 border-b border-[#412E4D]">
                 <h1 className="gro font-semibold text-xl text-transparent bg-gradient-to-r from-purple-500 via-teal-300 to-cyan-500 bg-clip-text">My Profile</h1>
                 <button><FaRegPenToSquare /></button>
             </div>
 
-            <div className="grid grid-cols-2 gap-5 w-full mt-3 mb-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 w-full mt-3 mb-6">
                 <div className="">
                     <h1 className="gro font-semibold text-xl text-[#5F556B]">Full Name</h1>
                     <h1 className="gro font-semibold text-xl text-[#CEC1DE]">{userData?.name}</h1>
@@ -71,8 +71,16 @@ const MyProfile = () => {
                                         <td className="text-base pl-3">
                                             {device?.deviceName}
                                         </td>
-                                        <td className="text-base pl-3">
-                                            {device?.loginDate} {device?.loginTime} {device?.loginShift}
+                                        <td className="text-base pl-3 lg:flex gap-2">
+                                            <p className="">
+                                                {device?.loginDate}
+                                            </p>
+                                            <p className="hidden lg:flex">
+                                                {device?.loginTime}
+                                            </p>
+                                            <p className="hidden lg:flex">
+                                                {device?.loginShift}
+                                            </p>
                                         </td>
                                         <td className="text-base pl-3">
                                             <button className="text-transparent bg-gradient-to-r from-purple-500 to-teal-500 bg-clip-text">Remove</button>

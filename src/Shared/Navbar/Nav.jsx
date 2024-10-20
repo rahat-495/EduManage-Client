@@ -1,3 +1,4 @@
+
 import {
   Navbar,
   MobileNav,
@@ -26,7 +27,11 @@ const Nav = () => {
   const { user, logOut } = useAuth();
   const [openNav, setOpenNav] = useState(false);
   const userData = useSelector((state) => state?.user);
-  const [openRight, setOpenRight] = React.useState(false);
+  const [openRight, setOpenRight] = useState(false);
+  const [open, setOpen] = React.useState(false);
+ 
+  const openDrawer = () => setOpen(true);
+  const closeDrawer = () => setOpen(false);
   const openDrawerRight = () => setOpenRight(true);
   const closeDrawerRight = () => setOpenRight(false);
 
@@ -202,10 +207,42 @@ const Nav = () => {
               </IconButton>
 
               {user ? (
-                  <React.Fragment>
+                <React.Fragment>
                   <div className="flex-wrap gap-4 ml-auto flex lg:hidden">
+
+                  {pathname?.includes("/message") ? (
+                    <Avatar
+                      onClick={openDrawer}  
+                      className="cursor-pointer w-[42px] h-[42px] rounded-full flex lg:hidden lg:mr-3"
+                      src={messageLogo}
+                    />
+                  ) : (
+                    <Link to={"/message"}>
+                      <Tooltip
+                        placement="bottom-center"
+                        content={
+                          pathname?.includes("/message") ? "" : "Chats"
+                        }
+                        animate={{
+                          mount: { scale: 1, y: 0 },
+                          unmount: { scale: 0, y: -25 },
+                        }}
+                        className={"bg-transparent"}
+                      >
+                        <Avatar
+                          className="cursor-pointer w-[42px] h-[42px] rounded-full flex lg:hidden lg:mr-3"
+                          src={messageLogo}
+                        />
+                      </Tooltip>
+                    </Link>
+                  )}
+
                     <button onClick={openDrawerRight}>
-                      <img src={ userData?.image ? userData?.image : user?.photoURL} alt="" className="cursor-pointer w-[40px] border border-teal-500 h-[40px] rounded-full flex lg:hidden"/>
+                      <img
+                        src={userData?.image ? userData?.image : user?.photoURL}
+                        alt=""
+                        className="cursor-pointer w-[40px] border border-teal-500 h-[40px] rounded-full flex lg:hidden"
+                      />
                     </button>
                   </div>
 
@@ -213,10 +250,10 @@ const Nav = () => {
                     placement="right"
                     open={openRight}
                     onClose={closeDrawerRight}
-                    className="flex flex-col bg-[#010313] lg:hidden min-h-screen pt-1 pb-3 w-3/5 fixed top-0 rounded-bl"
+                    className="flex flex-col bg-[#010313] border-l-[1.5px] border-y-[1.5px] border-[#4802c8] lg:hidden min-h-screen pt-1 pb-9 w-3/5 fixed top-0 rounded-l-xl"
                   >
-                    <div className="mb-6 flex items-center justify-between bg-[#010313]">
 
+                    <div className="mb-6 flex items-center justify-between bg-[#010313]">
                       <Typography
                         as="a"
                         className="mr-4 play font-medium cursor-pointer ml-2 py-1.5 flex lg:hidden"
@@ -248,39 +285,35 @@ const Nav = () => {
 
                     <div className="menu p-2 shadow w-full h-full flex flex-col">
                       <Avatar
-                            className="cursor-pointer w-[45px] border border-teal-500 h-[45px] rounded-full flex lg:hidden mx-auto"
-                            src={
-                              userData?.image ? userData?.image : user?.photoURL
-                            }
-                          />
-                          <h1 className="mx-1 text-[#f5f6fa] p-1 text-center rounded-md font-semibold">
-                            {user?.displayName}
-                          </h1>
-                          <h1 className="mx-1 text-[#f5f6fa] p-1 text-center rounded-md font-semibold">
-                            {user?.email}
-                          </h1>
-                          <h1 className="mx-1 text-[#f5f6fa] p-1 text-center rounded-md font-semibold">
-                            {user?.uid.slice(0, 20) + "..."}
-                          </h1>
-                          <Link
-                            to={"/profile"}
-                            className="rounded-lg py-2 text-center border border-teal-500 text-white hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-1000"
-                          >
-                            View Profile
-                          </Link>
+                        className="cursor-pointer w-[45px] border border-teal-500 h-[45px] rounded-full flex lg:hidden mx-auto"
+                        src={userData?.image ? userData?.image : user?.photoURL}
+                      />
+                      <h1 className="mx-1 text-[#f5f6fa] p-1 text-center rounded-md font-semibold">
+                        {user?.displayName}
+                      </h1>
+                      <h1 className="mx-1 text-[#f5f6fa] p-1 text-center rounded-md font-semibold">
+                        {user?.email}
+                      </h1>
+                      <h1 className="mx-1 text-[#f5f6fa] p-1 text-center rounded-md font-semibold">
+                        {user?.uid.slice(0, 20) + "..."}
+                      </h1>
+                      <Link
+                        to={"/profile"}
+                        className="rounded-lg py-2 text-center border border-teal-500 text-white hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-1000"
+                      >
+                        View Profile
+                      </Link>
 
-                          <ProfileLinks />
-
-                        </div>
-                          <Button
-                            onClick={() => logOut()}
-                            className="border flex items-center mx-2 py-2 justify-center gap-3 border-teal-500 text-white hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-500"
-                          >
-                            Log Out <MdLogout className="text-lg font-bold" />
-                          </Button>
+                      <ProfileLinks />
+                    </div>
+                    <Button
+                      onClick={() => logOut()}
+                      className="border flex items-center mx-2 py-2 justify-center gap-3 border-teal-500 text-white hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-500"
+                    >
+                      Log Out <MdLogout className="text-lg font-bold" />
+                    </Button>
 
                   </Drawer>
-
                 </React.Fragment>
               ) : (
                 <Typography
@@ -323,6 +356,33 @@ const Nav = () => {
           </MobileNav>
         </Navbar>
       </div>
+
+      <React.Fragment>
+        <Drawer open={open} onClose={closeDrawer} className="p-1 bg-[#170F21] min-h-screen rounded-r-lg border-r border-y">
+
+          <div className="mb-6 flex items-center justify-between">
+            <IconButton variant="text" color="white" onClick={closeDrawer}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="h-5 w-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </IconButton>
+          </div>
+
+          
+        </Drawer>
+      </React.Fragment>
+
     </div>
   );
 };

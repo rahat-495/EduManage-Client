@@ -8,7 +8,7 @@ const Address = () => {
             <Lottie 
                 animationData={workingData} 
                 loop={true} 
-                className="w-2/5 h-2/5"
+                className="lg:w-2/5 lg:h-2/5"
             />
             <h1 className="gro text-4xl text-white font-semibold">Working</h1>
         </div>

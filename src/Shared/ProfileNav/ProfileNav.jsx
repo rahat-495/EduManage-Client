@@ -79,7 +79,7 @@ const ProfileNav = () => {
     }
 
     return (
-        <div className="bg-[#170F21] w-80 min-h-[80vh] rounded-lg px-5 py-10 flex flex-col">
+        <div className="bg-[#170F21] w-full lg:w-80 min-h-[80vh] rounded-lg px-5 py-10 flex flex-col">
                 
             <div className="flex flex-col items-center justify-center gap-5 border-dashed border-b pb-5 border-[#412E4D]">
                 <img className="w-20 h-20 rounded-full p-1 border-teal-500 border" src={userData?.image ? userData?.image : user?.photoURL} alt="" />

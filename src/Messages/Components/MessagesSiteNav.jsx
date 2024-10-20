@@ -74,7 +74,7 @@ const MessagesSiteNav = () => {
     }
 
     return (
-        <div className="bg-[#170F21] w-64 min-h-[80vh] rounded-l-lg flex flex-col">
+        <div className="bg-[#170F21] w-64 min-h-[80vh] rounded-l-lg hidden flex-col lg:flex">
             
             <h1 className="border-[#483064] border-b rounded-tl-lg px-2 py-3 text-xl mx-2 my-1">Chats</h1>
 

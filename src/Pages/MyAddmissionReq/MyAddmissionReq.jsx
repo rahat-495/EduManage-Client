@@ -55,7 +55,7 @@ const MyAddmissionReq = () => {
     }
 
     return (
-        <div className="min-h-[70vh] flex flex-col items-center gap-5 mb-10">
+        <div className="min-h-[70vh] flex flex-col items-center gap-5 mb-10 mx-3 lg:mx-0">
 
             <h1 className="gro text-4xl font-semibold text-white my-14">Addmission Requests</h1>
 

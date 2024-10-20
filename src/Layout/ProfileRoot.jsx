@@ -6,15 +6,15 @@ import Footer from "../Shared/Footer/Footer";
 
 const ProfileRoot = () => {
     return (
-        <div className="">
+        <div className="overflow-x-hidden lg:overflow-visible">
             
             <div className="sticky top-0 z-50 bg-opacity-0 backdrop-blur-md">
                 <Nav/>
             </div>
 
-            <div className="flex items-start justify-between my-14 gap-6 max-w-[1440px] mx-auto overflow-hidden">
+            <div className="flex-col mx-3 lg:flex-row flex items-start justify-between my-14 gap-6 max-w-[1440px] lg:mx-auto overflow-hidden">
 
-                <div className="">
+                <div className="w-full lg:w-80">
                     <ProfileNav/>
                 </div>
 
