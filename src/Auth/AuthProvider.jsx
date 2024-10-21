@@ -59,7 +59,7 @@ const AuthProvider = ({children}) => {
     }
 
     useEffect(() => {
-        setSocket(io('http://localhost:5555')) ;
+        setSocket(io('https://edumanage-server.onrender.com')) ;
     } , [setSocket])
 
     useEffect(() => {

@@ -77,7 +77,7 @@ const MessagePage = () => {
   } , [messages])
 
   useEffect(() => {
-    setSocket(io('http://localhost:5555')) ;
+    setSocket(io('https://edumanage-server.onrender.com')) ;
   } , [setSocket])
 
   useEffect(() => {
@@ -246,22 +246,21 @@ const MessagePage = () => {
       <div id="scrollDiv" className={`w-full h-[69vh] overflow-y-auto flex flex-col items-start px-6 py-3 scrollbar-thin scrollbar-thumb-[#483064] scrollbar-track-transparent ${messagesLoading && "flex flex-col items-center justify-center"}`}>
         
         {
-          !messagesLoading ?
           messages?.length > 0 ?
           messages?.map((data) => <div ref={messageEndRef} key={data?._id} className={`w-full mb-1 ${currentUser?.studentUid === data?.sender ? "flex flex-col items-end justify-end gap-3" : "flex flex-col gap-3"}`}>
             
             {
               data?.text &&
               <div className={`flex flex-col my-1 ${currentUser?.studentUid === data?.sender ? "text-end" : ""}`}>
-                <p className={`inline-block max-w-xs ${currentUser?.studentUid === data?.sender ? "rounded-l-md rounded-br-md px-3 py-1 bg-[#3b3b3b] text-white" : "rounded-r-md w-fit rounded-bl-md px-3 py-1 bg-[#3c3c58] text-white"}`}>{data?.text}</p>
+                <p className={`inline-block max-w-[220px] lg:max-w-xs ${currentUser?.studentUid === data?.sender ? "rounded-l-md rounded-br-md px-3 py-1 bg-[#3b3b3b] text-white" : "rounded-r-md w-fit rounded-bl-md px-3 py-1 bg-[#3c3c58] text-white"}`}>{data?.text}</p>
                 <p className="text-[10px]">{new Date(data?.createdAt).getHours()} : {new Date(data?.createdAt).getMinutes()} : {new Date(data?.createdAt).getSeconds()}</p>
               </div>
             }
 
             {
               data?.imageUrl &&
-              <div className={`flex flex-col my-3 ${currentUser?.studentUid === data?.sender ? "text-end" : ""}`}>
-                <img src={data?.imageUrl} alt="image" className={`inline-block max-w-xs w-48 h-48 ${currentUser?.studentUid === data?.sender ? "rounded-lg bg-[#3b3b3b] text-white" : "bg-[#3c3c58] text-white rounded-lg"}`}/>
+              <div className={`flex flex-col my-3 cursor-pointer ${currentUser?.studentUid === data?.sender ? "text-end" : ""}`}>
+                <img src={data?.imageUrl} alt="image" className={`inline-block max-w-[170px] lg:max-w-md ${currentUser?.studentUid === data?.sender ? "rounded-lg bg-[#3b3b3b] text-white" : "bg-[#3c3c58] text-white rounded-lg"}`}/>
                 <p className="text-[10px]">{new Date(data?.createdAt).getHours()} : {new Date(data?.createdAt).getMinutes()} : {new Date(data?.createdAt).getSeconds()}</p>
               </div>
             }
@@ -269,7 +268,7 @@ const MessagePage = () => {
             {
               data?.videoUrl &&
               <div className={`flex flex-col my-3 ${currentUser?.studentUid === data?.sender ? "text-end" : ""}`}>
-                <video src={data?.videoUrl} controls className={`inline-block max-w-xs ${currentUser?.studentUid === data?.sender ? "rounded-lg bg-[#3b3b3b] text-white" : "bg-[#3c3c58] text-white rounded-lg"}`}></video>
+                <video src={data?.videoUrl} controls className={`inline-block max-w-[220px] lg:max-w-md ${currentUser?.studentUid === data?.sender ? "rounded-lg bg-[#3b3b3b] text-white" : "bg-[#3c3c58] text-white rounded-lg"}`}></video>
                 <p className="text-[10px]">{new Date(data?.createdAt).getHours()} : {new Date(data?.createdAt).getMinutes()} : {new Date(data?.createdAt).getSeconds()}</p>
               </div>
             }
@@ -277,9 +276,6 @@ const MessagePage = () => {
           </div>):
           <div className="flex flex-col items-center justify-center gro h-[75vh] w-full">
             <h1 className="font-bold text-4xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-[#00FFB2] text-center mt-3">No chats start yeat !</h1>
-          </div>:
-          <div className="w-[30%] h-[30%] flex items-center justify-center">
-            <Lottie animationData={loader} loop={true}/>
           </div>
         }
 
