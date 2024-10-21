@@ -340,28 +340,9 @@ const Nav = () => {
       </div>
 
       <React.Fragment>
-        <Drawer open={open} onClose={closeDrawer} className="p-1 bg-[#170F21] min-h-screen rounded-r-lg border-purple-500 border-r border-y">
+        <Drawer open={open} onClose={closeDrawer} className="p-1 bg-[#170F21] min-h-screen rounded-r-lg border-purple-500 border-r border-y flex flex-col lg:hidden">
 
-          <div className="flex items-center justify-between">
-            <IconButton variant="text" color="white" onClick={closeDrawer}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-                className="h-5 w-5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </IconButton>
-          </div>
-
-          <MessagesSiteNav isResponsive={"moblie"} closeDrawer={closeDrawer}/>
+          <MessagesSiteNav isResponsive={"mobile"} closeDrawer={closeDrawer}/>
           
         </Drawer>
       </React.Fragment>

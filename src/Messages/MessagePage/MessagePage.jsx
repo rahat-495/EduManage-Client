@@ -74,7 +74,7 @@ const MessagePage = () => {
 
   useEffect(() => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  } , [newMessage])
+  } , [messages])
 
   useEffect(() => {
     setSocket(io('http://localhost:5555')) ;

@@ -4,7 +4,7 @@ import { BiSearchAlt } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import { Avatar } from "@material-tailwind/react";
+import { Avatar, IconButton } from "@material-tailwind/react";
 import { useState } from "react";
 import {NavLink, useNavigate} from 'react-router-dom'
 import Swal from 'sweetalert2'
@@ -74,9 +74,30 @@ const MessagesSiteNav = ({isResponsive , closeDrawer}) => {
     }
 
     return (
-        <div className={`bg-[#170F21] w-64 min-h-[80vh] rounded-l-lg ${isResponsive === "moblie" ? "flex w-full" : "hidden"} flex-col lg:flex`}>
+        <div className={`bg-[#170F21] w-64 min-h-[80vh] rounded-l-lg ${isResponsive === "mobile" ? "flex w-full" : "hidden"} flex-col lg:flex`}>
             
-            <h1 className={`border-[#483064] border-b rounded-tl-lg px-2 py-3 text-xl mx-2 my-1 ${isResponsive === "moblie" ? "" : ""}`}>Chats</h1>
+            <h1 className={`border-[#483064] border-b rounded-tl-lg lg:px-2 py-3 text-xl mx-2 my-1 ${isResponsive === "mobile" ? "flex items-center justify-between px-0 mx-0" : ""}`}>
+                Chats 
+                {
+                    isResponsive === "mobile" && 
+                    <IconButton variant="text" color="white" onClick={closeDrawer}>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={2}
+                            stroke="currentColor"
+                            className="h-5 w-5"
+                        >
+                            <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M6 18L18 6M6 6l12 12"
+                            />
+                        </svg>
+                    </IconButton>
+                } 
+            </h1>
 
             <form onSubmit={handleSearch} className="mt-3 px-2 relative">
                 <input onChange={(e) => setSearch(e.target.value)} name="search" type="text" className="bg-transparent border border-b-[#00FFB2] border-gray-700 outline-none border-b-2 rounded-[4px] w-full py-1 pr-6 pl-1 gro" placeholder="Name / Email"/>
