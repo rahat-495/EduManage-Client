@@ -246,6 +246,7 @@ const MessagePage = () => {
       <div id="scrollDiv" className={`w-full h-[69vh] overflow-y-auto flex flex-col items-start px-6 py-3 scrollbar-thin scrollbar-thumb-[#483064] scrollbar-track-transparent ${messagesLoading && "flex flex-col items-center justify-center"}`}>
         
         {
+          !messagesLoading ?
           messages?.length > 0 ?
           messages?.map((data) => <div ref={messageEndRef} key={data?._id} className={`w-full mb-1 ${currentUser?.studentUid === data?.sender ? "flex flex-col items-end justify-end gap-3" : "flex flex-col gap-3"}`}>
             
@@ -276,6 +277,9 @@ const MessagePage = () => {
           </div>):
           <div className="flex flex-col items-center justify-center gro h-[75vh] w-full">
             <h1 className="font-bold text-4xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-[#00FFB2] text-center mt-3">No chats start yeat !</h1>
+          </div>:
+          <div className="flex flex-col items-center justify-center">
+            <Lottie animationData={loader} loop={true}/>
           </div>
         }
 

@@ -2,7 +2,8 @@
 import axios from "axios";
 
 const axiosSecure = axios.create({
-    baseURL : "https://edumanageserver.vercel.app/api" ,
+    baseURL : "https://edumanage-server.onrender.com/api" ,
+    // baseURL : "http://localhost:5555/api" ,
     withCredentials : true ,
 })
 
