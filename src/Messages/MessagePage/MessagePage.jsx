@@ -211,7 +211,7 @@ const MessagePage = () => {
   }
 
   return (
-    <div className={`flex flex-col items-start justify-between w-full min-h-[80vh] ${messagesLoading && "flex flex-col items-center justify-center"}`}> 
+    <div className={`flex flex-col items-start justify-between w-full min-h-screen lg:min-h-[80vh] ${messagesLoading && "flex flex-col items-center justify-center"}`}> 
 
       <div className={`w-full border-b border-[#483064] flex items-start justify-between px-3 rounded-tr-lg`}>
 
