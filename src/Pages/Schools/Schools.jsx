@@ -29,7 +29,7 @@ const Schools = () => {
     })
 
   return (
-    <div className="min-h-[70vh]">
+    <div className="min-h-[70vh] mx-3 mb-10 lg:mb-0 lg:mx-0">
       <h1 className="gro text-4xl text-center font-semibold my-10">
         All Schools
       </h1>
@@ -43,48 +43,49 @@ const Schools = () => {
           >
             <img src={school?.schoolLogo} alt="" className="h-52 w-52" />
 
-            <div className="gro flex w-full justify-between items-start gap-2 mt-2">
+            <div className="gro flex flex-col items-center justify-center lg:flex-row w-full lg:justify-between lg:items-start gap-2 mt-2">
+
               <div className="flex flex-col items-start gap-2">
-                <h1 className="text-lg text-black font-semibold ">
+                <h1 className="text-lg text-black font-semibold mx-auto lg:mx-0">
                   Name : {school?.schoolName}
                 </h1>
-                <p className="text-black font-semibold">
+                <p className="text-black font-semibold mx-auto lg:mx-0">
                   School Code : {school?.schoolCode}
                 </p>
-                <p className="text-black font-semibold">
+                <p className="text-black font-semibold mx-auto lg:mx-0">
                   Postal Code : {school?.postalCode}
                 </p>
-                <p className="text-black font-semibold">
+                <p className="text-black font-semibold mx-auto lg:mx-0">
                   Address :{" "}
                   {school?.address.length > 21
                     ? school?.address.slice(0, 18) + "..."
                     : school?.address}
                 </p>
-                <p className="text-black font-semibold capitalize">
+                <p className="text-black font-semibold capitalize mx-auto lg:mx-0">
                   School Phone : <span className="">{school?.phone}</span>
                 </p>
-                <p className="text-black font-semibold">
+                <p className="text-black font-semibold mx-auto lg:mx-0">
                   School Type : {school?.schoolType}
                 </p>
               </div>
 
               <div className="flex flex-col items-start gap-2">
 
-                <p className="text-black font-semibold capitalize">
+                <p className="text-black font-semibold capitalize mx-auto lg:mx-0">
                   Principal Name :{" "}
                   <span className="play text-sm">{school?.principalName}</span>
                 </p>
 
-                <p className="text-black font-semibold capitalize">
+                <p className="text-black font-semibold capitalize mx-auto lg:mx-0">
                   Principal Contact :{" "}
                   <span className="play text-sm">
                     {school?.principalContact}
                   </span>
                 </p>
 
-                <p className="text-black font-semibold">Id : {school?._id}</p>
+                <p className="text-black font-semibold mx-auto lg:mx-0">Id : {school?._id}</p>
 
-                <div className="text-black font-semibold flex items-center justify-between">Grade Name :  
+                <div className="text-black font-semibold flex items-center justify-between mx-auto lg:mx-0">Grade Name :  
                     <div className="dropdown dropdown-hover">
                         <div tabIndex={0} role="button" className="ml-5">Hover Here</div>
                         <div tabIndex={0} className="dropdown-content bg-[#1D232A] text-white w-max menu -ml-8 border rounded-box z-[10] p-2">
@@ -106,7 +107,7 @@ const Schools = () => {
                     </div>
                 </div>
 
-                <div className="text-black font-semibold flex items-center gap-5 justify-between">
+                <div className="text-black font-semibold flex items-center gap-5 justify-between mx-auto lg:mx-0">
                     <span>Available Grades :</span>
                     <div className="flex items-center gap-3">
                         {   school?.availableGrades?.length > 0 ? 
@@ -131,6 +132,7 @@ const Schools = () => {
                 </div>
 
               </div>
+
             </div>
           </div>
         ))}
