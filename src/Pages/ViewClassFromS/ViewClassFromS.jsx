@@ -20,7 +20,7 @@ const ViewClassFromS = () => {
     })
 
     return (
-        <div className="min-h-[70vh]">
+        <div className="min-h-[70vh] mx-3 lg:mx-0">
             
             <h1 className="gro text-4xl text-center my-10">This School Grades</h1>
             
@@ -36,11 +36,11 @@ const ViewClassFromS = () => {
                                         <p className="text-black font-semibold">Grade ID : {classD?._id}</p>
                                         <p className="text-black font-semibold">School ID : {classD?.schoolId}</p>
                                         <p className="text-black font-semibold">Grade Type : {classD?.gradeType}</p>
-                                        <div className="flex items-center justify-between gap-28">
+                                        <div className="flex gap-10 items-center justify-between lg:gap-28">
                                             <p className="text-black font-semibold">Grade No : {classD?.gradeNumber}<sup>th</sup></p>
                                             <p className="text-black font-semibold">Students: {classD?.totalStudent}</p>
                                         </div>
-                                        <p className="text-black font-semibold">Subjects : {classD?.subjectsArray?.map((sub , index) => <span className="mx-1" key={index}>{sub}</span>)}</p>
+                                        <p className="text-black font-semibold">Subjects : {classD?.subjectsArray?.map((sub , index) => <span className="mx-1 capitalize" key={index}>{sub},</span>)}</p>
                                     </div>
                                 </div>
                             </Tooltip>
