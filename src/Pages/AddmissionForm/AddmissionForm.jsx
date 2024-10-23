@@ -3,7 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAuth from "../../Hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
-import { Input, Option, Select } from "@material-tailwind/react";
 import Swal from "sweetalert2";
 import Lottie from "lottie-react";
 import squarLoader from '../../../public/squarLoader.json'
@@ -130,7 +129,7 @@ const AddmissionForm = () => {
     }
 
     return (
-        <div className="min-h-[70vh] my-10">
+        <div className="min-h-[70vh] my-10 mx-3 lg:mx-0">
             
             <h1 className="text-white gro text-4xl font-semibold text-center my-14">Addmission Form</h1>
             
@@ -139,28 +138,28 @@ const AddmissionForm = () => {
                 <form onSubmit={handleAddmission} className="w-full flex flex-col gap-5">
 
                     <div className="grid grid-cols-1 gap-5">
-                        <Input name="name" defaultValue={user?.displayName} type="text" label="Name" required/>
+                        <input className="outline-none rounded-md py-[10px] border-gray-300 focus:border-white border gro px-2 bg-transparent" name="name" defaultValue={user?.displayName} type="text" placeholder="Name" required/>
                     </div>
                     
                     <div className="grid grid-cols-2 gap-5">
-                        <Input name="studentNumber" type="number" label="Your Number" required/>
+                        <input className="outline-none rounded-md py-[10px] border-gray-300 focus:border-white border gro px-2 bg-transparent" name="studentNumber" type="number" placeholder="Your Number" required/>
 
-                        <select name="gender" label="gender" className="border px-3 py-[10px] cursor-pointer rounded-lg bg-transparent focus:border-white focus:outline-none" required>
+                        <select name="gender" placeholder="gender" className="border px-3 py-[10px] cursor-pointer rounded-lg bg-transparent focus:border-white focus:outline-none" required>
                             <option value={'male'}>Male</option>
                             <option value={'female'}>Female</option>
                         </select>
                     </div>
 
                     <div className="grid grid-cols-1 gap-5">
-                        <Input name="email" value={user?.email} type="email" label="Email" required/>
+                        <input className="outline-none rounded-md py-[10px] border-gray-300 focus:border-white border gro px-2 bg-transparent" name="email" value={user?.email} type="email" placeholder="Email" required/>
                     </div>
 
                     <div className="grid grid-cols-2 gap-5">
-                        <Select value={schoolInfo?.schoolName} name="school" label="School" required>
-                            <Option value={schoolInfo?.schoolName}>{schoolInfo?.schoolName}</Option>
-                        </Select>
+                        <select className="outline-none rounded-md border-gray-300 focus:border-white border gro px-2 bg-transparent" value={schoolInfo?.schoolName} name="school" placeholder="School" required>
+                            <option value={schoolInfo?.schoolName}>{schoolInfo?.schoolName}</option>
+                        </select>
 
-                        <select name="grade" label="Grades" className="border px-3 py-[10px] cursor-pointer rounded-lg bg-transparent focus:border-white focus:outline-none" required>
+                        <select name="grade" placeholder="Grades" className="border px-3 py-[10px] cursor-pointer rounded-lg bg-transparent focus:border-white focus:outline-none" required>
                             <option selected={true} disabled>Grade</option>
                             {gradesInfo?.length > 0 ? (
                                 gradesInfo?.map((data) => (
@@ -179,16 +178,16 @@ const AddmissionForm = () => {
                     </div>
 
                     <div className="grid grid-cols-1 gap-5">
-                        <Input name="parentNumber" type="number" label="Parent Number" required/>
+                        <input className="outline-none rounded-md py-[10px] border-gray-300 focus:border-white border gro px-2 bg-transparent" name="parentNumber" type="number" placeholder="Parent Number" required/>
                     </div>
 
                     <div className="grid grid-cols-2 gap-5">
-                        <Input name="fatherName" type="text" label="Father Name" required/>
-                        <Input name="motherName" type="text" label="Mother Name" required/>
+                        <input className="outline-none rounded-md py-[10px] border-gray-300 focus:border-white border gro px-2 bg-transparent" name="fatherName" type="text" placeholder="Father Name" required/>
+                        <input className="outline-none rounded-md py-[10px] border-gray-300 focus:border-white border gro px-2 bg-transparent" name="motherName" type="text" placeholder="Mother Name" required/>
                     </div>
 
                     <div className="grid grid-cols-1 gap-5">
-                        <Input name="address" type="text" label="Full Address" required/>
+                        <input className="outline-none rounded-md py-[10px] border-gray-300 focus:border-white border gro px-2 bg-transparent" name="address" type="text" placeholder="Full Address" required/>
                     </div>
                     
                     <input type="submit" value={'Apply'} className="btn btn-outline gro"/>
