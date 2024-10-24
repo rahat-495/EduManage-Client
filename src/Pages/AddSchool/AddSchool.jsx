@@ -1,6 +1,5 @@
 
 import Swal from 'sweetalert2' ;
-import { Input } from "@material-tailwind/react";
 import useAuth from "../../Hooks/useAuth";
 import axios from "axios";
 import useAxiosCommon from "../../Hooks/useAxiosCommon";
@@ -94,7 +93,7 @@ const AddSchool = () => {
   };
 
   return (
-    <div className="min-h-[70vh]">
+    <div className="min-h-[70vh] mx-3 lg:mx-0">
       <h1 className="play text-center my-16 text-4xl text-white">
         Add A School
       </h1>
@@ -102,21 +101,21 @@ const AddSchool = () => {
       <div className="flex items-center justify-center flex-col w-full">
         <form onSubmit={hanldeSubmit} className="w-full flex flex-col gap-5">
           <div className="grid grid-cols-2 gap-5">
-            <Input
+            <input
               required
               name="schoolName"
-              className="p-full"
+              className="outline-none rounded-md py-[7px] border-gray-300 focus:border-white border gro px-2 bg-transparent"
               color="white"
               type={"text"}
-              label={"School Name"}
+              placeholder={"School Name"}
             />
-            <Input
+            <input
               required
               name="schoolCode"
-              className="p-full"
+              className="outline-none rounded-md py-[7px] border-gray-300 focus:border-white border gro px-2 bg-transparent"
               color="white"
               type={"number"}
-              label={"School Code"}
+              placeholder={"School Code"}
             />
           </div>
 
@@ -124,88 +123,88 @@ const AddSchool = () => {
             <div className="border bg-transparent border-[#B0BEC5] p-0 rounded-md">
               <input
                 required
-                className="file-input bg-transparent cursor-pointer h-9 mt-[1px] w-full"
+                className="file-input bg-transparent cursor-pointer h-full mt-[1px] w-full"
                 type="file"
                 name="schoolLogo"
                 // accept="image/*"
               />
             </div>
-            <Input
+            <input
               required
               name="address"
-              className="p-full"
+              className="outline-none rounded-md py-[7px] border-gray-300 focus:border-white border gro px-2 bg-transparent"
               color="white"
               type={"text"}
-              label={"Address"}
+              placeholder={"Address"}
             />
           </div>
 
           <div className="grid grid-cols-2 gap-5">
-            <Input
+            <input
               required
               name="city"
-              className="p-full"
+              className="outline-none rounded-md py-[7px] border-gray-300 focus:border-white border gro px-2 bg-transparent"
               color="white"
               type={"text"}
-              label={"Add City"}
+              placeholder={"Add City"}
             />
-            <Input
+            <input
               required
               name="country"
-              className="p-full"
+              className="outline-none rounded-md py-[7px] border-gray-300 focus:border-white border gro px-2 bg-transparent"
               color="white"
               type={"text"}
-              label={"Country"}
+              placeholder={"Country"}
             />
           </div>
 
           <div className="grid grid-cols-2 gap-5">
-            <Input
+            <input
               required
               name="postalCode"
-              className="p-full"
+              className="outline-none rounded-md py-[7px] border-gray-300 focus:border-white border gro px-2 bg-transparent"
               color="white"
               type={"text"}
-              label={"School Postal-Code"}
+              placeholder={"School Postal-Code"}
             />
-            <Input
+            <input
               required
               name="phone"
-              className="p-full"
+              className="outline-none rounded-md py-[7px] border-gray-300 focus:border-white border gro px-2 bg-transparent"
               color="white"
               type={"text"}
-              label={"School Contact Number"}
+              placeholder={"School Contact Number"}
             />
           </div>
 
           <div className="grid grid-cols-2 gap-5">
-            <Input
+            <input
               required
               value={user?.email}
               name="email"
-              className="p-full"
+              className="outline-none rounded-md py-[7px] border-gray-300 focus:border-white border gro px-2 bg-transparent"
               color="white"
               type={"email"}
-              label={"Email"}
+              placeholder={"Email"}
             />
-            <Input
+            <input
               required
               name="principalName"
-              className="p-full"
+              className="outline-none rounded-md py-[7px] border-gray-300 focus:border-white border gro px-2 bg-transparent"
               color="white"
               type={"text"}
-              label={"Principal's Name"}
+              placeholder={"Principal's Name"}
             />
           </div>
 
           <div className="grid grid-cols-2 gap-5">
-            <Input
+            <input
               required
               name="principalContact"
-              className="p-full"
+              className="outline-none rounded-md py-[7px] border-gray-300 focus:border-white border gro px-2 bg-transparent"
               color="white"
               type={"number"}
-              label={"Principal's Contact Number"}
+              placeholder={"Principal's Contact Number"}
             />
             <select
               required

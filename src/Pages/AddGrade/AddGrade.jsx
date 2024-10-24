@@ -1,6 +1,6 @@
 
 import Swal from 'sweetalert2' ;
-import { Input, Option, Select } from "@material-tailwind/react";
+import { Option, Select } from "@material-tailwind/react";
 import useAuth from "../../Hooks/useAuth";
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -83,15 +83,16 @@ const AddGrade = () => {
   }
 
   return (
-    <div className="min-h-[70vh]">
+    <div className="min-h-[70vh] mx-3 lg:mx-0">
       <h1 className="play text-center my-16 text-4xl text-white">
         Add A Grade
       </h1>
 
       <div className="flex justify-center flex-col w-full relative">
         <form onSubmit={hanldeSubmit} className="w-full flex flex-col gap-5">
+
           <div className="grid grid-cols-2 gap-5">
-            <Select label="School Name" onChange={(e) => setGradeData((preve) => {
+            <select className="border px-3 py-[7px] cursor-pointer rounded-lg bg-transparent focus:border-white focus:outline-none" placeholder="School Name" onChange={(e) => setGradeData((preve) => {
               return{
                 ...preve ,
                 schoolId : e,
@@ -100,22 +101,22 @@ const AddGrade = () => {
               {
                 data && data.length > 0 ? (
                   data.map((school) => (
-                    <Option key={school?._id} value={school?._id} className='my-1'>
+                    <option key={school?._id} value={school?._id} className='my-1'>
                       {school?.schoolName}
-                    </Option>
+                    </option>
                   ))
                 ) : (
-                  <Option disabled>No schools available</Option>
+                  <option disabled>No schools available</option>
                 )
               }
-            </Select>
-            <Input
+            </select>
+            <input
               required
               name="className"
-              className="p-full"
+              className="outline-none rounded-md py-[7px] border-gray-300 focus:border-white border gro px-2 bg-transparent"
               color="white"
               type={"text"}
-              label={"Grade Name"}
+              placeholder={"Grade Name"}
             />
           </div>
 
@@ -141,13 +142,13 @@ const AddGrade = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-5">  
-            <Input
+            <input
               required
               name="totalStudent"
-              className="p-full"
+              className="outline-none rounded-md py-[7px] border-gray-300 focus:border-white border gro px-2 bg-transparent"
               color="white"
               type={"number"}
-              label={"Total Student Count"}
+              placeholder={"Total Student Count"}
             />
             <select
               required
@@ -162,39 +163,39 @@ const AddGrade = () => {
           </div>
 
           <div className="grid grid-cols-1 gap-5">
-            <Input
+            <input
               required
               value={user?.email}
               name="email"
-              className="p-full"
+              className="outline-none rounded-md py-[7px] border-gray-300 focus:border-white border gro px-2 bg-transparent"
               color="white"
               type={"email"}
-              label={"Email"}
+              placeholder={"Email"}
               />
           </div>  
 
           <div className="grid grid-cols-2 gap-5">
 
-            <Input
+            <input
               required
               name="classTeacherName"
-              className="p-full"
+              className="outline-none rounded-md py-[7px] border-gray-300 focus:border-white border gro px-2 bg-transparent"
               color="white"
               type={"text"}
-              label={"Class Teacher Name"}
+              placeholder={"Class Teacher Name"}
               />
 
           </div>  
 
-          <input type="submit" value={"Create"} className={`btn btn-outline w-full my-5 ${subjects?.length > 0 && 'mt-12'}`} />
+          <input type="submit" value={"Create"} className={`btn btn-outline w-full my-5 ${subjects?.length > 0 && 'mt-12'} ${subjects?.length > 3 && 'mt-20 lg:mt-12'}`} />
         </form>
 
-        <form onSubmit={handleSubjects} className={`flex border rounded-lg p-1 absolute w-[710px] bottom-[108px] right-0 ${subjects?.length > 0 && 'bottom-[136px]'}`}>
+        <form onSubmit={handleSubjects} className={`flex border rounded-lg p-1 absolute w-[190px] lg:w-[710px] bottom-[108px] right-0 ${subjects?.length > 0 && 'bottom-[136px]'} ${subjects?.length > 3 && 'bottom-[168px]'}`}>
           <input required name='subject' className={`bg-transparent w-full h-[30px] rounded-lg focus:outline-none px-3`} placeholder='Subjects'/>
           <input type="submit" value={'Add'} className='bg-white text-black gro font-semibold rounded px-1 cursor-pointer hover:text-white hover:bg-gray-700 duration-300'/>
         </form>
 
-        <div className={`grid grid-cols-10 absolute w-full bottom-[90px] overflow-x- gap-2 ${subjects?.length > 0 && "rounded-lg p-0"}`} >
+        <div className={`grid grid-cols-3 lg:grid-cols-10 absolute w-full bottom-[90px] overflow-x- gap-2 ${subjects?.length > 0 && "rounded-lg p-0"}`} >
           {
             subjects?.length > 0 && subjects?.map((subject) => <div key={subject} className='border flex items-center justify-center gap-1 gro capitalize rounded'><GiCancel className='hover:text-red-700 cursor-pointer duration-200' onClick={() => handleRemoveSubject(subject)}/> {subject}</div>)
           }
