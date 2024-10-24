@@ -1,7 +1,7 @@
 
 import { Link, NavLink, useLocation } from "react-router-dom";
 import NavLinks from "../NavLinks/NavLinks";
-import { Typography } from "@material-tailwind/react";
+import { Menu, MenuHandler, MenuList, Typography } from "@material-tailwind/react";
 import { useState } from "react";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
 import { useSelector } from "react-redux";
@@ -71,7 +71,7 @@ const NavLists = () => {
           as="li"
           onMouseEnter={() => setDropDown(!dropdown)}
           onMouseLeave={() => setDropDown(!dropdown)}
-          className={`p-1 font-normal gro dropdown dropdown-hover ${
+          className={`p-1 font-normal gro dropdown dropdown-hover hidden lg:flex ${
             pathname === "/addGrade" && "underline font-semibold"
           }`}
         >
@@ -121,6 +121,62 @@ const NavLists = () => {
           </NavLink>
           
         </Typography>
+
+        <Menu placement="top-start">
+          <MenuHandler>
+            <Typography
+              as="li"
+              onMouseEnter={() => setDropDown(!dropdown)}
+              onMouseLeave={() => setDropDown(!dropdown)}
+              className={`p-1 font-normal gro dropdown dropdown-hover flex lg:hidden ${
+                pathname === "/addGrade" && "underline font-semibold"
+              }`}
+            >
+              <NavLink
+                to={"/addSchool"}
+                className={({ isActive, isPending }) =>
+                  isPending
+                    ? "pending"
+                    : isActive
+                    ? "font-semibold underline transition-all ease-in-out duration-300"
+                    : ""
+                }
+              >
+                <div className="flex items-center justify-center gap-1 link mt-2">
+                  <NavLinks path={"/addSchool"} label={"Add"} />
+                  {dropdown ? <FaAngleUp /> : <FaAngleDown />}
+                </div>
+              </NavLink>
+            </Typography>
+          </MenuHandler>
+
+          <MenuList className="flex flex-col gap-3">
+
+              <Link
+                to={"/addSchool"}
+                className={`gro font-semibold px-3 on w-full py-2 rounded-lg ${
+                  pathname === "/addSchool"
+                    ? "bg-gray-500 text-black"
+                    : "bg-gray-500 text-black"
+                }`}
+              >
+                Add School
+              </Link>
+
+              <Link
+                to={"/addGrade"}
+                className={`gro font-semibold px-3 on w-full py-2 rounded-lg ${
+                  pathname === "/addGrade"
+                    ? "bg-gray-500 text-black"
+                    : "bg-gray-500 text-black"
+                }`}
+              >
+                Add Grade
+              </Link>
+
+          </MenuList>
+
+        </Menu>
 
         <Typography as="li" className="p-1 font-normal gro">
           <NavLink
