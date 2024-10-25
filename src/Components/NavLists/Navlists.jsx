@@ -156,8 +156,8 @@ const NavLists = () => {
                 to={"/addSchool"}
                 className={`gro font-semibold px-3 on w-full py-2 rounded-lg ${
                   pathname === "/addSchool"
-                    ? "bg-gray-500 text-black"
-                    : "bg-gray-500 text-black"
+                    ? "bg-gray-300 text-black"
+                    : "bg-gray-300 text-black"
                 }`}
               >
                 Add School
@@ -167,8 +167,8 @@ const NavLists = () => {
                 to={"/addGrade"}
                 className={`gro font-semibold px-3 on w-full py-2 rounded-lg ${
                   pathname === "/addGrade"
-                    ? "bg-gray-500 text-black"
-                    : "bg-gray-500 text-black"
+                    ? "bg-gray-300 text-black"
+                    : "bg-gray-300 text-black"
                 }`}
               >
                 Add Grade
