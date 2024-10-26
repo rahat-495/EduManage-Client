@@ -19,7 +19,7 @@ const YourSchools = () => {
     })
 
     return (
-        <div className="min-h-[70vh]">
+        <div className="min-h-[70vh] mx-3 lg:mx-0">
             
             <h1 className="gro text-4xl text-center my-10">Your Schools</h1>
             
@@ -28,14 +28,14 @@ const YourSchools = () => {
                     data?.map((school) => 
                         <Link to={`/schoolsDetails/${school._id}`} key={school?._id}>
                             <Tooltip placement="top-end" content="Click to Show Details" animate={{mount: { scale: 1, y: 0 },unmount: { scale: 0, y: 25 },}}>
-                                <div className="border grid grid-cols-5 bg-white max-h-52 rounded-lg gap-3 py-3 px-3">
+                                <div className="border flex flex-col items-center lg:grid lg:grid-cols-5 bg-white lg:max-h-52 rounded-lg gap-3 py-3 px-3">
                                     <img src={school?.schoolLogo} alt="" className="h-44 w-44 col-span-2" />
                                     <div className="col-span-3 gro flex flex-col items-start gap-2 mt-2">
-                                        <h1 className="text-lg text-black font-semibold ">Name: {school?.schoolName}</h1>
-                                        <p className="text-black font-semibold">ID: {school?._id}</p>
-                                        <p className="text-black font-semibold">Address: {school?.address.length > 21 ? school?.address.slice(0,18) + "..." : school?.address}</p>
-                                        <p className="text-black font-semibold capitalize">Principal Name: <span className="play text-sm">{school?.principalName}</span></p>
-                                        <p className="text-black font-semibold">School Type : {school?.schoolType}</p>
+                                        <h1 className="text-lg text-black font-semibold  mx-auto lg:mx-0">Name: {school?.schoolName}</h1>
+                                        <p className="text-black font-semibold mx-auto lg:mx-0">ID: {school?._id}</p>
+                                        <p className="text-black font-semibold mx-auto lg:mx-0">Address: {school?.address.length > 21 ? school?.address.slice(0,18) + "..." : school?.address}</p>
+                                        <p className="text-black font-semibold capitalize mx-auto lg:mx-0">Principal Name: <span className="play text-sm">{school?.principalName}</span></p>
+                                        <p className="text-black font-semibold mx-auto lg:mx-0">School Type : {school?.schoolType}</p>
                                     </div>
                                 </div>
                             </Tooltip>
