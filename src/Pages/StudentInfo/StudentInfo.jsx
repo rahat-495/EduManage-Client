@@ -119,7 +119,7 @@ const StudentInfo = () => {
     }
 
     return (
-        <div className="min-h-[70vh] flex flex-col items-center gap-5 mt-10">
+        <div className="min-h-[70vh] mx-3 lg:mx-0 flex flex-col items-center gap-5 mt-10">
             <div className="flex flex-col items-center justify-center gap-3">
                 <Tooltip content={addmissionData?.studentName} animate={{
                     mount: { scale: 1, y: 0 },
@@ -127,27 +127,27 @@ const StudentInfo = () => {
                 }}>
                     <img className="w-40 h-40 rounded-full mb-5 cursor-pointer" src={addmissionData?.studentImage} alt="" />
                 </Tooltip>
-                <div className="flex gap-10">
+                <div className="flex flex-col gap-1 text-center lg:text-start lg:flex-row lg:gap-10">
                     <p className="gro font-normal text-white text-lg"><span className="font-semibold">Student Name :</span> {addmissionData?.studentName}</p>
                     <p className="gro font-normal text-white text-lg"><span className="font-semibold">Student Email :</span> {addmissionData?.studentEmail}</p>
                 </div>
-                <div className="flex gap-10">
+                <div className="flex flex-col gap-1 text-center lg:text-start lg:flex-row lg:gap-10">
                     <p className="gro font-normal text-white text-lg"><span className="font-semibold">Student Number :</span> {addmissionData?.studentNumber}</p>
                     <p className="gro font-normal text-white text-lg"><span className="font-semibold">Student Uid :</span> {addmissionData?.studentUid}</p>
                 </div>
-                <div className="flex gap-10">
+                <div className="flex flex-col gap-1 text-center lg:text-start lg:flex-row lg:gap-10">
                     <p className="gro font-normal text-white text-lg"><span className="font-semibold">Father Name :</span> {addmissionData?.fatherName}</p>
                     <p className="gro font-normal text-white text-lg"><span className="font-semibold">Mother Name :</span> {addmissionData?.motherName}</p>
                 </div>
-                <div className="flex gap-10">
+                <div className="flex flex-col gap-1 text-center lg:text-start lg:flex-row lg:gap-10">
                     <p className="gro font-normal text-white text-lg"><span className="font-semibold">Parent Number :</span> {addmissionData?.parentNumber}</p>
                     <p className="gro font-normal text-white text-lg"><span className="font-semibold">Address :</span> {addmissionData?.address}</p>
                 </div>
-                <div className="flex gap-10">
+                <div className="flex flex-col gap-1 text-center lg:text-start lg:flex-row lg:gap-10">
                     <p className="gro font-normal text-white text-lg"><span className="font-semibold">Addmission On : </span> {addmissionData?.schoolName}</p>
                     <p className="gro font-normal text-white text-lg"><span className="font-semibold">Addmission Grade :</span> {addmissionData?.gradeNumber}</p>
                 </div>
-                <div className="flex gap-10 w-full mt-5">
+                <div className="flex flex-col gap-3 text-center lg:text-start lg:flex-row lg:gap-10 w-full mt-5">
 
                     <Button onClick={handleSchoolJoinStatus} className={`capitalize gro w-full text-sm bg-white shadow-none ${addmissionData?.schoolJoiningStatus === 'rejected' && 'text-red-700'} ${addmissionData?.schoolJoiningStatus === 'pending' && 'text-orange-700'}  ${addmissionData?.schoolJoiningStatus === 'accepted' && 'text-green-700'} border`}>School Status : {addmissionData?.schoolJoiningStatus}</Button>
 

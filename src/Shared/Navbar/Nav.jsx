@@ -232,7 +232,7 @@ const Nav = () => {
                     placement="right"
                     open={openRight}
                     onClose={closeDrawerRight}
-                    className="flex flex-col bg-[#010313] border-l-[1.5px] border-y-[1.5px] border-purple-500 lg:hidden min-h-screen pt-1 pb-9 w-3/5 fixed top-0 rounded-l-xl"
+                    className="flex flex-col bg-[#010313] border-l-[1.5px] border-y-[1.5px] border-purple-500 lg:hidden min-h-screen pt-1 pb-10 w-3/5 fixed top-0 rounded-l-xl"
                   >
 
                     <div className="mb-6 flex items-center justify-between bg-[#010313] rounded-xl">

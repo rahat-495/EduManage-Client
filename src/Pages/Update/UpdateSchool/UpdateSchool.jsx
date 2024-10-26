@@ -87,7 +87,7 @@ const UpdateSchool = () => {
   };
 
   return (
-    <div className="min-h-[70vh]">
+    <div className="min-h-[70vh] mx-3 lg:mx-0">
       <h1 className="play text-center my-16 text-4xl text-white">
         Update : {data?.schoolName}
       </h1>
@@ -95,20 +95,20 @@ const UpdateSchool = () => {
       <div className="flex items-center justify-center flex-col w-full">
         <form onSubmit={hanldeSubmit} className="w-full flex flex-col gap-5">
           <div className="grid grid-cols-2 gap-5">
-            <Input
+            <input
               required
               defaultValue={data?.schoolName}
               name="schoolName"
-              className="p-full"
+              className="outline-none rounded-md py-[7px] border-gray-300 focus:border-white border gro px-2 bg-transparent"
               color="white"
               type={"text"}
               label={"School Name"}
             />
-            <Input
+            <input
               required
               defaultValue={data?.schoolCode}
               name="schoolCode"
-              className="p-full"
+              className="outline-none rounded-md py-[7px] border-gray-300 focus:border-white border gro px-2 bg-transparent"
               color="white"
               type={"number"}
               label={"School Code"}
@@ -116,20 +116,20 @@ const UpdateSchool = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-5">
-            <div className="border bg-transparent border-[#B0BEC5] p-0 rounded-md flex items-center justify-between">
+            <div className="border bg-transparent border-[#B0BEC5] p-0 rounded-md h-[40px] flex items-center justify-between pr-1">
               <input
                 required
-                className="file-input bg-transparent cursor-pointer h-9 mt-[1px] w-full"
+                className="file-input bg-transparent cursor-pointer w-full h-[40px]"
                 type="file"
                 name="schoolLogo"
               />
-              <p className="">{data?.schoolLogo}</p>
+              <img className="w-9 h-9" src={data?.schoolLogo} alt="" />
             </div>
             <input
               required
               defaultValue={data?.address}
               name="address"
-              className="rounded-lg bg-transparent border p-3 text-white"
+              className="outline-none rounded-md py-[7px] border-gray-300 focus:border-white border gro px-2 bg-transparent"
               color="white"
               type={"text"}
               label={"Address"}
@@ -137,20 +137,20 @@ const UpdateSchool = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-5">
-            <Input
+            <input
               required
               name="city"
               defaultValue={data?.city}
-              className="p-full"
+              className="outline-none rounded-md py-[7px] border-gray-300 focus:border-white border gro px-2 bg-transparent"
               color="white"
               type={"text"}
               label={"Add City"}
             />
-            <Input
+            <input
               required
               name="country"
               defaultValue={data?.country}
-              className="p-full"
+              className="outline-none rounded-md py-[7px] border-gray-300 focus:border-white border gro px-2 bg-transparent"
               color="white"
               type={"text"}
               label={"Country"}
@@ -158,20 +158,20 @@ const UpdateSchool = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-5">
-            <Input
+            <input
               required
               defaultValue={data?.postalCode}
               name="postalCode"
-              className="p-full"
+              className="outline-none rounded-md py-[7px] border-gray-300 focus:border-white border gro px-2 bg-transparent"
               color="white"
               type={"text"}
               label={"School Postal-Code"}
             />
-            <Input
+            <input
               required
               defaultValue={data?.phone}
               name="phone"
-              className="p-full"
+              className="outline-none rounded-md py-[7px] border-gray-300 focus:border-white border gro px-2 bg-transparent"
               color="white"
               type={"text"}
               label={"School Contact Number"}
@@ -179,20 +179,20 @@ const UpdateSchool = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-5">
-            <Input
+            <input
               required
               value={data?.email}
               name="email"
-              className="p-full"
+              className="outline-none rounded-md py-[7px] border-gray-300 focus:border-white border gro px-2 bg-transparent"
               color="white"
               type={"email"}
               label={"Email"}
             />
-            <Input
+            <input
               required
               name="principalName"
               defaultValue={data?.principalName}
-              className="p-full"
+              className="outline-none rounded-md py-[7px] border-gray-300 focus:border-white border gro px-2 bg-transparent"
               color="white"
               type={"text"}
               label={"Principal's Name"}
@@ -200,11 +200,11 @@ const UpdateSchool = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-5">
-            <Input
+            <input
               required
               defaultValue={data?.principalContact}
               name="principalContact"
-              className="p-full"
+              className="outline-none rounded-md py-[7px] border-gray-300 focus:border-white border gro px-2 bg-transparent"
               color="white"
               type={"number"}
               label={"Principal's Contact Number"}
