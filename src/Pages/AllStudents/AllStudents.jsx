@@ -20,11 +20,11 @@ const AllStudents = () => {
     console.log(data) 
 
     return (
-        <div className="min-h-[70vh] flex flex-col items-center gap-5">
+        <div className="min-h-[70vh] flex flex-col items-center gap-5 mx-3 lg:mx-0">
 
             <h1 className="gro text-white text-4xl mb-10">All Students</h1>
 
-            <div className="w-full grid grid-cols-10 gap-5">
+            <div className="w-full grid grid-cols-3 lg:grid-cols-10 gap-5">
                 {
                     data?.map((data) => 
 

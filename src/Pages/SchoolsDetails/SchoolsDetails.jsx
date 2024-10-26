@@ -17,14 +17,14 @@ const SchoolsDetails = () => {
     })
 
     return (
-        <div className="min-h-[70vh]">
+        <div className="min-h-[70vh] mx-3 lg:mx-0">
 
             <h1 className="play text-4xl text-white text-center mt-20 mb-10">Schools Details</h1>
 
-            <div className="w-4/5 mx-auto h-[500px] rounded-md bg-white grid grid-cols-5 gap-3 px-3">
+            <div className="lg:w-4/5 mx-auto py-3 flex flex-col items-center justify-center lg:py-0 lg:h-[500px] rounded-md bg-white lg:grid grid-cols-5 gap-3 px-3">
                 <img src={data?.schoolLogo} alt="" className="my-auto w-80 h-80 col-span-2"/>
                 <div className="col-span-3 gro my-auto">
-                    <div className="grid grid-cols-2 border border-teal-500 my-2 rounded-md w-full py-1 px-3">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 border border-teal-500 my-2 rounded-md w-full py-1 px-3">
                         <h1 className="text-xl text-black font-semibold ">Name: {data?.schoolName}</h1>
                         <h1 className="text-xl text-black font-semibold ">School Code: {data?.schoolCode}</h1>
                     </div>

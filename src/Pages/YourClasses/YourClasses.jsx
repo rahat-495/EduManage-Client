@@ -19,7 +19,7 @@ const YourClasses = () => {
     })
 
     return (
-        <div className="min-h-[70vh]">
+        <div className="min-h-[70vh] mx-3 lg:mx-0">
             
             <h1 className="gro text-4xl text-center my-10">My Classes</h1>
             

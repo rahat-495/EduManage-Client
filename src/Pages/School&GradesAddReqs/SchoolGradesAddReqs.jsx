@@ -195,7 +195,7 @@ const SchoolGradesAddReqs = () => {
     }
 
     return (
-        <div className="min-h-[70vh] flex flex-col items-end my-8">
+        <div className="min-h-[70vh] mx-3 lg:mx-0 flex flex-col items-end my-8">
             
             {
                 columnType ? 
@@ -206,7 +206,7 @@ const SchoolGradesAddReqs = () => {
             <div className="w-full flex flex-col items-center justify-center mt-5">
                 {
                     columnType ? 
-                    <div className="grid grid-cols-3 gap-5 w-full">
+                    <div className="grid lg:grid-cols-3 gap-5 w-full">
                         {
                             addmissionReqData?.map((data) => <Tooltip key={data?._id} content="Click To Show Details" animate={{
                                 mount: { scale: 1, y: 0 },
