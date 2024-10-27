@@ -4,7 +4,7 @@ import { BiSearchAlt } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import { Avatar, IconButton } from "@material-tailwind/react";
+import { Avatar , Dialog , IconButton } from "@material-tailwind/react";
 import { useState } from "react";
 import {NavLink, useNavigate} from 'react-router-dom'
 import Swal from 'sweetalert2'
@@ -17,6 +17,7 @@ const MessagesSiteNav = ({isResponsive , closeDrawer}) => {
     const axiosSecure = useAxiosSecure() ;
     const [search , setSearch] = useState("") ;
     const userData = useSelector(state => state?.user) ;
+    const [open, setOpen] = useState(false);
 
     const {data : conversations , refetch , isLoading} = useQuery({
         queryKey : ['conversations' , userData?.email] ,
@@ -38,7 +39,7 @@ const MessagesSiteNav = ({isResponsive , closeDrawer}) => {
         e.preventDefault() ;
         e.target.reset() ;
         if(search){
-            document.getElementById('searchUsersModal').showModal() ;
+            handleOpen() ;
         }
     } 
 
@@ -61,10 +62,10 @@ const MessagesSiteNav = ({isResponsive , closeDrawer}) => {
         if(data?._id){
             refetch() ;
             navigate(`/message/${receiverData?.studentUid}`) ;
-            document.getElementById("searchUsersModal").close() ;
+            handleOpen() ;
         }
         else{
-            document.getElementById("searchUsersModal").close() ;
+            handleOpen() ;
             Swal.fire({
                 title: "Oops!",
                 text: "You Already Start Conversation With Him !",
@@ -72,6 +73,8 @@ const MessagesSiteNav = ({isResponsive , closeDrawer}) => {
             });
         }
     }
+
+    const handleOpen = () => setOpen(!open);
 
     return (
         <div className={`bg-[#170F21] w-64 min-h-[80vh] rounded-l-lg ${isResponsive === "mobile" ? "flex w-full" : "hidden"} flex-col lg:flex`}>
@@ -100,7 +103,7 @@ const MessagesSiteNav = ({isResponsive , closeDrawer}) => {
             </h1>
 
             <form onSubmit={handleSearch} className="mt-3 px-2 relative">
-                <input onChange={(e) => setSearch(e.target.value)} name="search" type="text" className="bg-transparent border border-b-[#00FFB2] border-gray-700 outline-none border-b-2 rounded-[4px] w-full py-1 pr-6 pl-1 gro" placeholder="Name / Email"/>
+                <input onPaste={(e) => setSearch(e.target.value)} onChange={(e) => setSearch(e.target.value)} name="search" type="text" className="bg-transparent border border-b-[#00FFB2] border-gray-700 outline-none border-b-2 rounded-[4px] w-full py-1 pr-6 pl-1 gro" placeholder="Name / Email"/>
                 <button className="absolute top-[10px] right-[14px]"><BiSearchAlt className=""/></button>
             </form>
 
@@ -138,7 +141,7 @@ const MessagesSiteNav = ({isResponsive , closeDrawer}) => {
                                 <p className="text-base flex items-center">
                                     {   !user?.lastMessage ?
                                         userData?.studentUid === user?.receiver ? user?.senderEmail?.length > 16 ? user?.senderEmail : user?.senderEmail?.slice(0,20)+"..." : user?.receiverEmail?.length > 16 ? user?.receiverEmail : user?.receiverEmail?.slice(0,20)+"..."  :
-                                        user?.sender === userData?.studentUid ? user?.lastMessage?.length > 12 ? " You → " + user?.lastMessage.slice(0 , 12)+"..." : user?.receiverName?.slice(0,4) + " → " + user?.lastMessage?.slice(0,13) : "You" + " → " + user?.lastMessage?.slice(0,13)
+                                        user?.lastMessage?.length > 12 ? user?.lastMessage?.slice(0,12) + "..." : user?.lastMessage
                                     }
                                 </p>
                             </div>
@@ -150,12 +153,21 @@ const MessagesSiteNav = ({isResponsive , closeDrawer}) => {
                 }
             </div>
 
-            <dialog id="searchUsersModal" className="modal">
-                <div className="modal-box bg-[#0F172A]">
+            <Dialog
+                size="xs"
+                open={open}
+                handler={handleOpen}
+                animate={{
+                mount: { scale: 1, y: 0 },
+                unmount: { scale: 0.9, y: -100 },
+                }}
+                className="flex items-center justify-center"
+            >
+                <div className="modal-box bg-[#0F172A] w-full h-full">
 
                     <div className="gro flex flex-col gap-2">
                         {
-                            students?.length > 0 ? students?.map((data) => <div key={data?._id} onClick={() => handleConversation(data)} className="flex border-b duration-300 text-white hover:text-[#C7ABFF] hover:border-[#C7ABFF] hover:rounded rounded-none p-2 gap-3 cursor-pointer">
+                            students?.length > 0 ? students?.map((data) => <div key={data?._id} onClick={() => handleConversation(data)} className="flex border-b border-white duration-300 text-white hover:text-[#C7ABFF] hover:border-[#C7ABFF] p-2 gap-3 cursor-pointer">
                                 <Avatar src={data?.image} className="border border-[#C7ABFF]"/>
                                 <div className="flex flex-col gro ">
                                     <p className="capitalize">{data?.name}</p>
@@ -170,13 +182,11 @@ const MessagesSiteNav = ({isResponsive , closeDrawer}) => {
                     </div>
 
                     <div className="modal-action w-full flex items-center justify-center">
-                        <form method="dialog" className="w-full">
-                            <button className="btn w-full bg-gradient-to-r from-purple-400 to-[#00FFB2] text-[#dccaff]">Close</button>
-                        </form>
+                        <button className="btn w-full text-white gro bg-gradient-to-r from-purple-400 to-[#00FFB2]" onClick={handleOpen}>Close</button>
                     </div>
 
                 </div>
-            </dialog>
+            </Dialog>
 
         </div>
     );
