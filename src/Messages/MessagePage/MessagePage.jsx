@@ -1,6 +1,6 @@
 
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Avatar, Button, Menu, MenuHandler, MenuItem, MenuList } from "@material-tailwind/react";
+import { Avatar, Button, Dialog, Menu, MenuHandler, MenuItem, MenuList } from "@material-tailwind/react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
@@ -40,6 +40,7 @@ const MessagePage = () => {
     sender : currentUser?.studentUid ,
     receiver : receiverUid ,
   })
+  const [open, setOpen] = useState("");
   
   const {data : receiverData , isLoading} = useQuery({
     queryKey : ['getReceiverDetails' , receiverUid] ,
@@ -210,6 +211,10 @@ const MessagePage = () => {
     document.getElementById('customModalForUpload').close() ;
   }
 
+  const handleOpen = (imageUrl) => {
+    setOpen(imageUrl) ;
+  }
+
   return (
     <div className={`flex flex-col items-start justify-between w-full min-h-screen lg:min-h-[80vh] ${messagesLoading && "flex flex-col items-center justify-center"}`}> 
 
@@ -261,7 +266,7 @@ const MessagePage = () => {
             {
               data?.imageUrl &&
               <div className={`flex flex-col my-3 cursor-pointer ${currentUser?.studentUid === data?.sender ? "text-end" : ""}`}>
-                <img src={data?.imageUrl} alt="image" className={`inline-block max-w-[170px] lg:max-w-md ${currentUser?.studentUid === data?.sender ? "rounded-lg bg-[#3b3b3b] text-white" : "bg-[#3c3c58] text-white rounded-lg"}`}/>
+                <img onClick={() => handleOpen(data?.imageUrl)} src={data?.imageUrl} alt="image" className={`inline-block max-w-[170px] lg:max-w-md ${currentUser?.studentUid === data?.sender ? "rounded-lg bg-[#3b3b3b] text-white" : "bg-[#3c3c58] text-white rounded-lg"}`}/>
                 <p className="text-[10px]">{new Date(data?.createdAt).getHours()} : {new Date(data?.createdAt).getMinutes()} : {new Date(data?.createdAt).getSeconds()}</p>
               </div>
             }
@@ -389,6 +394,27 @@ const MessagePage = () => {
 
         </div>
       </dialog>
+
+      <Dialog
+        size="xl"
+        open={open}
+        handler={handleOpen}
+        animate={{
+        mount: { scale: 1, y: 0 },
+        unmount: { scale: 0.9, y: 0 },
+        }}
+        className="flex items-center justify-center bg-transparent max-h-[60vh]"
+      >
+        <div className="modal-box w-full h-full relative overflow-hidden">
+
+            <img className="w-full h-full rounded-lg" src={open} alt="" />
+
+            <div className="absolute top-[2px] right-[10px] flex items-center justify-center">
+                <button className="text-white" onClick={() => setOpen('')}>✕</button>
+            </div>
+
+        </div>
+      </Dialog>
 
     </div>
   );
