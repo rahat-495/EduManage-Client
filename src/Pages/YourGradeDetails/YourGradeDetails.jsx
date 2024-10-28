@@ -11,13 +11,12 @@ const YourGradeDetails = () => {
     const {user} = useAuth() ;
 
     const {data} = useQuery({
-        queryKey : ['yourClasses' , user?.email] ,
+        queryKey : ['yourGradeSubs' , user?.email] ,
         queryFn : async () => {
             const {data} = await axiosSecure.get(`/subjects?id=${id}`)
             return data ;
         }
     })
-    console.log(data)
 
     return (
         <div className="min-h-[70vh]">

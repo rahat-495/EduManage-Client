@@ -25,12 +25,12 @@ import AllStudents from '../Pages/AllStudents/AllStudents';
 import JoinedStudentInfo from '../Pages/JoinedStudentInfo/JoinedStudentInfo';
 import MyClasses from '../Pages/MyClasses/MyClasses';
 import ClassMates from '../Pages/ClassMates/ClassMates';
-import YourClasses from '../Pages/YourClasses/YourClasses';
 import AddGrade from '../Pages/AddGrade/AddGrade';
 import YourGradeDetails from '../Pages/YourGradeDetails/YourGradeDetails';
 import MessageRoot from '../Layout/MessageRoot';
 import MessageStatic from '../Messages/MessageStatic/MessageStatic';
 import MessagePage from '../Messages/MessagePage/MessagePage';
+import YourGrades from '../Pages/YourGrades/YourGrades';
 
 const router = createBrowserRouter([
     {
@@ -67,7 +67,7 @@ const router = createBrowserRouter([
             },
             {
                 path : '/yourGrades' ,
-                element : <YourClasses/> ,
+                element : <YourGrades/> ,
             },
             {
                 path : '/schoolsDetails/:id' ,
