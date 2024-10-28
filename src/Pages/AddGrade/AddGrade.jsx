@@ -73,8 +73,17 @@ const AddGrade = () => {
   const handleSubjects = async (e) => {
     e.preventDefault() ;
     const subject = e.target.subject.value ;
-    setSubjects([...subjects , subject]) ;
-    e.target.reset() ;
+    if(!subjects?.includes(subject)){
+      setSubjects([...subjects , subject]) ;
+      e.target.reset() ;
+    }
+    else{
+      Swal.fire({
+        title: "Oops",
+        html: "You can't add the same subject <br/> two for times !",
+        icon: "warning"
+      });
+    }
   }
 
   const handleRemoveSubject = (subject) => {

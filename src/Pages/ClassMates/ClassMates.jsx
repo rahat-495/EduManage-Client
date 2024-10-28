@@ -46,10 +46,10 @@ const ClassMates = () => {
                                 </div>
                             }
                         >
-                            <Link to={`/message/${data?._id}`} className="">
+                            <Link to={`/message/${data?.studentUid}`} className="">
                                 <div className="border rounded-md duration-300 w-[94%] gap-3 mr-10 p-1 flex items-center lg:p-0 lg:rounded-full lg:w-[125px] lg:h-[125px] lg:block">
                                     <img src={data?.studentImage} alt="" className="w-[70px] h-[70px] lg:w-full lg:h-full rounded-full cursor-pointer duration-300"/>
-                                    <div className="">
+                                    <div className="flex flex-col lg:hidden">
                                         <p className="gro text-xl capitalize font-medium">{data?.studentName}</p>
                                         <p className="gro text-base capitalize font-medium">{data?.studentEmail}</p>
                                         <p className="gro text-sm capitalize font-medium">{data?.studentUid}</p>
