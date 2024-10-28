@@ -25,7 +25,7 @@ const ClassMates = () => {
 
             <h1 className="play text-4xl mb-10 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-[#00FFB2] text-center">Class Mates</h1>
 
-            <div className={`w-full ${data?.length > 0 && "grid grid-cols-1 lg:grid-cols-10 gap-5"} `}>
+            <div className={`w-full ${data?.length > 0 && !isLoading && "grid grid-cols-1 lg:grid-cols-10 gap-5"} `}>
                 {
                     !isLoading ?
                     data?.length > 0 ?
@@ -61,7 +61,9 @@ const ClassMates = () => {
                     <div className="flex flex-col items-center justify-center gro w-full h-full">
                         <p className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-[#00FFB2] text-center text-4xl">Class Mates Not Found !</p>
                     </div>:
-                    <Lottie animationData={loader} loop={true}/>
+                    <div className="w-full h-full mt-20 flex items-center justify-center">
+                        <Lottie animationData={loader} loop={true} className="mx-auto"/>
+                    </div>
                 }
             </div>
 

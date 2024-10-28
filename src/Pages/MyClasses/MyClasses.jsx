@@ -19,11 +19,11 @@ const MyClasses = () => {
     console.log(data?.subjectsArray?.length)
 
     return (
-        <div className="min-h-[70vh]">
+        <div className="min-h-[70vh] mx-3 mb-10 lg:mx-0 lg:mb-0">
             
             <h1 className="gro text-4xl text-center my-10">My Classes</h1>
             
-            <div className={`grid ${data?.subjectsArray?.length <= 5 && 'grid-cols-'+data?.subjectsArray?.length || data?.subjectsArray?.length === 6 && 'grid-cols-3' || data?.subjectsArray?.length === 7 && 'grid-cols-3' || data?.subjectsArray?.length === 8 && 'grid-cols-4' || data?.subjectsArray?.length === 9 && 'grid-cols-5' || data?.subjectsArray?.length >= 10 && 'grid-cols-5'} gap-3`}>
+            <div className={`grid grid-cols-1 ${data?.subjectsArray?.length <= 5 && 'lg:grid-cols-'+data?.subjectsArray?.length || data?.subjectsArray?.length === 6 && 'lg:grid-cols-3' || data?.subjectsArray?.length === 7 && 'lg:grid-cols-3' || data?.subjectsArray?.length === 8 && 'lg:grid-cols-4' || data?.subjectsArray?.length === 9 && 'lg:grid-cols-5' || data?.subjectsArray?.length >= 10 && 'lg:grid-cols-5'} gap-3`}>
                 {
                     data?.subjectsArray?.length > 0 && data?.subjectsArray?.map((sub , index) => 
                     <div key={index} className="px-5 py-10 bg-white rounded-md border hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-500 cursor-pointer">

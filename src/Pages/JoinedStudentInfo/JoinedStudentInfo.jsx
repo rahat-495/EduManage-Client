@@ -1,6 +1,6 @@
 
 import { Tooltip } from "@material-tailwind/react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
@@ -50,6 +50,11 @@ const JoinedStudentInfo = () => {
                 </div>
                 <div className="flex flex-col gap-1 text-center lg:text-start lg:flex-row lg:gap-10">
                     <p className="gro font-normal text-blue-500 text-lg"><span className="font-semibold text-white">Joined School Status : </span> {data?.schoolJoiningStatus && "Joined"}</p>
+                </div>
+                <div className="flex flex-col gap-1 text-center lg:text-start lg:flex-row lg:gap-10">
+                    <Link to={`/message/${data?.studentUid}`} className="rounded-lg py-2 px-3 text-center border border-blue-500 text-white hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-300 gro">
+                        Send Message
+                    </Link>
                 </div>
             </div>
         </div>

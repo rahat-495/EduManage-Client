@@ -127,7 +127,7 @@ const Nav = () => {
                           </h1>
                           <Link
                             to={"/profile"}
-                            className="rounded-lg py-2 text-center border border-teal-500 text-white hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-1000"
+                            className="rounded-lg py-2 gro text-center border border-teal-500 text-white hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-1000"
                           >
                             View Profile
                           </Link>
@@ -136,9 +136,9 @@ const Nav = () => {
 
                           <Button
                             onClick={() => logOut()}
-                            className="border flex items-center justify-center gap-3 border-teal-500 text-white hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-500"
+                            className="gap-3 gro text-[#e855de] text-sm font-semibold bg-transparent flex items-center ml-3 p-0 mb-2"
                           >
-                            Log Out <MdLogout className="text-lg font-bold" />
+                            Log Out <MdLogout className="text-base font-bold" />
                           </Button>
                         </div>
                       </MenuList>
