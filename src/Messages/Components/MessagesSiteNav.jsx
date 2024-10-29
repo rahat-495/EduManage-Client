@@ -129,11 +129,11 @@ const MessagesSiteNav = ({isResponsive , closeDrawer}) => {
                                 {
                                     userData?.studentUid === user?.sender?
                                     user?.isReceiverOnline ?
-                                    <div className="absolute w-2 h-2 bg-[#00FF00] rounded-full bottom-1 right-0"></div>:
-                                    <div className="absolute w-2 h-2 bg-[#808080] rounded-full bottom-1 right-0"></div>:
+                                    <div className="absolute w-[10px] h-[10px] bg-[#00FF00] border border-white rounded-full bottom-1 right-0"></div>:
+                                    <div className="absolute w-[10px] h-[10px] bg-[#808080] border border-white rounded-full bottom-1 right-0"></div>:
                                     user?.isSenderOnline ?
-                                    <div className="absolute w-2 h-2 bg-[#00FF00] rounded-full bottom-1 right-0"></div>:
-                                    <div className="absolute w-2 h-2 bg-[#808080] rounded-full bottom-1 right-0"></div>
+                                    <div className="absolute w-[10px] h-[10px] bg-[#00FF00] border border-white rounded-full bottom-1 right-0"></div>:
+                                    <div className="absolute w-[10px] h-[10px] bg-[#808080] border border-white rounded-full bottom-1 right-0"></div>
                                 }
                             </div>
                             <div className="flex flex-col gro">

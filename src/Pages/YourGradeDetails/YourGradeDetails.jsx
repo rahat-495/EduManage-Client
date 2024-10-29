@@ -35,9 +35,24 @@ const YourGradeDetails = () => {
             <div className="grid lg:grid-cols-5 gap-5">
                 {
                     data?.subjectsArray?.map((sub , index) => 
-                        <Link to={sub} key={index} className="px-5 py-10 bg-white rounded-md border hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-500 cursor-pointer">
-                            <h1 className="text-white text-center text-xl gro capitalize">{sub}</h1>
-                        </Link>
+                        <Tooltip
+                            placement="top-center"
+                            key={index}
+                            animate={{
+                                mount: { scale: 1, y: 0 },
+                                unmount: { scale: 0, y: 25 },
+                            }}
+                            className={"bg-white"}
+                            content={
+                                <div className="text-black gro">
+                                    <p className="font-semibold">Upload Module/Assignment...</p>
+                                </div>
+                            }
+                        >
+                            <Link to={sub} className="px-5 py-10 bg-white rounded-md border hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-500 cursor-pointer">
+                                <h1 className="text-white text-center text-xl gro capitalize">{sub}</h1>
+                            </Link>
+                        </Tooltip>
                     )
                 }
             </div>
