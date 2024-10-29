@@ -81,7 +81,7 @@ const Nav = () => {
                       ) : (
                         <Link to={"/message"}>
                           <Tooltip
-                            placement="bottom-center"
+                            placement="bottom"
                             content={
                               pathname?.includes("/message") ? "" : "Chats"
                             }

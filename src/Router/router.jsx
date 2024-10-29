@@ -31,6 +31,7 @@ import MessageRoot from '../Layout/MessageRoot';
 import MessageStatic from '../Messages/MessageStatic/MessageStatic';
 import MessagePage from '../Messages/MessagePage/MessagePage';
 import YourGrades from '../Pages/YourGrades/YourGrades';
+import UploadSubject from '../Pages/UploadSubject/UploadSubject';
 
 const router = createBrowserRouter([
     {
@@ -62,8 +63,8 @@ const router = createBrowserRouter([
                 element : <YourSchools/> ,
             },
             {
-                path : '/myClasses' ,
-                element : <MyClasses/> ,
+                path : '/myClasses' , // for students
+                element : <MyClasses/> , // for students
             },
             {
                 path : '/yourGrades' ,
@@ -78,8 +79,12 @@ const router = createBrowserRouter([
                 element : <UpdateSchool/> ,
             },
             {
-                path : '/yourGrades/details/:id' ,
-                element : <YourGradeDetails/> ,
+                path : '/yourGrades/details/:id' , // for teachers
+                element : <YourGradeDetails/> , // for teachers
+            },
+            {
+                path : '/yourGrades/details/:id/:subject' , // for teachers
+                element : <UploadSubject/> , // for teachers
             },
             {
                 path : '/viewClasses/:id' ,

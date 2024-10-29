@@ -8,8 +8,8 @@ import { Tooltip } from "@material-tailwind/react";
 const YourGradeDetails = () => {
 
     const {id} = useParams() ;
-    const axiosSecure = useAxiosSecure() ;
     const {user} = useAuth() ;
+    const axiosSecure = useAxiosSecure() ;
 
     const {data} = useQuery({
         queryKey : ['yourGradeSubs' , user?.email] ,
@@ -35,16 +35,16 @@ const YourGradeDetails = () => {
             <div className="grid lg:grid-cols-5 gap-5">
                 {
                     data?.subjectsArray?.map((sub , index) => 
-                        <div key={index} className="px-5 py-10 bg-white rounded-md border hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-500 cursor-pointer">
-                        <h1 className="text-white text-center text-xl gro capitalize">{sub}</h1>
-                    </div>
+                        <Link to={sub} key={index} className="px-5 py-10 bg-white rounded-md border hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-500 cursor-pointer">
+                            <h1 className="text-white text-center text-xl gro capitalize">{sub}</h1>
+                        </Link>
                     )
                 }
             </div>
 
             <h1 className="gro text-4xl text-center mt-20 text-white">All Students</h1>
 
-            <div className="w-full grid grid-cols-3 lg:grid-cols-10 gap-5 my-10">
+            <div className="w-full grid grid-cols-3 lg:grid-cols-12 gap-5 my-10">
                 {
                     gradeStudents?.map((data) => 
                         <Tooltip
@@ -65,8 +65,8 @@ const YourGradeDetails = () => {
                             }
                         >
                             <Link to={`/joinedStudentInfo/${data?._id}`}>
-                                <div className="border rounded-full p-1 duration-300 w-[125px] h-[125px] hover:p-0">
-                                    <img src={data?.studentImage} alt="" className="w-[115px] h-[115px] mx-auto rounded-full cursor-pointer duration-300 hover:w-full hover:h-full"/>
+                                <div className="border border-[#4c2f81] rounded-full duration-300 w-[100px] h-[100px] hover:border-purple-500">
+                                    <img src={data?.studentImage} alt="" className="w-full h-full mx-auto rounded-full cursor-pointer duration-300 hover:w-full hover:h-full"/>
                                 </div>
                             </Link>
                         </Tooltip>
