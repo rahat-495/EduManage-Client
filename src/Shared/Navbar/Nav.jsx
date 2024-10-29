@@ -136,7 +136,7 @@ const Nav = () => {
 
                           <Button
                             onClick={() => logOut()}
-                            className="gap-3 gro text-[#e855de] text-sm font-semibold bg-transparent flex items-center ml-3 p-0 mb-2"
+                            className="gap-3 gro w-fit text-[#e855de] hover:text-purple-500 duration-200 text-sm font-semibold bg-transparent flex items-center ml-3 p-0 mb-2"
                           >
                             Log Out <MdLogout className="text-base font-bold" />
                           </Button>
