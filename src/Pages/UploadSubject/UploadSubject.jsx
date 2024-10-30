@@ -52,6 +52,14 @@ const UploadSubject = () => {
         }
     })
 
+    const {data : moduleDetails} = useQuery({
+        queryKey : ['moduleData' , pathname] ,
+        queryFn : async () => {
+            const {data} = await axiosSecure.get(`/moduleDetails?id=${pathname.split('/')[6]}`) ;
+            return data ;
+        }
+    })
+
     const handleAddModuleOpen = () => setAddModule(!addModule);
     const handleAddAssignmentOpen = () => setAddAssignment(!addAssignment);
 
@@ -162,48 +170,58 @@ const UploadSubject = () => {
     }
 
     return (
-        <div className="h-[70vh] mx-3 mb-10 lg:flex lg:items-start lg:justify-between gap-3 lg:mx-0 lg:mb-5 lg:mt-5">
+        <div className={`h-[80vh] mx-3 mb-10 lg:mx-0 lg:mt-5 ${moduleDetails?.moduleName && 'mb-20'}`}>
 
-            <div className="bg-[#010313] w-full h-full rounded p-3">
-                <Outlet />
-            </div>
+            {
+                moduleDetails?.moduleName &&
+                <h1 className="border-b border-[#302442] gro pb-2 text-xl font-semibold text-[#EAAAFF] w-full mb-5">{moduleDetails?.moduleName}</h1>
+            }
 
-            <div className="bg-[#010313] w-96 h-full rounded p-3 flex flex-col gap-3 overflow-y-auto">
+            <div className="lg:flex lg:items-start lg:justify-between gap-3 h-full">
 
-                <div className="w-full flex flex-col gap-3">
-                    <div className="w-full flex flex-col gap-3 sticky top-0">
-                        <Button onClick={handleAddModuleOpen} className="gro capitalize py-2 shadow-none hover:shadow-none bg-gradient-to-r from-purple-500 to-teal-500 rounded text-sm">Add Module</Button>
-                        <Button onClick={handleAddAssignmentOpen} className="gro capitalize py-2 shadow-none hover:shadow-none bg-gradient-to-r from-purple-500 to-teal-500 rounded text-sm">Add Assignment</Button>
-                    </div>
+                <div className="w-full h-full rounded bg-[#010313]">
+                    <Outlet />
                 </div>
 
-                <div className="h-[60vh] grid grid-rows-2 gap-3">
-                    <div className="h-full w-full flex flex-col items-start gap-3 p-2 bg-[#160929] rounded">
-                        {
-                            modules?.length > 0 && modules?.map((data) => <NavLink to={`modules/${data?._id}`} key={data?._id} className={({ isActive, isPending }) =>
-                                isPending ? "pending bg-[#211336] w-full py-1 px-2 rounded" : isActive ? "bg-[#3a215f] w-full py-1 px-2 rounded" : "bg-[#211336] w-full py-1 px-2 rounded duration-300"
-                              }
-                            >
-                                <p className="gro font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-teal-500">{data?.moduleName}</p>
-                                <p className="gro font- text-[#C7ABFF]">{data?.time} {data?.date.split(' ').slice(2 , 3)} {data?.date.split(' ').slice(3)}</p>
-                            </NavLink>)
-                        }
+                <div className="bg-[#010313] w-96 h-full rounded p-3 flex flex-col gap-3 overflow-y-auto">
+
+                    <div className="w-full flex flex-col gap-3">
+                        <div className="w-full flex flex-col gap-3 sticky top-0">
+                            <Button onClick={handleAddModuleOpen} className="gro capitalize py-2 shadow-none hover:shadow-none bg-gradient-to-r from-purple-500 to-teal-500 rounded text-sm">Add Module</Button>
+                            <Button onClick={handleAddAssignmentOpen} className="gro capitalize py-2 shadow-none hover:shadow-none bg-gradient-to-r from-purple-500 to-teal-500 rounded text-sm">Add Assignment</Button>
+                        </div>
                     </div>
 
-                    <div className="h-full w-full flex flex-col items-start gap-3 p-2 bg-[#160929] rounded">
-                        {
-                            assignments?.length > 0 && assignments?.map((data) => <NavLink to={`assignment/${data?._id}`} key={data?._id} className={({ isActive, isPending }) =>
-                                isPending ? "pending bg-[#211336] w-full py-1 px-2 rounded" : isActive ? "bg-[#3a215f] w-full py-1 px-2 rounded" : "bg-[#211336] w-full py-1 px-2 rounded duration-300"
-                              }
-                            >
-                                <p className="gro font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-teal-500">{data?.moduleName}</p>
-                                <p className="gro font- text-[#C7ABFF]">{data?.time} {data?.date.split(' ').slice(2 , 3)} {data?.date.split(' ').slice(3)}</p>
-                            </NavLink>)
-                        }
+                    <div className="h-[70vh] grid grid-rows-2 gap-1">
+                        <div className="h-full w-full flex flex-col items-start gap-3 p-2 bg-[#160929] rounded-t rounded-l rounded-r rounded-b-none">
+                            {
+                                modules?.length > 0 && modules?.map((data) => <NavLink to={`modules/${data?._id}`} key={data?._id} className={({ isActive, isPending }) =>
+                                    isPending ? "pending bg-[#211336] w-full py-1 px-2 rounded" : isActive ? "bg-[#3a215f] w-full py-1 px-2 rounded" : "bg-[#211336] w-full py-1 px-2 rounded duration-300"
+                                }
+                                >
+                                    <p className="gro font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-teal-500">{data?.moduleName}</p>
+                                    <p className="gro text-sm text-[#C7ABFF]">{data?.time} {data?.date.split(' ').slice(2 , 3)} {data?.date.split(' ').slice(3)}</p>
+                                </NavLink>)
+                            }
+                        </div>
+
+                        <div className="h-full w-full flex flex-col items-start gap-3 p-2 bg-[#160929] rounded-b rounded-l rounded-r rounded-t-none">
+                            {
+                                assignments?.length > 0 && assignments?.map((data) => <NavLink to={`assignment/${data?._id}`} key={data?._id} className={({ isActive, isPending }) =>
+                                    isPending ? "pending bg-[#211336] w-full py-1 px-2 rounded" : isActive ? "bg-[#3a215f] w-full py-1 px-2 rounded" : "bg-[#211336] w-full py-1 px-2 rounded duration-300"
+                                }
+                                >
+                                    <p className="gro font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-teal-500">{data?.moduleName}</p>
+                                    <p className="gro font- text-[#C7ABFF]">{data?.time} {data?.date.split(' ').slice(2 , 3)} {data?.date.split(' ').slice(3)}</p>
+                                </NavLink>)
+                            }
+                        </div>
                     </div>
+
                 </div>
 
             </div>
+
 
             <Dialog
                 size="sm"
