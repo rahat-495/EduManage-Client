@@ -14,7 +14,7 @@ const key = import.meta.env.VITE_IMAGE_HOISTING_API_KEY;
 const apiUrl = `https://api.imgbb.com/1/upload?key=${key}`;
 
 const UploadSubject = () => {
-
+    
     const {pathname} = useLocation() ;
     const axiosSecure = useAxiosSecure() ;
     const [loading, setLoading] = useState(false) ;
@@ -72,6 +72,7 @@ const UploadSubject = () => {
     const handleAddModuleOpen = () => {
         setAddModule(!addModule)
     };
+
     const handleAddAssignmentOpen = () => {
         setAddAssignment(!addAssignment)
     };
@@ -126,11 +127,20 @@ const UploadSubject = () => {
                 urls.push(data?.data?.display_url) ;
             }
             const moduleData = {
+                moduleData : [
+                    {
+                        textForModuleTitle ,
+                        textForModule ,
+                    },
+                    {
+                        moduleImages : urls ,
+                    },
+                    {
+                        moduleVideos : uploadedVideos ,
+                    },
+                ] ,
                 time,
                 moduleName ,
-                textForModule ,
-                textForModuleTitle ,
-                moduleImages : urls ,
                 grade : pathname.split('/')[3] ,
                 subject : pathname.split('/')[4] ,
                 date : new Date().toDateString() ,
@@ -139,6 +149,7 @@ const UploadSubject = () => {
             setLoading(false) ;
             handleAddModuleOpen() ;
             setSelectedImages([]) ;
+            setUploadedVideos([]) ;
             moduleRefetch() ;
             Swal.fire({
                 title: "Success",
@@ -251,7 +262,6 @@ const UploadSubject = () => {
                 </div>
 
             </div>
-
 
             <Dialog
                 size="sm"
