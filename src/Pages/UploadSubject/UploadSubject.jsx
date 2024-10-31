@@ -6,7 +6,9 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import {useMutation, useQuery} from '@tanstack/react-query'
+import { IoImage } from "react-icons/io5";
 import moment from 'moment';
+import { MdOutlineCancel, MdVideoLibrary } from "react-icons/md";
 
 const key = import.meta.env.VITE_IMAGE_HOISTING_API_KEY;
 const apiUrl = `https://api.imgbb.com/1/upload?key=${key}`;
@@ -15,10 +17,17 @@ const UploadSubject = () => {
 
     const {pathname} = useLocation() ;
     const axiosSecure = useAxiosSecure() ;
-    const [loading, setLoading] = useState(false);
-    const [addModule, setAddModule] = useState(false);
-    const [addAssignment, setAddAssignment] = useState(false);
+    const [loading, setLoading] = useState(false) ;
+    const [addModule, setAddModule] = useState(false) ;
+    const [vidoeLoading, setVideoLoading] = useState(false) ;
+    const [addAssignment, setAddAssignment] = useState(false) ;
     const [selectedImages , setSelectedImages] = useState([]) ;
+    const [uploadedVideos , setUploadedVideos] = useState([]) ;
+    const [texts, setTexts] = useState({
+        moduleName : '',
+        textForModule : '' ,
+        moduleTextTitle : '' ,
+    });
     
     const time = moment().format('hh:mm:ss A');
 
@@ -60,20 +69,41 @@ const UploadSubject = () => {
         }
     })
 
-    const handleAddModuleOpen = () => setAddModule(!addModule);
-    const handleAddAssignmentOpen = () => setAddAssignment(!addAssignment);
+    const handleAddModuleOpen = () => {
+        setAddModule(!addModule)
+    };
+    const handleAddAssignmentOpen = () => {
+        setAddAssignment(!addAssignment)
+    };
 
     const handleSelectImages = (e) => {
         const files = Array.from(e.target.files) ;
         setSelectedImages(files) ;
     }
 
+    const handleSelectVideos = async (e) => {
+        if(!uploadedVideos?.length > 0){
+            setVideoLoading(true) ;
+            const files = Array.from(e.target.files) ;
+            let videoUrls = [] ;
+            for(let video of files){
+                const formData = new FormData() ;
+                formData.append('file' , video) ;
+                formData.append('upload_preset', 'eduManage');
+                const {data} = await axios.post(import.meta.env.VITE_UPLOADING_ANYTHING_URL , formData) ;
+                videoUrls.push(data?.url) ;
+            }
+            setUploadedVideos(videoUrls);
+            setVideoLoading(false) ;
+        }
+    }
+
     const handleAddModule = async (e) => {
         e.preventDefault() ;
         const from = e.target ;
         const moduleName = from.moduleName.value ;
-        const moduleDescription = from.moduleDescription.value ;
         const textForModule = from.textForModule.value ;
+        const textForModuleTitle = from.textForModuleTitle.value ;
         
         if(textForModule.length === 0 && selectedImages.length === 0){
             setSelectedImages([]) ;
@@ -99,7 +129,7 @@ const UploadSubject = () => {
                 time,
                 moduleName ,
                 textForModule ,
-                moduleDescription ,
+                textForModuleTitle ,
                 moduleImages : urls ,
                 grade : pathname.split('/')[3] ,
                 subject : pathname.split('/')[4] ,
@@ -226,63 +256,116 @@ const UploadSubject = () => {
             <Dialog
                 size="sm"
                 open={addModule}
-                handler={handleAddModuleOpen}
                 animate={{
                 mount: { scale: 1, y: 0 },
                 unmount: { scale: 0.9, y: 0 },
                 }}
             >
-                <div className="p-3">
+                <div className="p-5 bg-[#0e081f] rounded relative">
                     
+                    <p className="absolute -top-3 -right-3 cursor-pointer text-white hover:text-red-600 hover:bg-[#3e26806e] duration-300 rounded-full" onClick={handleAddModuleOpen}>
+                        <MdOutlineCancel className="text-2xl"/>
+                    </p>
+
                     <form onSubmit={handleAddModule} className="flex flex-col gap-3 h-full">
 
                         <div className="grid grid-cols-1 gap-3">
-                            <div className="bg-gradient-to-r from-purple-500 to-teal-500 p-[2px] rounded-md h-12">
+                            <div className="bg-gradient-to-r from-purple-500 to-teal-500 p-[1px] rounded-md h-12">
                                 <input
+                                    onChange={(e) => setTexts((preve) => {
+                                        return{
+                                            ...preve ,
+                                            moduleName : e.target.value ,
+                                        }
+                                    })}
                                     required
                                     name="moduleName"
-                                    className="outline-none text-white h-full rounded-md py-[6px] border border-teal-900 focus:border-white gro px-2 w-full bg-[#0103137a] hover:bg-transparent focus:bg-transparent duration-300"
+                                    className={`outline-none text-white h-full rounded-md py-[6px] border border-teal-900 focus:border-white gro px-2 w-full bg-[#0103137a] hover:bg-transparent focus:bg-transparent duration-300 ${texts?.moduleName ? 'bg-transparent' : ''}`}
                                     color="white"
                                     type={"text"}
                                     placeholder={`Module/Subject Name : ${pathname.split('/')[4]}`}
                                 />
                             </div>
-                            <div className="bg-gradient-to-r from-purple-500 to-teal-500 p-[2px] rounded-md h-12">
-                                <textarea
-                                    required
-                                    name="moduleDescription"
-                                    className="outline-none h-full text-white rounded-md pt-2 border border-teal-900 focus:border-white gro px-2 w-full bg-[#0103137a] hover:bg-transparent focus:bg-transparent duration-300"
-                                    color="white"
-                                    type={"text"}
-                                    placeholder={"Module Description"}
-                                />
-                            </div>
                         </div>
 
                         <div className="grid grid-cols-1 gap-3">
-                            <div className="bg-gradient-to-r from-purple-500 to-teal-500 p-[2px] rounded-md h-64">
+                            <div className="bg-gradient-to-r from-purple-500 to-teal-500 p-[1px] rounded-md h-12">
+                                <input
+                                    onChange={(e) => setTexts((preve) => {
+                                        return{
+                                            ...preve ,
+                                            moduleTextTitle : e.target.value ,
+                                        }
+                                    })}
+                                    required={texts?.textForModule}
+                                    name="textForModuleTitle"
+                                    className={`outline-none text-white h-full rounded-md py-[6px] border border-teal-900 focus:border-white gro px-2 w-full bg-[#0103137a] hover:bg-transparent focus:bg-transparent duration-300 ${texts?.moduleTextTitle && 'bg-transparent'}`}
+                                    color="white"
+                                    type={"text"}
+                                    placeholder={`Module Text Title  ↓`}
+                                />
+                            </div>
+                            <div className="bg-gradient-to-r from-purple-500 to-teal-500 p-[1px] rounded-md h-64">
                                 <textarea
+                                    onChange={(e) => setTexts((preve) => {
+                                        return{
+                                            ...preve ,
+                                            textForModule : e.target.value ,
+                                        }
+                                    })}
                                     minLength={200}
                                     name="textForModule"
-                                    className="outline-none h-full text-white rounded-md pt-2 border border-teal-900 focus:border-white gro px-2 w-full bg-[#0103137a] hover:bg-transparent focus:bg-transparent duration-300"
+                                    className={`outline-none h-full text-white rounded-md pt-2 border border-teal-900 focus:border-white gro px-2 w-full bg-[#0103137a] hover:bg-transparent focus:bg-transparent duration-300 ${texts?.textForModule && 'bg-transparent'}`}
                                     color="white"
                                     type={"text"}
                                     placeholder={"Write For Module"}
                                 />
                             </div>
-                            <div className="bg-gradient-to-r from-purple-500 to-teal-500 p-[2px] rounded-md h-12">
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-3">
+                            <div className="bg-gradient-to-br from-purple-500 to-teal-500 p-[1px] rounded-md h-12">
+                                <label htmlFor="images" className="flex items-center justify-center gap-3 h-full text-white cursor-pointer gro font-semibold text-base"><IoImage className="text-xl"/>Upload Images</label>
                                 <input
+                                    id="images"
                                     multiple
                                     onChange={handleSelectImages}
-                                    className="file-input file-input-bordered outline-none text-white cursor-pointer h-full rounded-md py-[6px] border border-teal-900 focus:border-white gro px-2 bg-transparent w-full bg-gradient-to-r from-purple-500 to-teal-500 capitalize gro"
+                                    className="outline-none hidden text-white cursor-pointer h-full rounded-md py-[6px] border border-teal-900 focus:border-white gro px-2 bg-transparent w-full bg-gradient-to-r from-purple-500 to-teal-500 capitalize gro"
                                     color="white"
                                     type={"file"}
                                     placeholder={`Write For Module`}
+                                    accept="image/*"
+                                />
+                            </div>
+                            <div className="bg-gradient-to-br from-purple-500 to-teal-500 p-[1px] rounded-md h-12">
+                                {
+                                    uploadedVideos?.length > 0 ?
+                                    <label className="flex items-center justify-center gap-3 h-full text-white cursor-pointer gro font-semibold text-base">Videos Already Uploaded</label>:
+                                    <label htmlFor="videos" className="flex items-center justify-center gap-3 h-full text-white cursor-pointer gro font-semibold text-base"><MdVideoLibrary className="text-xl"/>Upload Videos</label>
+                                }
+                                <input
+                                    id="videos"
+                                    multiple
+                                    onChange={(e) => handleSelectVideos(e)}
+                                    className="outline-none hidden text-white cursor-pointer h-full rounded-md py-[6px] border border-teal-900 focus:border-white gro px-2 bg-transparent w-full bg-gradient-to-r from-purple-500 to-teal-500 capitalize gro"
+                                    color="white"
+                                    type={"file"}
+                                    placeholder={`Write For Module`}
+                                    accept="video/*"
                                 />
                             </div>
                         </div>
 
-                        <button disabled={loading} className="btn border-none bg-gradient-to-r from-purple-500 to-teal-500 rounded-md text-white gro font-semibold">{loading ? <span className="loading loading-infinity loading-lg"></span> : 'Add Module'}</button>
+                        {
+                            loading || vidoeLoading ?
+                            <p className="btn border-none flex gap-3 bg-gradient-to-r from-purple-500 to-teal-500 rounded-md text-white gro font-semibold">
+                                {vidoeLoading && 'Uploading Videos'} 
+                                {loading || vidoeLoading && <span className="loading loading-infinity loading-lg"></span>}
+                            </p>:
+                            <button className="btn border-none bg-gradient-to-r from-purple-500 to-teal-500 rounded-md text-white gro font-semibold">
+                                Add Module
+                            </button> 
+                        }
 
                     </form>
 
@@ -292,7 +375,6 @@ const UploadSubject = () => {
             <Dialog
                 size="sm"
                 open={addAssignment}
-                handler={handleAddAssignmentOpen}
                 animate={{
                 mount: { scale: 1, y: 0 },
                 unmount: { scale: 0.9, y: 0 },
@@ -303,7 +385,7 @@ const UploadSubject = () => {
                     <form onSubmit={handleAddAssignment} className="flex flex-col gap-3 h-full">
 
                         <div className="grid grid-cols-1 gap-3">
-                            <div className="bg-gradient-to-r from-purple-500 to-teal-500 p-[2px] rounded-md h-12">
+                            <div className="bg-gradient-to-r from-purple-500 to-teal-500 p-[1px] rounded-md h-12">
                                 <input
                                     required
                                     name="assignmentName"
