@@ -20,6 +20,7 @@ const UploadSubject = () => {
     const [loading, setLoading] = useState(false) ;
     const [addModule, setAddModule] = useState(false) ;
     const [vidoeLoading, setVideoLoading] = useState(false) ;
+    const [imageLoading, setImageLoading] = useState(false) ;
     const [addAssignment, setAddAssignment] = useState(false) ;
     const [selectedImages , setSelectedImages] = useState([]) ;
     const [uploadedVideos , setUploadedVideos] = useState([]) ;
@@ -117,7 +118,7 @@ const UploadSubject = () => {
         }
         else{
             let urls = [] ;
-            setLoading(true) ;
+            setImageLoading(true) ;
             for(let image of selectedImages){
                 const formData = new FormData() ;
                 formData.append('image' , image) ;
@@ -126,6 +127,7 @@ const UploadSubject = () => {
                 })
                 urls.push(data?.data?.display_url) ;
             }
+            setImageLoading(false) ;
             const moduleData = {
                 moduleData : [
                     {
@@ -145,12 +147,13 @@ const UploadSubject = () => {
                 subject : pathname.split('/')[4] ,
                 date : new Date().toDateString() ,
             }
+            setLoading(true) ;
             moduleMutate(moduleData) ;
             setLoading(false) ;
+            moduleRefetch() ;
             handleAddModuleOpen() ;
             setSelectedImages([]) ;
             setUploadedVideos([]) ;
-            moduleRefetch() ;
             Swal.fire({
                 title: "Success",
                 text: "Module Added Success Full !",
@@ -214,8 +217,7 @@ const UploadSubject = () => {
         <div className={`h-[80vh] mx-3 mb-10 lg:mx-0 lg:mt-5 ${moduleDetails?.moduleName && 'mb-20'}`}>
 
             {
-                moduleDetails?.moduleName &&
-                <h1 className="border-b border-[#302442] gro pb-2 text-xl font-semibold text-[#EAAAFF] w-full mb-5">{moduleDetails?.moduleName}</h1>
+                moduleDetails?.moduleName && <h1 className="border-b border-[#302442] gro pb-2 text-xl font-semibold text-[#EAAAFF] w-full mb-5">{moduleDetails?.moduleName}</h1>
             }
 
             <div className="lg:flex lg:items-start lg:justify-between gap-3 h-full">
@@ -367,8 +369,10 @@ const UploadSubject = () => {
                         </div>
 
                         {
-                            loading || vidoeLoading ?
+                            loading || vidoeLoading || imageLoading ?
                             <p className="btn border-none flex gap-3 bg-gradient-to-r from-purple-500 to-teal-500 rounded-md text-white gro font-semibold">
+                                {loading && <span className="loading loading-infinity loading-lg"></span>} 
+                                {imageLoading && 'Uploading Images'} 
                                 {vidoeLoading && 'Uploading Videos'} 
                                 {loading || vidoeLoading && <span className="loading loading-infinity loading-lg"></span>}
                             </p>:
