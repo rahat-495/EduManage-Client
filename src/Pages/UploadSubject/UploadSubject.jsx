@@ -219,11 +219,11 @@ const UploadSubject = () => {
                                         </div>
 
                                         {
-                                            moduleClick ? 
-                                            <p className={`bg-gradient-to-br from-purple-500 p-[2px] to-[#5457FE] rounded ${moduleClick && 'rotate-180 duration-500'}`}>
+                                            moduleClick === data?._id ? 
+                                            <p className={`bg-gradient-to-br from-purple-500 p-[2px] to-[#5457FE] rounded ${moduleClick === data?._id && 'rotate-180 duration-500'}`}>
                                                 <FaMinus className={`text-lg bg-[#211336]`}/>
                                             </p> :
-                                            <p className={`bg-gradient-to-br from-purple-500 p-[2px] to-[#5457FE] rounded ${!moduleClick && '-rotate-90 duration-500'}`}>
+                                            <p className={`bg-gradient-to-br from-purple-500 p-[2px] to-[#5457FE] rounded ${moduleClick === data?._id && '-rotate-90 duration-500'}`}>
                                                 <FaPlus className="text-lg"/>
                                             </p>
                                         }

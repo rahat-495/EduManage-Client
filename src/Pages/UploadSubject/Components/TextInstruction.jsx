@@ -25,7 +25,7 @@ const TextInstruction = () => {
         <div className="w-full h-full p-5 bg-[#160929] rounded">
 
             {
-                data?.moduleData[0]?.textForModuleTitle && <h1 className="text-3xl gro mb-5 text-white">{data?.moduleData[0]?.textForModuleTitle}</h1>
+                data?.moduleData[0]?.textForModuleTitle && <h1 className="text-3xl gro mb-5 text-[#DBA0F1]">{data?.moduleData[0]?.textForModuleTitle}</h1>
             }
 
             { 

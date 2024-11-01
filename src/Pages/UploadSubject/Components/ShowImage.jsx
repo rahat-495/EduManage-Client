@@ -20,7 +20,7 @@ const ShowImage = () => {
 
     return (
         <div>
-            <img src={data?.image} alt="" className="w-full h-full rounded-md"/>
+            <img src={data?.image?.moduleImage} alt="" className="w-full h-full rounded-md"/>
         </div>
     );
 };
