@@ -33,8 +33,9 @@ import MessagePage from '../Messages/MessagePage/MessagePage';
 import YourGrades from '../Pages/YourGrades/YourGrades';
 import UploadSubject from '../Pages/UploadSubject/UploadSubject';
 import UploadSubStatic from '../Pages/UploadSubject/Components/UploadSubStatic';
-import ModulePage from '../Pages/UploadSubject/Components/ModulePage';
 import AssignmentPage from '../Pages/UploadSubject/Components/AssignmentPage';
+import TextInstruction from '../Pages/UploadSubject/Components/TextInstruction';
+import ShowImage from '../Pages/UploadSubject/Components/ShowImage';
 
 const router = createBrowserRouter([
     {
@@ -94,8 +95,12 @@ const router = createBrowserRouter([
                         element : <UploadSubStatic/>,
                     },
                     {
-                        path : 'modules/:id' ,
-                        element : <ModulePage/>,
+                        path : 'textInstruction/:id' ,
+                        element : <TextInstruction/>,
+                    },
+                    {
+                        path : 'images/:index/:id' ,
+                        element : <ShowImage/>,
                     },
                     {
                         path : 'assignment/:id' ,

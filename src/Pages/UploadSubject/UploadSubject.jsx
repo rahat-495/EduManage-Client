@@ -9,6 +9,8 @@ import {useMutation, useQuery} from '@tanstack/react-query'
 import { IoImage } from "react-icons/io5";
 import moment from 'moment';
 import { MdOutlineCancel, MdVideoLibrary } from "react-icons/md";
+import { FaMinus, FaPlus } from "react-icons/fa6";
+import ModuleData from "./Components/ModuleData";
 
 const key = import.meta.env.VITE_IMAGE_HOISTING_API_KEY;
 const apiUrl = `https://api.imgbb.com/1/upload?key=${key}`;
@@ -19,6 +21,7 @@ const UploadSubject = () => {
     const axiosSecure = useAxiosSecure() ;
     const [loading, setLoading] = useState(false) ;
     const [addModule, setAddModule] = useState(false) ;
+    const [moduleClick, setModuleClick] = useState(false) ;
     const [vidoeLoading, setVideoLoading] = useState(false) ;
     const [imageLoading, setImageLoading] = useState(false) ;
     const [addAssignment, setAddAssignment] = useState(false) ;
@@ -222,11 +225,11 @@ const UploadSubject = () => {
 
             <div className="lg:flex lg:items-start lg:justify-between gap-3 h-full">
 
-                <div className="w-full h-full rounded bg-[#010313]">
+                <div className="w-full h-[60vh] rounded bg-[#010313]">
                     <Outlet />
                 </div>
 
-                <div className="bg-[#010313] w-96 h-full rounded p-3 flex flex-col gap-3 overflow-y-auto">
+                <div className="bg-[#010313] w-[550px] h-full rounded p-3 flex flex-col gap-3 overflow-y-auto scrollbar-thin">
 
                     <div className="w-full flex flex-col gap-3">
                         <div className="w-full flex flex-col gap-3 sticky top-0">
@@ -236,19 +239,45 @@ const UploadSubject = () => {
                     </div>
 
                     <div className="h-[70vh] grid grid-rows-2 gap-1">
-                        <div className="h-full w-full flex flex-col items-start gap-3 p-2 bg-[#160929] rounded-t rounded-l rounded-r rounded-b-none">
+                        <div className="h-full w-full flex flex-col items-start gap-3 p-2 bg-[#160929] rounded overflow-auto scrollbar-none">
                             {
-                                modules?.length > 0 && modules?.map((data) => <NavLink to={`modules/${data?._id}`} key={data?._id} className={({ isActive, isPending }) =>
-                                    isPending ? "pending bg-[#211336] w-full py-1 px-2 rounded" : isActive ? "bg-[#3a215f] w-full py-1 px-2 rounded" : "bg-[#211336] w-full py-1 px-2 rounded duration-300"
-                                }
+                                modules?.length > 0 && modules?.map((data) => 
+                                <div key={data?._id} className={`bg-[#211336] w-full py-1 px-2 rounded duration-1000 cursor-pointer`}
                                 >
-                                    <p className="gro font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-teal-500">{data?.moduleName}</p>
-                                    <p className="gro text-sm text-[#C7ABFF]">{data?.time} {data?.date.split(' ').slice(2 , 3)} {data?.date.split(' ').slice(3)}</p>
-                                </NavLink>)
+                                    <div onClick={() => {
+                                        moduleClick === data?._id ?
+                                        setModuleClick('') :
+                                        setModuleClick(data?._id)
+                                        }} className="cursor-pointer flex items-center justify-between">
+                                        <div className="flex flex-col items-start">
+                                            <p className="gro font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-[#5457FE]">{data?.moduleName}</p>
+                                            <p className="gro text-sm text-[#C7ABFF]">{data?.time} {data?.date.split(' ').slice(2 , 3)} {data?.date.split(' ').slice(3)}</p>
+                                        </div>
+
+                                        {
+                                            moduleClick ? 
+                                            <p className={`bg-gradient-to-br from-purple-500 p-[2px] to-[#5457FE] rounded ${moduleClick && 'rotate-180 duration-500'}`}>
+                                                <FaMinus className={`text-lg bg-[#211336]`}/>
+                                            </p> :
+                                            <p className={`bg-gradient-to-br from-purple-500 p-[2px] to-[#5457FE] rounded ${!moduleClick && '-rotate-90 duration-500'}`}>
+                                                <FaPlus className="text-lg"/>
+                                            </p>
+                                        }
+                                    </div>
+
+                                    <div className={`${moduleClick === data?._id && 'mt-5 border-t py-2 border-gray-700'}`}>
+
+                                        {
+                                            moduleClick === data?._id && data?.moduleData?.map((moduleData , index) => <ModuleData key={index} data={moduleData} id={data?._id}/>)
+                                        }
+
+                                    </div>
+
+                                </div>)
                             }
                         </div>
 
-                        <div className="h-full w-full flex flex-col items-start gap-3 p-2 bg-[#160929] rounded-b rounded-l rounded-r rounded-t-none">
+                        <div className="h-full w-full flex flex-col items-start gap-3 p-2 bg-[#160929] rounded">
                             {
                                 assignments?.length > 0 && assignments?.map((data) => <NavLink to={`assignment/${data?._id}`} key={data?._id} className={({ isActive, isPending }) =>
                                     isPending ? "pending bg-[#211336] w-full py-1 px-2 rounded" : isActive ? "bg-[#3a215f] w-full py-1 px-2 rounded" : "bg-[#211336] w-full py-1 px-2 rounded duration-300"
