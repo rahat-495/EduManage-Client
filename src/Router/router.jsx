@@ -36,6 +36,7 @@ import UploadSubStatic from '../Pages/UploadSubject/Components/UploadSubStatic';
 import AssignmentPage from '../Pages/UploadSubject/Components/AssignmentPage';
 import TextInstruction from '../Pages/UploadSubject/Components/TextInstruction';
 import ShowImage from '../Pages/UploadSubject/Components/ShowImage';
+import ShowVideo from '../Pages/UploadSubject/Components/ShowVideo';
 
 const router = createBrowserRouter([
     {
@@ -101,6 +102,10 @@ const router = createBrowserRouter([
                     {
                         path : 'images/:index/:id' ,
                         element : <ShowImage/>,
+                    },
+                    {
+                        path : 'videos/:index/:id' ,
+                        element : <ShowVideo/>,
                     },
                     {
                         path : 'assignment/:id' ,
