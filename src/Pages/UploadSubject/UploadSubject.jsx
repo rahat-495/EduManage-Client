@@ -1,9 +1,8 @@
 
 import { Button, Dialog } from "@material-tailwind/react";
 import { useState } from "react";
-import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
-import axios from "axios";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import {useMutation, useQuery} from '@tanstack/react-query'
 import { IoImage } from "react-icons/io5";
@@ -11,21 +10,28 @@ import moment from 'moment';
 import { MdOutlineCancel, MdVideoLibrary } from "react-icons/md";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 import ModuleData from "./Components/ModuleData";
+import UploadImageForm from "./Components/UploadImageForm";
+import UploadVideoForm from "./Components/UploadVideoForm";
 
 const key = import.meta.env.VITE_IMAGE_HOISTING_API_KEY;
 const apiUrl = `https://api.imgbb.com/1/upload?key=${key}`;
+
+const imageArray = [] ;
+const videoArray = [] ;
 
 const UploadSubject = () => {
     
     const {pathname} = useLocation() ;
     const axiosSecure = useAxiosSecure() ;
     const [loading, setLoading] = useState(false) ;
+    const [imageNumber, setImageNumber] = useState(1) ;
+    const [videoNumber, setVideoNumber] = useState(1) ;
     const [addModule, setAddModule] = useState(false) ;
     const [moduleClick, setModuleClick] = useState(false) ;
     const [vidoeLoading, setVideoLoading] = useState(false) ;
     const [imageLoading, setImageLoading] = useState(false) ;
     const [addAssignment, setAddAssignment] = useState(false) ;
-    const [selectedImages , setSelectedImages] = useState([]) ;
+    const [uploadedImages , setUploadedImages] = useState([]) ;
     const [uploadedVideos , setUploadedVideos] = useState([]) ;
     const [texts, setTexts] = useState({
         moduleName : '',
@@ -42,12 +48,12 @@ const UploadSubject = () => {
         },
     })
 
-    const {mutate : assignmentMutate} = useMutation({
-        mutationFn : async (assingmentData) => {
-            const {data} = await axiosSecure.post('/createAssignment' , assingmentData) ;
-            return data ;
-        }
-    })
+    // const {mutate : assignmentMutate} = useMutation({
+    //     mutationFn : async (assingmentData) => {
+    //         const {data} = await axiosSecure.post('/createAssignment' , assingmentData) ;
+    //         return data ;
+    //     }
+    // })
 
     const {data : modules , refetch : moduleRefetch} = useQuery({
         queryKey : ['uploadedModulesList' , pathname] ,
@@ -57,18 +63,18 @@ const UploadSubject = () => {
         }
     })
 
-    const {data : assignments , refetch : assignmentsRefetch} = useQuery({
-        queryKey : ['uploadedAssignmentsList' , pathname] ,
-        queryFn : async () => {
-            const {data} = await axiosSecure.get(`/getUploadedAssignmentsList?grade=${pathname.split('/')[3]}&subject=${pathname.split('/')[4]}`)
-            return data ;
-        }
-    })
+    // const {data : assignments , refetch : assignmentsRefetch} = useQuery({
+    //     queryKey : ['uploadedAssignmentsList' , pathname] ,
+    //     queryFn : async () => {
+    //         const {data} = await axiosSecure.get(`/getUploadedAssignmentsList?grade=${pathname.split('/')[3]}&subject=${pathname.split('/')[4]}`)
+    //         return data ;
+    //     }
+    // })
 
     const {data : moduleDetails} = useQuery({
         queryKey : ['moduleData' , pathname] ,
         queryFn : async () => {
-            const {data} = await axiosSecure.get(`/moduleDetails?id=${pathname.split('/')[6]}`) ;
+            const {data} = await axiosSecure.get(`/moduleDetails?id=${pathname.split('/')[6].length < 10 ? pathname.split('/')[7] : pathname.split('/')[6]}`) ;
             return data ;
         }
     })
@@ -81,28 +87,6 @@ const UploadSubject = () => {
         setAddAssignment(!addAssignment)
     };
 
-    const handleSelectImages = (e) => {
-        const files = Array.from(e.target.files) ;
-        setSelectedImages(files) ;
-    }
-
-    const handleSelectVideos = async (e) => {
-        if(!uploadedVideos?.length > 0){
-            setVideoLoading(true) ;
-            const files = Array.from(e.target.files) ;
-            let videoUrls = [] ;
-            for(let video of files){
-                const formData = new FormData() ;
-                formData.append('file' , video) ;
-                formData.append('upload_preset', 'eduManage');
-                const {data} = await axios.post(import.meta.env.VITE_UPLOADING_ANYTHING_URL , formData) ;
-                videoUrls.push(data?.url) ;
-            }
-            setUploadedVideos(videoUrls);
-            setVideoLoading(false) ;
-        }
-    }
-
     const handleAddModule = async (e) => {
         e.preventDefault() ;
         const from = e.target ;
@@ -110,8 +94,9 @@ const UploadSubject = () => {
         const textForModule = from.textForModule.value ;
         const textForModuleTitle = from.textForModuleTitle.value ;
         
-        if(textForModule.length === 0 && selectedImages.length === 0){
-            setSelectedImages([]) ;
+        if(textForModule.length === 0 && uploadedImages.length === 0){
+            setUploadedImages([]) ;
+            setUploadedVideos([]) ;
             handleAddModuleOpen() ;
             Swal.fire({
                 title: "Oops!",
@@ -120,17 +105,6 @@ const UploadSubject = () => {
             });
         }
         else{
-            let urls = [] ;
-            setImageLoading(true) ;
-            for(let image of selectedImages){
-                const formData = new FormData() ;
-                formData.append('image' , image) ;
-                const {data} = await axios.post(apiUrl , formData, {
-                    headers: { "content-type": "multipart/form-data" },
-                })
-                urls.push(data?.data?.display_url) ;
-            }
-            setImageLoading(false) ;
             const moduleData = {
                 moduleData : [
                     {
@@ -138,7 +112,7 @@ const UploadSubject = () => {
                         textForModule ,
                     },
                     {
-                        moduleImages : urls ,
+                        moduleImages : uploadedImages ,
                     },
                     {
                         moduleVideos : uploadedVideos ,
@@ -155,8 +129,8 @@ const UploadSubject = () => {
             setLoading(false) ;
             moduleRefetch() ;
             handleAddModuleOpen() ;
-            setSelectedImages([]) ;
-            setUploadedVideos([]) ;
+            setUploadedImages([]) ;
+            setUploadedVideos([]) ;-
             Swal.fire({
                 title: "Success",
                 text: "Module Added Success Full !",
@@ -168,52 +142,42 @@ const UploadSubject = () => {
     const handleAddAssignment = async (e) => {
         e.preventDefault() ;
 
-        const from = e.target ;
-        const assignmentName = from.assignmentName.value ;
-        const assignmentDescription = from.assignmentDescription.value ;
-        const textForAssignment = from.textForAssignment.value ;
+        // const from = e.target ;
+        // const assignmentName = from.assignmentName.value ;
+        // const assignmentDescription = from.assignmentDescription.value ;
+        // const textForAssignment = from.textForAssignment.value ;
 
-        if(textForAssignment.length === 0 && selectedImages.length === 0){
-            setSelectedImages([]) ;
-            handleAddModuleOpen() ;
-            Swal.fire({
-                title: "Oops!",
-                html: "Please fill text for module fuild or <br/> select some images !",
-                icon: "warning"
-            });
-        }
-        else{
-            let urls = [] ;
-            setLoading(true) ;
-            for(let image of selectedImages){
-                const formData = new FormData() ;
-                formData.append('image' , image) ;
-                const {data} = await axios.post(apiUrl , formData, {
-                    headers: { "content-type": "multipart/form-data" },
-                })
-                urls.push(data?.data?.display_url) ;
-            }
-            const assignmentData = {
-                time,
-                assignmentName ,
-                textForAssignment ,
-                assignmentDescription ,
-                assignmentImages : urls ,
-                grade : pathname.split('/')[3] ,
-                subject : pathname.split('/')[4] ,
-                date : new Date().toDateString() ,
-            }
-            assignmentMutate(assignmentData) ;
-            setLoading(false) ;
-            handleAddModuleOpen() ;
-            setSelectedImages([]) ;
-            assignmentsRefetch() ;
-            Swal.fire({
-                title: "Success",
-                text: "Module Added Success Full !",
-                icon: "success"
-            });
-        }
+        // if(textForAssignment.length === 0){
+        //     handleAddModuleOpen() ;
+        //     Swal.fire({
+        //         title: "Oops!",
+        //         html: "Please fill text for module fuild or <br/> select some images !",
+        //         icon: "warning"
+        //     });
+        // }
+        // else{
+        //     let urls = [] ;
+        //     setLoading(true) ;
+        //     const assignmentData = {
+        //         time,
+        //         assignmentName ,
+        //         textForAssignment ,
+        //         assignmentDescription ,
+        //         assignmentImages : urls ,
+        //         grade : pathname.split('/')[3] ,
+        //         subject : pathname.split('/')[4] ,
+        //         date : new Date().toDateString() ,
+        //     }
+        //     assignmentMutate(assignmentData) ;
+        //     setLoading(false) ;
+        //     handleAddModuleOpen() ;
+        //     assignmentsRefetch() ;
+        //     Swal.fire({
+        //         title: "Success",
+        //         text: "Module Added Success Full !",
+        //         icon: "success"
+        //     });
+        // }
     }
 
     return (
@@ -279,13 +243,13 @@ const UploadSubject = () => {
 
                         <div className="h-full w-full flex flex-col items-start gap-3 p-2 bg-[#160929] rounded">
                             {
-                                assignments?.length > 0 && assignments?.map((data) => <NavLink to={`assignment/${data?._id}`} key={data?._id} className={({ isActive, isPending }) =>
-                                    isPending ? "pending bg-[#211336] w-full py-1 px-2 rounded" : isActive ? "bg-[#3a215f] w-full py-1 px-2 rounded" : "bg-[#211336] w-full py-1 px-2 rounded duration-300"
-                                }
-                                >
-                                    <p className="gro font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-teal-500">{data?.moduleName}</p>
-                                    <p className="gro font- text-[#C7ABFF]">{data?.time} {data?.date.split(' ').slice(2 , 3)} {data?.date.split(' ').slice(3)}</p>
-                                </NavLink>)
+                                // assignments?.length > 0 && assignments?.map((data) => <NavLink to={`assignment/${data?._id}`} key={data?._id} className={({ isActive, isPending }) =>
+                                //     isPending ? "pending bg-[#211336] w-full py-1 px-2 rounded" : isActive ? "bg-[#3a215f] w-full py-1 px-2 rounded" : "bg-[#211336] w-full py-1 px-2 rounded duration-300"
+                                // }
+                                // >
+                                //     <p className="gro font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-teal-500">{data?.moduleName}</p>
+                                //     <p className="gro font- text-[#C7ABFF]">{data?.time} {data?.date.split(' ').slice(2 , 3)} {data?.date.split(' ').slice(3)}</p>
+                                // </NavLink>)
                             }
                         </div>
                     </div>
@@ -295,7 +259,7 @@ const UploadSubject = () => {
             </div>
 
             <Dialog
-                size="sm"
+                size="lg"
                 open={addModule}
                 animate={{
                 mount: { scale: 1, y: 0 },
@@ -308,10 +272,11 @@ const UploadSubject = () => {
                         <MdOutlineCancel className="text-2xl"/>
                     </p>
 
-                    <form onSubmit={handleAddModule} className="flex flex-col gap-3 h-full">
+                    <form onSubmit={handleAddModule} className="flex flex-col gap-3 min-h-[50vh] max-h-[80vh] overflow-y-auto scrollbar-thin">
 
-                        <div className="grid grid-cols-1 gap-3">
-                            <div className="bg-gradient-to-r from-purple-500 to-teal-500 p-[1px] rounded-md h-12">
+                        <div className="grid grid-cols-2 gap-3">
+
+                            <div className="bg-gradient-to-br from-purple-500 to-[#6B0DEC] p-[1px] rounded-md h-12">
                                 <input
                                     onChange={(e) => setTexts((preve) => {
                                         return{
@@ -327,10 +292,8 @@ const UploadSubject = () => {
                                     placeholder={`Module/Subject Name : ${pathname.split('/')[4]}`}
                                 />
                             </div>
-                        </div>
 
-                        <div className="grid grid-cols-1 gap-3">
-                            <div className="bg-gradient-to-r from-purple-500 to-teal-500 p-[1px] rounded-md h-12">
+                            <div className="bg-gradient-to-r from-purple-500 to-[#6B0DEC] p-[1px] rounded-md h-12">
                                 <input
                                     onChange={(e) => setTexts((preve) => {
                                         return{
@@ -346,7 +309,11 @@ const UploadSubject = () => {
                                     placeholder={`Module Text Title  ↓`}
                                 />
                             </div>
-                            <div className="bg-gradient-to-r from-purple-500 to-teal-500 p-[1px] rounded-md h-64">
+
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-3">
+                            <div className="bg-gradient-to-r from-purple-500 to-[#6B0DEC] p-[1px] rounded-md h-64">
                                 <textarea
                                     onChange={(e) => setTexts((preve) => {
                                         return{
@@ -364,48 +331,88 @@ const UploadSubject = () => {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-3">
-                            <div className="bg-gradient-to-br from-purple-500 to-teal-500 p-[1px] rounded-md h-12">
-                                <label htmlFor="images" className="flex items-center justify-center gap-3 h-full text-white cursor-pointer gro font-semibold text-base"><IoImage className="text-xl"/>Upload Images</label>
-                                <input
-                                    id="images"
-                                    multiple
-                                    onChange={handleSelectImages}
-                                    className="outline-none hidden text-white cursor-pointer h-full rounded-md py-[6px] border border-teal-900 focus:border-white gro px-2 bg-transparent w-full bg-gradient-to-r from-purple-500 to-teal-500 capitalize gro"
-                                    color="white"
-                                    type={"file"}
-                                    placeholder={`Write For Module`}
-                                    accept="image/*"
-                                />
+                        <div className="grid grid-cols-1 gap-3">
+
+                            <div className="grid grid-cols-2 gap-3">
+
+                                <div className="w-full flex flex-col gap-3">
+                                    
+                                    <div className="bg-gradient-to-t from-purple-500 to-[#6B0DEC] p-[1px] rounded-md h-12 flex items-center justify-center">
+                                        <Button onClick={() => {
+                                            setImageNumber(imageNumber + 1) ;
+                                            imageArray.push(imageNumber) ;
+                                        }} className="gro bg-transparent capitalize text-base font-semibold text-white flex items-center justify-center gap-2 cursor-pointer w-full h-full"><IoImage className="text-xl"/> Add Image Input Fuild <FaPlus /></Button>
+                                    </div>
+
+                                    <div className="grid grid-cols-1 gap-3 w- pr-[6px]">
+                                        {
+                                            imageArray.map((image) => 
+                                            <div key={image} className="bg-gradient-to-br from-purple-500 to-[#6B0DEC] p-[1px] rounded-md h-12 flex items-center justify-between gap-3 pr-3">
+
+                                                <UploadImageForm image={image} apiUrl={apiUrl} uploadedImages={uploadedImages} setImageLoading={setImageLoading} setUploadedImages={setUploadedImages} imageLoading={imageLoading}/>
+
+                                            </div>)
+                                        }
+                                        {
+                                            imageArray?.length > 0 &&
+                                            <div className=" bg-[#1f0b3b] p-[1px] rounded-md h-12 flex items-center justify-center">
+                                                <Button onClick={() => {
+                                                    imageArray.pop() ;
+                                                    uploadedImages.pop() ;
+                                                    setImageNumber(imageNumber-1) ;
+                                                }} className="gro bg-transparent capitalize text-base font-semibold text-red-600 flex items-center justify-center gap-2 cursor-pointer w-full h-full"> Remove Image Input Fuild <FaMinus /></Button>
+                                            </div>
+                                        }
+                                    </div>
+
+                                </div>
+
+                                <div className="w-full flex flex-col gap-3">
+
+                                    <div className="bg-gradient-to-t from-purple-500 to-[#6B0DEC] p-[1px] rounded-md h-12 flex items-center justify-center">
+                                        <Button onClick={() => {
+                                            setVideoNumber(videoNumber + 1) ;
+                                            videoArray.push(videoNumber) ;
+                                        }} className="gro bg-transparent capitalize text-base font-semibold text-white flex items-center justify-center gap-3 cursor-pointer w-full h-full"><MdVideoLibrary className="text-xl"/> Add Video Input Fuild <FaPlus /></Button>
+                                    </div>
+
+                                    <div className="grid grid-cols-1 gap-3 pr-[6px]">
+                                        {
+                                            videoArray.map((video) => 
+                                            <div key={video} className="bg-gradient-to-br from-purple-500 to-[#6B0DEC] p-[1px] rounded-md h-12 flex items-center justify-between gap-3 pr-3">
+
+                                                <UploadVideoForm video={video} setUploadedVideos={setUploadedVideos} setVideoLoading={setVideoLoading} uploadedVideos={uploadedVideos} videoLoading={vidoeLoading}/>
+
+                                            </div>)
+                                        }
+                                        {
+                                            videoArray?.length > 0 &&
+                                            <div className=" bg-[#1f0b3b] p-[1px] rounded-md h-12 flex items-center justify-center">
+                                                <Button onClick={() => {
+                                                    videoArray.pop() ;
+                                                    uploadedVideos.pop();
+                                                    setVideoNumber(videoNumber-1) ;
+                                                }} className="gro bg-transparent capitalize text-base font-semibold text-red-600 flex items-center justify-center gap-2 cursor-pointer w-full h-full"> Remove Image Input Fuild <FaMinus /></Button>
+                                            </div>
+                                        }
+                                    </div>
+
+                                </div>
+
                             </div>
-                            <div className="bg-gradient-to-br from-purple-500 to-teal-500 p-[1px] rounded-md h-12">
-                                {
-                                    uploadedVideos?.length > 0 ?
-                                    <label className="flex items-center justify-center gap-3 h-full text-white cursor-pointer gro font-semibold text-base">Videos Already Uploaded</label>:
-                                    <label htmlFor="videos" className="flex items-center justify-center gap-3 h-full text-white cursor-pointer gro font-semibold text-base"><MdVideoLibrary className="text-xl"/>Upload Videos</label>
-                                }
-                                <input
-                                    id="videos"
-                                    multiple
-                                    onChange={(e) => handleSelectVideos(e)}
-                                    className="outline-none hidden text-white cursor-pointer h-full rounded-md py-[6px] border border-teal-900 focus:border-white gro px-2 bg-transparent w-full bg-gradient-to-r from-purple-500 to-teal-500 capitalize gro"
-                                    color="white"
-                                    type={"file"}
-                                    placeholder={`Write For Module`}
-                                    accept="video/*"
-                                />
-                            </div>
+
                         </div>
 
                         {
                             loading || vidoeLoading || imageLoading ?
-                            <p className="btn border-none flex gap-3 bg-gradient-to-r from-purple-500 to-teal-500 rounded-md text-white gro font-semibold">
-                                {loading && <span className="loading loading-infinity loading-lg"></span>} 
+                            <p className="btn border-none flex gap-3 bg-gradient-to-r from-purple-500 to-[#6B0DEC] rounded-md text-white gro font-semibold">
                                 {imageLoading && 'Uploading Images'} 
                                 {vidoeLoading && 'Uploading Videos'} 
-                                {loading || vidoeLoading && <span className="loading loading-infinity loading-lg"></span>}
+                                {loading && <span className="loading loading-infinity loading-lg"></span>} 
+                                {imageLoading && <span className="loading loading-infinity loading-lg"></span>}
+                                {vidoeLoading && <span className="loading loading-infinity loading-lg"></span>}
                             </p>:
-                            <button className="btn border-none bg-gradient-to-r from-purple-500 to-teal-500 rounded-md text-white gro font-semibold">
+                            <button className="btn border-none bg-gradient-to-t from-purple-500 to-[#6B0DEC] rounded-md text-white gro font-semibold">
                                 Add Module
                             </button> 
                         }
@@ -428,7 +435,7 @@ const UploadSubject = () => {
                     <form onSubmit={handleAddAssignment} className="flex flex-col gap-3 h-full">
 
                         <div className="grid grid-cols-1 gap-3">
-                            <div className="bg-gradient-to-r from-purple-500 to-teal-500 p-[1px] rounded-md h-12">
+                            <div className="bg-gradient-to-r from-purple-500 to-[#6B0DEC] p-[1px] rounded-md h-12">
                                 <input
                                     required
                                     name="assignmentName"
@@ -463,8 +470,6 @@ const UploadSubject = () => {
                             </div>
                             <div className="bg-gradient-to-r from-purple-500 to-teal-500 p-[2px] rounded-md h-12">
                                 <input
-                                    multiple
-                                    onChange={handleSelectImages}
                                     className="file-input file-input-bordered outline-none text-white cursor-pointer h-full rounded-md py-[6px] border border-teal-900 focus:border-white gro px-2 bg-transparent w-full bg-gradient-to-r from-purple-500 to-teal-500 capitalize gro"
                                     color="white"
                                     type={"file"}
