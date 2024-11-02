@@ -1,12 +1,14 @@
 
 import axios from "axios";
 import { useState } from "react";
+import { IoMdDoneAll } from "react-icons/io";
 import { MdVideoLibrary } from "react-icons/md";
 
-const UploadVideoForm = ({setVideoLoading , setUploadedVideos , video , videoLoading , uploadedVideos}) => {
+const UploadVideoForm = ({setVideoLoading , setUploadedVideos , video , uploadedVideos}) => {
 
     const [videoName , setVideoName] = useState('') ;
     const [uploadedVideo , setUploadedVideo] = useState('') ;
+    const [click , setClick] = useState(false) ;
 
     const handleUploadVideo = async (e) => {
         setVideoLoading(true) ;
@@ -19,8 +21,7 @@ const UploadVideoForm = ({setVideoLoading , setUploadedVideos , video , videoLoa
         setVideoLoading(false) ;
     }
     
-    const handleAddVideo = async (e) => {
-        e.preventDefault() ;
+    const handleAddVideo = async () => {
         setUploadedVideo('') ;
         setUploadedVideos([...uploadedVideos , { videoName , moduleVideo : uploadedVideo }]) ;
     }
@@ -34,6 +35,7 @@ const UploadVideoForm = ({setVideoLoading , setUploadedVideos , video , videoLoa
             <label htmlFor={`video${video}`} className="flex items-center w-[35%] border justify-center gap-3 h-full text-white cursor-pointer gro rounded-md font-semibold text-base"><MdVideoLibrary className="text-xl"/>Upload Video</label>
 
             <input
+                disabled={uploadedVideo}
                 id={`video${video}`}
                 onChange={handleUploadVideo}
                 className="outline-none hidden text-white cursor-pointer h-full rounded-md py-[6px] border border-teal-900 focus:border-white gro px-2 bg-transparent w-full bg-gradient-to-r from-purple-500 to-[#6B0DEC] capitalize gro"
@@ -43,9 +45,15 @@ const UploadVideoForm = ({setVideoLoading , setUploadedVideos , video , videoLoa
                 accept="video/*"
             /> 
             {
-                videoLoading ? 
-                <button disabled className="bg-transparent border shadow-none h-full w-[15%] ml-auto gro capitalize font-semibold text-base px-3 rounded text-white">Add</button> :
-                <button disabled={!uploadedVideo} onClick={handleAddVideo} className="bg-transparent border shadow-none h-full w-[15%] ml-auto gro capitalize font-semibold text-base px-3 rounded text-white">Add</button> 
+                uploadedVideo && !click &&
+                <button onClick={() => {
+                    handleAddVideo() ;
+                    setClick(true) ;
+                }} className="bg-transparent border shadow-none h-full w-[15%] ml-auto gro capitalize font-semibold text-base px-3 rounded text-white">Add</button> 
+            }
+            {
+                !uploadedVideo && click &&
+                <button type="button" className="bg-transparent border cursor-default shadow-none h-full w-[10%] text-orange-700 flex items-center justify-center text-lg ml-auto gro capitalize font-semibold px-3 rounded"><IoMdDoneAll /></button> 
             }
         </form>
     );

@@ -1,14 +1,14 @@
 
 import { Button, Dialog } from "@material-tailwind/react";
 import { useState } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import {useMutation, useQuery} from '@tanstack/react-query'
 import { IoImage } from "react-icons/io5";
 import moment from 'moment';
 import { MdOutlineCancel, MdVideoLibrary } from "react-icons/md";
-import { FaMinus, FaPlus } from "react-icons/fa6";
+import { FaArrowLeft, FaMinus, FaPlus } from "react-icons/fa6";
 import ModuleData from "./Components/ModuleData";
 import UploadImageForm from "./Components/UploadImageForm";
 import UploadVideoForm from "./Components/UploadVideoForm";
@@ -184,7 +184,13 @@ const UploadSubject = () => {
         <div className={`h-[80vh] mx-3 mb-10 lg:mx-0 lg:mt-5 ${moduleDetails?.moduleName && 'mb-20'}`}>
 
             {
-                moduleDetails?.moduleName && <h1 className="border-b border-[#302442] gro pb-2 text-xl font-semibold text-[#EAAAFF] w-full mb-5">{moduleDetails?.moduleName}</h1>
+                moduleDetails?.moduleName && 
+                <div className="flex items-center gap-3 border-b border-[#302442] mb-2 pb-1">
+                    <Link to={`/yourGrades/details/${pathname.split('/')[3]}`} className="bg-gradient-to-r from-[#CC45E1] to-[#6B0DEC] rounded-full p-[2px] text-white">
+                        <FaArrowLeft className=""/>
+                    </Link>
+                    <h1 className="gro text-xl font-semibold text-[#EAAAFF] w-full">{moduleDetails?.moduleName}</h1>
+                </div>
             }
 
             <div className="lg:flex lg:items-start lg:justify-between gap-3 h-full">
@@ -406,8 +412,8 @@ const UploadSubject = () => {
                         {
                             loading || vidoeLoading || imageLoading ?
                             <p className="btn border-none flex gap-3 bg-gradient-to-r from-purple-500 to-[#6B0DEC] rounded-md text-white gro font-semibold">
-                                {imageLoading && 'Uploading Images'} 
-                                {vidoeLoading && 'Uploading Videos'} 
+                                {imageLoading && 'Uploading Image'} 
+                                {vidoeLoading && 'Uploading Video'} 
                                 {loading && <span className="loading loading-infinity loading-lg"></span>} 
                                 {imageLoading && <span className="loading loading-infinity loading-lg"></span>}
                                 {vidoeLoading && <span className="loading loading-infinity loading-lg"></span>}

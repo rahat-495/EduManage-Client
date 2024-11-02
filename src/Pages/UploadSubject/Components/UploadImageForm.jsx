@@ -2,11 +2,13 @@
 import axios from "axios";
 import { useState } from "react";
 import { IoImage } from "react-icons/io5";
+import { IoMdDoneAll } from "react-icons/io";
 
-const UploadImageForm = ({image , setImageLoading , setUploadedImages , uploadedImages , apiUrl , imageLoading}) => {
+const UploadImageForm = ({image , setImageLoading , setUploadedImages , uploadedImages , apiUrl}) => {
     
     const [imageName , setImageName] = useState('') ;
     const [uploadedImage , setUploadedImage] = useState('') ;
+    const [click , setClick] = useState(false) ;
 
     const handleUploadImage = async (e) => {
         setImageLoading(true) ;
@@ -17,11 +19,12 @@ const UploadImageForm = ({image , setImageLoading , setUploadedImages , uploaded
             headers: { "content-type": "multipart/form-data" },
         })
         setUploadedImage(data?.data?.url) ;
+        setUploadedImages([...uploadedImages , { imageName , moduleImage : uploadedImage }]) ;
         setImageLoading(false) ;
     }
     
-    const handleAddImage = async (e) => {
-        e.preventDefault() ;
+    const handleAddImage = async () => {
+        setUploadedImage('') ;
         setUploadedImages([...uploadedImages , { imageName , moduleImage : uploadedImage }]) ;
     }
 
@@ -34,6 +37,7 @@ const UploadImageForm = ({image , setImageLoading , setUploadedImages , uploaded
             <label htmlFor={`image${image}`} className="flex items-center w-[35%] border justify-center gap-3 h-full text-white cursor-pointer gro rounded-md font-semibold text-base"><IoImage className="text-xl"/>Upload Image</label>
 
             <input
+                disabled={uploadedImage}
                 id={`image${image}`}
                 onChange={handleUploadImage}
                 className="outline-none hidden text-white cursor-pointer h-full rounded-md py-[6px] border border-teal-900 focus:border-white gro px-2 bg-transparent w-full bg-gradient-to-r from-purple-500 to-[#6B0DEC] capitalize gro"
@@ -43,9 +47,15 @@ const UploadImageForm = ({image , setImageLoading , setUploadedImages , uploaded
                 accept="image/*"
             /> 
             {
-                imageLoading ? 
-                <button disabled className="bg-transparent border shadow-none h-full w-[15%] ml-auto gro capitalize font-semibold text-base px-3 rounded text-white">Add</button> :
-                <button disabled={!uploadedImage} onClick={handleAddImage} className="bg-transparent border shadow-none h-full w-[15%] ml-auto gro capitalize font-semibold text-base px-3 rounded text-white">Add</button> 
+                uploadedImage && !click &&
+                <button onClick={() => {
+                    handleAddImage() ;
+                    setClick(true) ;
+                }} type="button" className="bg-transparent border shadow-none h-full w-[15%] ml-auto gro capitalize font-semibold text-base px-3 rounded text-white">Add</button> 
+            }
+            {
+                !uploadedImage && click &&
+                <button type="button" className="bg-transparent border cursor-default shadow-none h-full w-[15%] text-orange-700 flex items-center justify-center text-lg ml-auto gro capitalize font-semibold px-3 rounded"><IoMdDoneAll /></button> 
             }
         </form>
     );
