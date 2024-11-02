@@ -37,6 +37,8 @@ import AssignmentPage from '../Pages/UploadSubject/Components/AssignmentPage';
 import TextInstruction from '../Pages/UploadSubject/Components/TextInstruction';
 import ShowImage from '../Pages/UploadSubject/Components/ShowImage';
 import ShowVideo from '../Pages/UploadSubject/Components/ShowVideo';
+import MyClassesDetails from '../Pages/MyClassesDetails/MyClassesDetails';
+import MyClassesDetailsDefault from '../Pages/MyClassesDetails/Components/MyClassesDetailsDefault';
 
 const router = createBrowserRouter([
     {
@@ -192,6 +194,16 @@ const router = createBrowserRouter([
             {
                 path : '/message/:receiverUid',
                 element : <MessagePage/>
+            },
+        ]
+    },
+    {
+        path : '/myClasses/details/:subject' ,
+        element : <MyClassesDetails/> ,
+        children : [
+            {
+                path : '/myClasses/details/:subject',
+                element : <MyClassesDetailsDefault/>
             },
         ]
     },
