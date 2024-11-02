@@ -22,7 +22,7 @@ const TextInstruction = () => {
     const handleOpen = () => setOpen(!open);
 
     return (
-        <div className="w-full h-full p-5 bg-[#160929] rounded">
+        <div className="w-full h-full p-5 bg-[#160929] rounded overflow-hidden">
 
             {
                 data?.moduleData[0]?.textForModuleTitle && <h1 className="text-3xl gro mb-5 text-[#DBA0F1]">{data?.moduleData[0]?.textForModuleTitle}</h1>

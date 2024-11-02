@@ -19,13 +19,14 @@ const UploadImageForm = ({image , setImageLoading , setUploadedImages , uploaded
             headers: { "content-type": "multipart/form-data" },
         })
         setUploadedImage(data?.data?.url) ;
-        setUploadedImages([...uploadedImages , { imageName , moduleImage : uploadedImage }]) ;
         setImageLoading(false) ;
     }
     
     const handleAddImage = async () => {
+        if(uploadedImage){
+            setUploadedImages([...uploadedImages , { imageName , moduleImage : uploadedImage }]) ;
+        }
         setUploadedImage('') ;
-        setUploadedImages([...uploadedImages , { imageName , moduleImage : uploadedImage }]) ;
     }
 
     return (

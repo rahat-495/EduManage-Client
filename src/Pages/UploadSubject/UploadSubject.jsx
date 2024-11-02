@@ -180,6 +180,8 @@ const UploadSubject = () => {
         // }
     }
 
+    console.log(uploadedVideos)
+
     return (
         <div className={`h-[80vh] mx-3 mb-10 lg:mx-0 lg:mt-5 ${moduleDetails?.moduleName && 'mb-20'}`}>
 
@@ -354,9 +356,7 @@ const UploadSubject = () => {
                                         {
                                             imageArray.map((image) => 
                                             <div key={image} className="bg-gradient-to-br from-purple-500 to-[#6B0DEC] p-[1px] rounded-md h-12 flex items-center justify-between gap-3 pr-3">
-
                                                 <UploadImageForm image={image} apiUrl={apiUrl} uploadedImages={uploadedImages} setImageLoading={setImageLoading} setUploadedImages={setUploadedImages} imageLoading={imageLoading}/>
-
                                             </div>)
                                         }
                                         {
@@ -386,9 +386,7 @@ const UploadSubject = () => {
                                         {
                                             videoArray.map((video) => 
                                             <div key={video} className="bg-gradient-to-br from-purple-500 to-[#6B0DEC] p-[1px] rounded-md h-12 flex items-center justify-between gap-3 pr-3">
-
                                                 <UploadVideoForm video={video} setUploadedVideos={setUploadedVideos} setVideoLoading={setVideoLoading} uploadedVideos={uploadedVideos} videoLoading={vidoeLoading}/>
-
                                             </div>)
                                         }
                                         {
