@@ -180,8 +180,6 @@ const UploadSubject = () => {
         // }
     }
 
-    console.log(uploadedVideos)
-
     return (
         <div className={`h-[80vh] mx-3 mb-10 lg:mx-0 lg:mt-5 ${moduleDetails?.moduleName && 'mb-20'}`}>
 
@@ -191,7 +189,11 @@ const UploadSubject = () => {
                     <Link to={`/yourGrades/details/${pathname.split('/')[3]}`} className="bg-gradient-to-r from-[#CC45E1] to-[#6B0DEC] rounded-full p-[2px] text-white">
                         <FaArrowLeft className=""/>
                     </Link>
-                    <h1 className="gro text-xl font-semibold text-[#EAAAFF] w-full">{moduleDetails?.moduleName}</h1>
+                    <h1 className="gro text-xl font-semibold text-[#EAAAFF] w-full">
+                        {pathname.split('/')[5] === 'textInstruction' && 'Text Instruction : ' + moduleDetails?.moduleName}
+                        {pathname.split('/')[5] === 'images' && moduleDetails?.moduleName + ' : ' + moduleDetails?.moduleData[1]?.moduleImages[pathname.split('/')[6]]?.imageName}
+                        {pathname.split('/')[5] === 'videos' && moduleDetails?.moduleName + ' : ' + moduleDetails?.moduleData[2]?.moduleVideos[pathname.split('/')[6]]?.videoName}
+                    </h1>
                 </div>
             }
 
@@ -231,7 +233,7 @@ const UploadSubject = () => {
                                             <p className={`bg-gradient-to-br from-purple-500 p-[2px] to-[#5457FE] rounded ${moduleClick === data?._id && 'rotate-180 duration-500'}`}>
                                                 <FaMinus className={`text-lg bg-[#211336]`}/>
                                             </p> :
-                                            <p className={`bg-gradient-to-br from-purple-500 p-[2px] to-[#5457FE] rounded ${moduleClick === data?._id && '-rotate-90 duration-500'}`}>
+                                            <p className={`bg-gradient-to-br from-purple-500 p-[2px] to-[#5457FE] rounded ${moduleClick !== data?._id && '-rotate-90 duration-500'}`}>
                                                 <FaPlus className="text-lg"/>
                                             </p>
                                         }

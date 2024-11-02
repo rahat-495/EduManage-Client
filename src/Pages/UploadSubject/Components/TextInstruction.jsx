@@ -4,6 +4,8 @@ import { useLocation } from "react-router-dom";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import React, { useState } from "react";
 import { Button, Dialog } from "@material-tailwind/react";
+import image from '../../../../public/images/textInstruction.png'
+import { MdOutlineCancel } from "react-icons/md";
 
 const TextInstruction = () => {
 
@@ -24,18 +26,14 @@ const TextInstruction = () => {
     return (
         <div className="w-full h-full p-5 bg-[#160929] rounded overflow-hidden">
 
-            {
-                data?.moduleData[0]?.textForModuleTitle && <h1 className="text-3xl gro mb-5 text-[#DBA0F1]">{data?.moduleData[0]?.textForModuleTitle}</h1>
-            }
-
             { 
-                data?.moduleData[0]?.textForModule ? <div className="gro text-xl text-white flex flex-col">{data?.moduleData[0]?.textForModule?.slice(0 , 800)?.split('\n')?.map((line, index) => (
+                data?.moduleData[0]?.textForModule ? <div className="gro text-xl text-white flex flex-col">{data?.moduleData[0]?.textForModule?.slice(0 , 850)?.split('\n')?.map((line, index) => (
                     <React.Fragment key={index}>
                         {line}
                         <br />
                     </React.Fragment>))}
                     {
-                        data?.moduleData[0]?.textForModule?.length > 800 &&
+                        data?.moduleData[0]?.textForModule?.length > 850 &&
                         <Button size="sm" onClick={handleOpen} className="w-fit mx-auto bg-transparent border capitalize gro shadow-none hover:shadow-none rounded-full text-sm hover:border-[#C3105D] hover:text-[#C3105D] duration-300 ease-in-out mt-10">See More</Button>
                     }
                 </div> :
@@ -47,14 +45,21 @@ const TextInstruction = () => {
             <Dialog
                 size="md"
                 open={open} 
-                handler={handleOpen}
                 animate={{
                     mount: { scale: 1, y: 0 },
                     unmount: { scale: 0.9, y: 0 },
                 }}
             >
-                <div className="min-h-[50vh] h-[50vh] p-6 bg-[#191124] rounded-md">
+                <div className="min-h-[75vh] h-[75vh] p-6 bg-[#191124] rounded-md relative">
+
+                    <p className="absolute -top-3 -right-3 cursor-pointer text-white bg-gradient-to-br from-red-500 to-[#ff5e00] duration-300 rounded-full" onClick={() => handleOpen()}>
+                        <MdOutlineCancel className="text-2xl"/>
+                    </p>
+
                     <div className="bg-[#191124] h-full rounded-md overflow-auto scrollbar-thin">
+
+                        <img className="mx-auto mb-10" src={image} alt="" />
+
                         <p className="gro text-white">
                             {
                                 data?.moduleData[0]?.textForModule?.split('\n')?.map((line, index) => (
