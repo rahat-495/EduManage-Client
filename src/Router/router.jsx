@@ -37,8 +37,8 @@ import AssignmentPage from '../Pages/UploadSubject/Components/AssignmentPage';
 import TextInstruction from '../Pages/UploadSubject/Components/TextInstruction';
 import ShowImage from '../Pages/UploadSubject/Components/ShowImage';
 import ShowVideo from '../Pages/UploadSubject/Components/ShowVideo';
-import MyClassesDetails from '../Pages/MyClassesDetails/MyClassesDetails';
-import MyClassesDetailsDefault from '../Pages/MyClassesDetails/Components/MyClassesDetailsDefault';
+import MyClassesRoot from '../Layout/MyClassesRoot';
+import MyClassesDefault from '../MyClassesPages/MyClassesDefault';
 
 const router = createBrowserRouter([
     {
@@ -199,11 +199,11 @@ const router = createBrowserRouter([
     },
     {
         path : '/myClasses/details/:subject' ,
-        element : <MyClassesDetails/> ,
+        element : <MyClassesRoot/> ,
         children : [
             {
                 path : '/myClasses/details/:subject',
-                element : <MyClassesDetailsDefault/>
+                element : <MyClassesDefault/>
             },
         ]
     },

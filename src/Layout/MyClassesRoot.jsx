@@ -1,9 +1,9 @@
 
 import { Outlet } from "react-router-dom";
-import Nav from "../../Shared/Navbar/Nav";
-import Footer from "../../Shared/Footer/Footer";
+import Nav from "../Shared/Navbar/Nav";
+import Footer from "../Shared/Footer/Footer";
 
-const MyClassesDetails = () => {
+const MyClassesRoot = () => {
     return (
         <div className="overflow-x-hidden lg:overflow-visible">
 
@@ -22,4 +22,4 @@ const MyClassesDetails = () => {
     );
 };
 
-export default MyClassesDetails;
+export default MyClassesRoot;
