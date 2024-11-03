@@ -186,7 +186,7 @@ const UploadSubject = () => {
             {
                 moduleDetails?.moduleName && 
                 <div className="flex items-center gap-3 border-b border-[#302442] mb-2 pb-1">
-                    <Link to={`/yourGrades/details/${pathname.split('/')[3]}`} className="bg-gradient-to-r from-[#CC45E1] to-[#6B0DEC] rounded-full p-[2px] text-white">
+                    <Link to={`/yourGrades/details/${pathname.split('/')[3]}`} className="bg-gradient-to-r from-[#CC45E1] to-[#6B0DEC] rounded-full p-[2px] text-[#0F172A]">
                         <FaArrowLeft className=""/>
                     </Link>
                     <h1 className="gro text-xl font-semibold text-[#EAAAFF] w-full">
