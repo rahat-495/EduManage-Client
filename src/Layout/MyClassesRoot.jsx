@@ -11,8 +11,18 @@ const MyClassesRoot = () => {
                 <Nav/>
             </div>
 
-            <div className="max-w-[1440px] min-h-[70vh] mx-auto overflow-hidden">
-                <Outlet/>
+            <div className="max-w-[1440px] min-h-[70vh] mx-auto overflow-hidden lg:mb-10">
+                <div className="lg:flex lg:items-start lg:justify-between gap-3 h-full">
+
+                    <div className="w-full h-[60vh] rounded bg-[#010313]">
+                        <Outlet />
+                    </div>
+
+                    <div className="bg-[#010313] w-[550px] h-[70vh] max-h-[100vh] rounded p-3 flex flex-col gap-3 overflow-y-auto scrollbar-thin">
+
+                    </div>
+
+                </div>
             </div>
 
             <div className="">
