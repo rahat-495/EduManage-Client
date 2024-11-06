@@ -19,7 +19,9 @@ const MyClassesRoot = () => {
                     </div>
 
                     <div className="bg-[#010313] w-[550px] h-[70vh] max-h-[100vh] rounded p-3 flex flex-col gap-3 overflow-y-auto scrollbar-thin">
-
+                        <div className="h-[70vh] grid grid-rows-2 gap-1">
+                            
+                        </div>
                     </div>
 
                 </div>
