@@ -16,7 +16,7 @@ const TextInstruction = () => {
     const {data} = useQuery({
         queryKey : ['moduleData' , pathname] ,
         queryFn : async () => {
-            const {data} = await axiosSecure.get(`/moduleDetails?id=${pathname.split('/')[6]}`) ;
+            const {data} = await axiosSecure.get(`/moduleDetails?id=${pathname.split('/')[6] ? pathname.split('/')[6] : pathname.split('/')[5]}`) ;
             return data ;
         }
     })
@@ -24,7 +24,7 @@ const TextInstruction = () => {
     const handleOpen = () => setOpen(!open);
 
     return (
-        <div className="w-full h-full p-5 bg-[#160929] rounded overflow-hidden">
+        <div className="w-full h-full p-5 bg-[#010313] rounded overflow-hidden">
 
             { 
                 data?.moduleData[0]?.textForModule ? <div className="gro text-xl text-white flex flex-col">{data?.moduleData[0]?.textForModule?.slice(0 , 850)?.split('\n')?.map((line, index) => (

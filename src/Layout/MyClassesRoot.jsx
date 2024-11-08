@@ -35,6 +35,20 @@ const MyClassesRoot = () => {
                 <Nav/>
             </div>
 
+            {
+                // moduleDetails?.moduleName && 
+                // <div className="flex items-center gap-3 border-b border-[#302442] mb-2 pb-1">
+                //     <Link to={`/yourGrades/details/${pathname.split('/')[3]}`} className="bg-gradient-to-r from-[#CC45E1] to-[#6B0DEC] rounded-full p-[2px] text-[#0F172A]">
+                //         <FaArrowLeft className=""/>
+                //     </Link>
+                //     <h1 className="gro text-xl font-semibold text-[#EAAAFF] w-full">
+                //         {pathname.split('/')[5] === 'textInstruction' && 'Text Instruction : ' + moduleDetails?.moduleName}
+                //         {pathname.split('/')[5] === 'images' && moduleDetails?.moduleName + ' : ' + moduleDetails?.moduleData[1]?.moduleImages[pathname.split('/')[6]]?.imageName}
+                //         {pathname.split('/')[5] === 'videos' && moduleDetails?.moduleName + ' : ' + moduleDetails?.moduleData[2]?.moduleVideos[pathname.split('/')[6]]?.videoName}
+                //     </h1>
+                // </div>
+            }
+
             <div className="max-w-[1440px] min-h-[70vh] mx-auto overflow-hidden lg:mb-10">
                 <div className="lg:flex lg:items-start lg:justify-between gap-3 h-full">
 

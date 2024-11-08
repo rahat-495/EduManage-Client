@@ -205,6 +205,18 @@ const router = createBrowserRouter([
                 path : '/myClasses/details/:subject',
                 element : <MyClassesDefault/>
             },
+            {
+                path : 'textInstruction/:id' ,
+                element : <TextInstruction/>,
+            },
+            {
+                // path : 'images/:index/:id' ,
+                // element : <ShowImage/>,
+            },
+            {
+                // path : 'videos/:index/:id' ,
+                // element : <ShowVideo/>,
+            },
         ]
     },
 ])
