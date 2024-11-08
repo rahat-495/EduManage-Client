@@ -1,5 +1,5 @@
 
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Nav from "../Shared/Navbar/Nav";
 import Footer from "../Shared/Footer/Footer";
 import { useQuery } from "@tanstack/react-query";
@@ -11,17 +11,22 @@ import ModuleData from "../Pages/UploadSubject/Components/ModuleData";
 
 const MyClassesRoot = () => {
 
+    const {pathname} = useLocation() ;
     const axiosSecure = useAxiosSecure() ;
-    const {userData} = useSelector(state => state.user) ;
+    const userData = useSelector(state => state?.user) ;
     const [moduleClick, setModuleClick] = useState(false) ;
 
     const {data : modules} = useQuery({
-        queryKey : ['myClassModules' , userData] ,
+        queryKey : ['myClassModules' , pathname , userData] ,
         queryFn : async () => {
-            const {data} = await axiosSecure.get(`/myClassModules?userData=${userData}`);
-            return data ;
+            if(userData){
+                const {data} = await axiosSecure.get(`/myClassModules?userUid=${userData?.studentUid}&subject=${pathname.split('/')[3]}`);
+                return data ;
+            }
         }
     })
+
+    console.log(pathname.split('/')[3])
 
     return (
         <div className="overflow-x-hidden lg:overflow-visible">
@@ -37,9 +42,11 @@ const MyClassesRoot = () => {
                         <Outlet />
                     </div>
 
-                    <div className="bg-[#010313] w-[550px] h-[80vh] max-h-[100vh] rounded p-3 flex flex-col gap-3 overflow-y-auto scrollbar-thin">
+                    <div className="w-[550px] h-[80vh] max-h-[100vh] rounded flex flex-col gap-3 overflow-y-auto scrollbar-thin">
+
                         <div className="h-[80vh] grid grid-rows-2 gap-1">
-                            <div className="h-full w-full flex flex-col items-start gap-3 p-2 bg-[#160929] rounded overflow-auto scrollbar-none">
+
+                            <div className="h-full w-full flex flex-col items-start gap-3 p-2 bg-[#010313] rounded overflow-auto scrollbar-none">
                                 {
                                     modules?.length > 0 && modules?.map((data) => 
                                     <div key={data?._id} className={`bg-[#211336] w-full py-1 px-2 rounded duration-1000 cursor-pointer`}
@@ -76,7 +83,21 @@ const MyClassesRoot = () => {
                                     </div>)
                                 }
                             </div>
+
+                            <div className="h-full w-full flex flex-col items-start gap-3 p-2 bg-[#010313] rounded">
+                                {
+                                    // assignments?.length > 0 && assignments?.map((data) => <NavLink to={`assignment/${data?._id}`} key={data?._id} className={({ isActive, isPending }) =>
+                                    //     isPending ? "pending bg-[#211336] w-full py-1 px-2 rounded" : isActive ? "bg-[#3a215f] w-full py-1 px-2 rounded" : "bg-[#211336] w-full py-1 px-2 rounded duration-300"
+                                    // }
+                                    // >
+                                    //     <p className="gro font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-teal-500">{data?.moduleName}</p>
+                                    //     <p className="gro font- text-[#C7ABFF]">{data?.time} {data?.date.split(' ').slice(2 , 3)} {data?.date.split(' ').slice(3)}</p>
+                                    // </NavLink>)
+                                }
+                            </div>
+
                         </div>
+
                     </div>
 
                 </div>
