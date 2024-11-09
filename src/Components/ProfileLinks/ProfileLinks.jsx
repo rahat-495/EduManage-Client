@@ -17,7 +17,7 @@ const ProfileLinks = () => {
             isPending
               ? ""
               : isActive
-              ? "font-bold border-b border-purple-500 transition-all text-purple-500 ease-in-out duration-300"
+              ? "font-semibold border-b border-purple-500 transition-all text-purple-500 ease-in-out duration-300"
               : "text-white border-b hover:border-b-purple-500"
           }
         >
@@ -35,7 +35,7 @@ const ProfileLinks = () => {
             isPending
               ? ""
               : isActive
-              ? "font-bold border-b border-purple-500 transition-all text-purple-500 ease-in-out duration-300"
+              ? "font-semibold border-b border-purple-500 transition-all text-purple-500 ease-in-out duration-300"
               : "text-white border-b hover:border-b-purple-500"
           }
         >
@@ -60,7 +60,7 @@ const ProfileLinks = () => {
             isPending
               ? ""
               : isActive
-              ? "font-bold border-b border-purple-500 transition-all text-purple-500 ease-in-out duration-300"
+              ? "font-semibold border-b border-purple-500 transition-all text-purple-500 ease-in-out duration-300"
               : "text-white border-b hover:border-b-purple-500"
           }
         >
@@ -78,7 +78,7 @@ const ProfileLinks = () => {
             isPending
               ? ""
               : isActive
-              ? "font-bold border-b border-purple-500 transition-all text-purple-500 ease-in-out duration-300"
+              ? "font-semibold border-b border-purple-500 transition-all text-purple-500 ease-in-out duration-300"
               : "text-white border-b hover:border-b-purple-500"
           }
         >
@@ -96,7 +96,7 @@ const ProfileLinks = () => {
             isPending
               ? ""
               : isActive
-              ? "font-bold border-b border-purple-500 transition-all text-purple-500 ease-in-out duration-300"
+              ? "font-semibold border-b border-purple-500 transition-all text-purple-500 ease-in-out duration-300"
               : "text-white border-b hover:border-b-purple-500"
           }
         >
@@ -114,7 +114,7 @@ const ProfileLinks = () => {
             isPending
               ? ""
               : isActive
-              ? "font-bold border-b border-purple-500 transition-all text-purple-500 ease-in-out duration-300"
+              ? "font-semibold border-b border-purple-500 transition-all text-purple-500 ease-in-out duration-300"
               : "text-white border-b hover:border-b-purple-500"
           }
         >
@@ -143,7 +143,7 @@ const ProfileLinks = () => {
                 isPending
                   ? ""
                   : isActive
-                  ? "font-bold border-b border-purple-500 transition-all text-purple-500 ease-in-out duration-300"
+                  ? "font-semibold border-b border-purple-500 transition-all text-purple-500 ease-in-out duration-300"
                   : "text-white border-b hover:border-b-purple-500"
               }
             >
@@ -161,7 +161,7 @@ const ProfileLinks = () => {
                 isPending
                   ? ""
                   : isActive
-                  ? "font-bold border-b border-purple-500 transition-all text-purple-500 ease-in-out duration-300"
+                  ? "font-semibold border-b border-purple-500 transition-all text-purple-500 ease-in-out duration-300"
                   : "text-white border-b hover:border-b-purple-500"
               }
             >
@@ -181,7 +181,7 @@ const ProfileLinks = () => {
             isPending
               ? ""
               : isActive
-              ? "font-bold border-b border-purple-500 transition-all text-purple-500 ease-in-out duration-300"
+              ? "font-semibold border-b border-purple-500 transition-all text-purple-500 ease-in-out duration-300"
               : "text-white border-b hover:border-b-purple-500"
           }
         >

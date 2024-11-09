@@ -214,6 +214,21 @@ const NavLists = () => {
           </NavLink>
         </Typography>
 
+        <Typography as="li" className="p-1 font-normal gro">
+          <NavLink
+            to={"/myClasses"}
+            className={({ isActive, isPending }) =>
+              isPending
+                ? "pending"
+                : isActive
+                ? "font-semibold underline transition-all ease-in-out duration-300"
+                : ""
+            }
+          >
+            <NavLinks path={"/myClasses"} label={"My Classes"} />
+          </NavLink>
+        </Typography>
+
         {
           !userData?.isjoined &&
           <Typography as="li" className="p-1 font-normal gro">

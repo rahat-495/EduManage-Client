@@ -1,12 +1,12 @@
 
-import { Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import Nav from "../Shared/Navbar/Nav";
 import Footer from "../Shared/Footer/Footer";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { useState } from "react";
-import { FaMinus, FaPlus } from "react-icons/fa6";
+import { FaArrowLeft, FaMinus, FaPlus } from "react-icons/fa6";
 import ModuleData from "../Pages/UploadSubject/Components/ModuleData";
 
 const MyClassesRoot = () => {
@@ -26,6 +26,16 @@ const MyClassesRoot = () => {
         }
     })
 
+    const {data : moduleDetails} = useQuery({
+        queryKey : ['moduleData' , pathname] ,
+        queryFn : async () => {
+            const {data} = await axiosSecure.get(`/moduleDetails?id=${pathname.split('/')[6].length < 10 ? pathname.split('/')[5] : pathname.split('/')[6]}`) ;
+            return data ;
+        }
+    })
+
+    console.log(moduleDetails?.moduleName)
+
     return (
         <div className="overflow-x-hidden lg:overflow-visible">
 
@@ -33,21 +43,22 @@ const MyClassesRoot = () => {
                 <Nav/>
             </div>
 
-            {
-                // moduleDetails?.moduleName && 
-                // <div className="flex items-center gap-3 border-b border-[#302442] mb-2 pb-1">
-                //     <Link to={`/yourGrades/details/${pathname.split('/')[3]}`} className="bg-gradient-to-r from-[#CC45E1] to-[#6B0DEC] rounded-full p-[2px] text-[#0F172A]">
-                //         <FaArrowLeft className=""/>
-                //     </Link>
-                //     <h1 className="gro text-xl font-semibold text-[#EAAAFF] w-full">
-                //         {pathname.split('/')[5] === 'textInstruction' && 'Text Instruction : ' + moduleDetails?.moduleName}
-                //         {pathname.split('/')[5] === 'images' && moduleDetails?.moduleName + ' : ' + moduleDetails?.moduleData[1]?.moduleImages[pathname.split('/')[6]]?.imageName}
-                //         {pathname.split('/')[5] === 'videos' && moduleDetails?.moduleName + ' : ' + moduleDetails?.moduleData[2]?.moduleVideos[pathname.split('/')[6]]?.videoName}
-                //     </h1>
-                // </div>
-            }
-
             <div className="max-w-[1440px] min-h-[70vh] mx-auto overflow-hidden lg:mb-10">
+
+                {
+                    moduleDetails?.moduleName && 
+                    <div className="flex items-center gap-3 border-b border-[#302442] mb-2 pb-1">
+                        <Link to={`/myClasses`} className="bg-gradient-to-r from-[#CC45E1] to-[#6B0DEC] rounded-full p-[2px] text-[#0F172A]">
+                            <FaArrowLeft className=""/>
+                        </Link>
+                        <h1 className="gro text-xl font-semibold text-[#EAAAFF] w-full">
+                            {pathname.split('/')[4] === 'textInstruction' && 'Text Instruction : ' + moduleDetails?.moduleName}
+                            {pathname.split('/')[4] === 'images' && moduleDetails?.moduleData[1]?.moduleImages[pathname.split('/')[5]]?.imageName}
+                            {pathname.split('/')[4] === 'videos' && moduleDetails?.moduleData[2]?.moduleVideos[pathname.split('/')[5]]?.videoName}
+                        </h1>
+                    </div>
+                }
+
                 <div className="lg:flex lg:items-start lg:justify-between gap-3 h-full">
 
                     <div className="w-full h-[60vh] rounded bg-[#010313]">
