@@ -204,7 +204,7 @@ const UploadSubject = () => {
                         <FaArrowLeft className=""/>
                     </Link>
                     <h1 className="gro text-xl font-semibold text-[#EAAAFF] w-full">
-                        {pathname.split('/')[5] === 'textInstruction' && 'Text Instruction : ' + moduleDetails?.moduleName}
+                        {pathname.split('/')[5] === 'textinstruction' && 'Text Instruction : ' + moduleDetails?.moduleName}
                         {pathname.split('/')[5] === 'images' && moduleDetails?.moduleName + ' : ' + moduleDetails?.moduleData[1]?.moduleImages[pathname.split('/')[6]]?.imageName}
                         {pathname.split('/')[5] === 'videos' && moduleDetails?.moduleName + ' : ' + moduleDetails?.moduleData[2]?.moduleVideos[pathname.split('/')[6]]?.videoName}
                     </h1>
@@ -216,7 +216,7 @@ const UploadSubject = () => {
                 <div className="w-full rounded flex flex-col gap-3">
                     <Outlet />
                     {
-                        pathname.split('/')[5] === 'textInstruction' && <div className="flex items-center justify-end gap-5 mr-5">
+                        pathname.split('/')[5] === 'textinstruction' && <div className="flex items-center justify-end gap-5 mr-5">
                             <button className="px-4 py-1 text-lg font-semibold border border-[#7D48BF] gro hover:text-[#d3aeff] duration-300 rounded">Previous</button>
                             <button className="px-8 py-1 text-lg bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffd2] hover:to-[#9286face] text-black gro rounded font-semibold duration-300">Next</button>
                         </div>

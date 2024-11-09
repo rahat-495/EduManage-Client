@@ -25,7 +25,7 @@ const ModuleData = ({data , id}) => {
     }
 
     const handleImageNavigate = (data , index) => {
-        if(data?.whichStudentsSeen?.includes(userData?.studentUid)){
+        if(!data?.whichStudentsSeen?.includes(userData?.studentUid)){
             navigate(`images/${index}/${id}`) ;
         }
         else{
@@ -38,7 +38,7 @@ const ModuleData = ({data , id}) => {
     }
     
     const handleVideoNavigate = (data , index) => {
-        if(data?.whichStudentsSeen?.includes(userData?.studentUid)){
+        if(!data?.whichStudentsSeen?.includes(userData?.studentUid)){
             navigate(`videos/${index}/${id}`) ;
         }
         else{
@@ -50,11 +50,13 @@ const ModuleData = ({data , id}) => {
         }
     }
 
+    console.log(pathname.split('/')[6])
+
     return (
         <div className="w-full">
             {
                 data?.textForModuleTitle &&
-                <div onClick={() => handleTextInstructionNavigate()} className={`${pathname.split('/')[4] === 'textinstruction' && pathname.split('/')[5] === id  ? "gro w-full pr-3 font-semibold bg-gradient-to-r from-[#CC45E1] to-[#6B0DEC] text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4" : 'gro w-full pr-3 font-semibold bg-transparent border-b text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4 justify-between' }`}>
+                <div onClick={() => handleTextInstructionNavigate()} className={`${ pathname.split('/')[4] === 'textinstruction' && pathname.split('/')[5] === id ? "gro w-full pr-3 font-semibold bg-gradient-to-r from-[#CC45E1] to-[#6B0DEC] text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4" : 'gro w-full pr-3 font-semibold bg-transparent border-b text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4 justify-between' }`}>
                     {data?.textForModuleTitle}
                 </div>
             }

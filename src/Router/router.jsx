@@ -34,13 +34,13 @@ import YourGrades from '../Pages/YourGrades/YourGrades';
 import UploadSubject from '../Pages/UploadSubject/UploadSubject';
 import UploadSubStatic from '../Pages/UploadSubject/Components/UploadSubStatic';
 import AssignmentPage from '../Pages/UploadSubject/Components/AssignmentPage';
-import TextInstruction from '../Pages/UploadSubject/Components/TextInstruction';
 import ShowImage from '../Pages/UploadSubject/Components/ShowImage';
 import ShowVideo from '../Pages/UploadSubject/Components/ShowVideo';
 import MyClassesRoot from '../Layout/MyClassesRoot';
 import MyClassesDefault from '../MyClassesPages/MyClassesDefault';
 import MyModuleImage from '../MyClassesPages/Components/MyModuleImage';
 import MyModuleVideo from '../MyClassesPages/Components/MyModuleVideo';
+import TextInstruction from '../Pages/UploadSubject/Components/TextInstruction';
 
 const router = createBrowserRouter([
     {
@@ -208,7 +208,7 @@ const router = createBrowserRouter([
                 element : <MyClassesDefault/>
             },
             {
-                path : 'textInstruction/:id' ,
+                path : 'textinstruction/:id' ,
                 element : <TextInstruction/>,
             },
             {
