@@ -26,8 +26,6 @@ const MyClassesRoot = () => {
         }
     })
 
-    console.log(pathname.split('/')[3])
-
     return (
         <div className="overflow-x-hidden lg:overflow-visible">
 

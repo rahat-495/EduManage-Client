@@ -39,6 +39,8 @@ import ShowImage from '../Pages/UploadSubject/Components/ShowImage';
 import ShowVideo from '../Pages/UploadSubject/Components/ShowVideo';
 import MyClassesRoot from '../Layout/MyClassesRoot';
 import MyClassesDefault from '../MyClassesPages/MyClassesDefault';
+import MyModuleImage from '../MyClassesPages/Components/MyModuleImage';
+import MyModuleVideo from '../MyClassesPages/Components/MyModuleVideo';
 
 const router = createBrowserRouter([
     {
@@ -210,12 +212,12 @@ const router = createBrowserRouter([
                 element : <TextInstruction/>,
             },
             {
-                // path : 'images/:index/:id' ,
-                // element : <ShowImage/>,
+                path : 'images/:index/:id' ,
+                element : <MyModuleImage/>,
             },
             {
-                // path : 'videos/:index/:id' ,
-                // element : <ShowVideo/>,
+                path : 'videos/:index/:id' ,
+                element : <MyModuleVideo/>,
             },
         ]
     },
