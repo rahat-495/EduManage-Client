@@ -24,7 +24,7 @@ const UploadImageForm = ({image , setImageLoading , setUploadedImages , uploaded
     
     const handleAddImage = async () => {
         if(uploadedImage){
-            setUploadedImages([...uploadedImages , { imageName , moduleImage : uploadedImage }]) ;
+            setUploadedImages([...uploadedImages , { imageName , moduleImage : uploadedImage , whichStudentsSeen : [] }]) ;
         }
         setUploadedImage('') ;
     }

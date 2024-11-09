@@ -23,7 +23,7 @@ const UploadVideoForm = ({setVideoLoading , setUploadedVideos , video , uploaded
     
     const handleAddVideo = async () => {
         if(uploadedVideo){
-            setUploadedVideos([...uploadedVideos , { videoName , moduleVideo : uploadedVideo }]) ;
+            setUploadedVideos([...uploadedVideos , { videoName , moduleVideo : uploadedVideo , whichStudentsSeen : [] }]) ;
         }
         setUploadedVideo('') ;
     }

@@ -41,20 +41,6 @@ const UploadSubject = () => {
     
     const time = moment().format('hh:mm:ss A');
 
-    const {mutate : moduleMutate} = useMutation({
-        mutationFn : async (moduleData) => {
-            const {data} = await axiosSecure.post('/createModule' , moduleData) ;
-            return data ;
-        },
-    })
-
-    // const {mutate : assignmentMutate} = useMutation({
-    //     mutationFn : async (assingmentData) => {
-    //         const {data} = await axiosSecure.post('/createAssignment' , assingmentData) ;
-    //         return data ;
-    //     }
-    // })
-
     const {data : modules , refetch : moduleRefetch} = useQuery({
         queryKey : ['uploadedModulesList' , pathname] ,
         queryFn : async () => {
@@ -63,10 +49,27 @@ const UploadSubject = () => {
         }
     })
 
+    const {mutate : moduleMutate} = useMutation({
+        mutationFn : async (moduleData) => {
+            const {data} = await axiosSecure.post('/createModule' , moduleData) ;
+            return data ;
+        },
+        onSuccess : () => {
+            moduleRefetch() ;
+        }
+    })
+
     // const {data : assignments , refetch : assignmentsRefetch} = useQuery({
     //     queryKey : ['uploadedAssignmentsList' , pathname] ,
     //     queryFn : async () => {
     //         const {data} = await axiosSecure.get(`/getUploadedAssignmentsList?grade=${pathname.split('/')[3]}&subject=${pathname.split('/')[4]}`)
+    //         return data ;
+    //     }
+    // })
+    
+    // const {mutate : assignmentMutate} = useMutation({
+    //     mutationFn : async (assingmentData) => {
+    //         const {data} = await axiosSecure.post('/createAssignment' , assingmentData) ;
     //         return data ;
     //     }
     // })
@@ -107,7 +110,8 @@ const UploadSubject = () => {
         else{
             const moduleData = {
                 moduleData : [
-                    {
+                    {   
+                        whichStudentsSeen : [] ,
                         textForModuleTitle ,
                         textForModule ,
                     },
@@ -214,19 +218,19 @@ const UploadSubject = () => {
                     {
                         pathname.split('/')[5] === 'textInstruction' && <div className="flex items-center justify-end gap-5 mr-5">
                             <button className="px-4 py-1 text-lg font-semibold border border-[#7D48BF] gro hover:text-[#d3aeff] duration-300 rounded">Previous</button>
-                            <button className="px-8 py-1 text-lg bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffaf] hover:to-[#9286fac0] text-black gro rounded font-semibold duration-300">Next</button>
+                            <button className="px-8 py-1 text-lg bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffd2] hover:to-[#9286face] text-black gro rounded font-semibold duration-300">Next</button>
                         </div>
                     }
                     {
                         pathname.split('/')[5] === 'images' && <div className="flex items-center justify-end gap-5 mr-5">
                             <button className="px-4 py-1 text-lg font-semibold border border-[#7D48BF] gro hover:text-[#d3aeff] duration-300 rounded">Previous</button>
-                            <button className="px-8 py-1 text-lg bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffaf] hover:to-[#9286fac0] text-black gro rounded font-semibold duration-300">Next</button>
+                            <button className="px-8 py-1 text-lg bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffd2] hover:to-[#9286face] text-black gro rounded font-semibold duration-300">Next</button>
                         </div>
                     }
                     {
                         pathname.split('/')[5] === 'videos' && <div className="flex items-center justify-end gap-5 mr-5">
                             <button className="px-4 py-1 text-lg font-semibold border border-[#7D48BF] gro hover:text-[#d3aeff] duration-300 rounded">Previous</button>
-                            <button className="px-8 py-1 text-lg bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffaf] hover:to-[#9286fac0] text-black gro rounded font-semibold duration-300">Next</button>
+                            <button className="px-8 py-1 text-lg bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffd2] hover:to-[#9286face] text-black gro rounded font-semibold duration-300">Next</button>
                         </div>
                     }
                 </div>

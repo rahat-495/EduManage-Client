@@ -74,19 +74,19 @@ const MyClassesRoot = () => {
                         {
                             pathname.split('/')[4] === 'textInstruction' && <div className="flex items-center justify-end gap-5 mr-5">
                                 <button className="px-4 py-1 text-lg font-semibold border border-[#7D48BF] gro hover:text-[#d3aeff] duration-300 rounded">Previous</button>
-                                <button className="px-8 py-1 text-lg bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffaf] hover:to-[#9286fac0] text-black gro rounded font-semibold duration-300">Next</button>
+                                <button className="px-8 py-1 text-lg bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffd2] hover:to-[#9286face] text-black gro rounded font-semibold duration-300">Next</button>
                             </div>
                         }
                         {
                             pathname.split('/')[4] === 'images' && <div className="flex items-center justify-end gap-5 mr-5">
                                 <button className="px-4 py-1 text-lg font-semibold border border-[#7D48BF] gro hover:text-[#d3aeff] duration-300 rounded">Previous</button>
-                                <button className="px-8 py-1 text-lg bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffaf] hover:to-[#9286fac0] text-black gro rounded font-semibold duration-300">Next</button>
+                                <button className="px-8 py-1 text-lg bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffd2] hover:to-[#9286face] text-black gro rounded font-semibold duration-300">Next</button>
                             </div>
                         }
                         {
                             pathname.split('/')[4] === 'videos' && <div className="flex items-center justify-end gap-5 mr-5">
                                 <button className="px-4 py-1 text-lg font-semibold border border-[#7D48BF] gro hover:text-[#d3aeff] duration-300 rounded">Previous</button>
-                                <button className="px-8 py-1 text-lg bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffaf] hover:to-[#9286fac0] text-black gro rounded font-semibold duration-300">Next</button>
+                                <button className="px-8 py-1 text-lg bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffd2] hover:to-[#9286face] text-black gro rounded font-semibold duration-300">Next</button>
                             </div>
                         }
                     </div>
