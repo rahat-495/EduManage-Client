@@ -7,7 +7,7 @@ const MyClassesDefault = () => {
     console.log(pathname) ;
 
     return (
-        <div>
+        <div className="flex items-center justify-center h-[60vh] overflow-hidden p-1 w-full bg-[#010313] rounded">
             default
         </div>
     );

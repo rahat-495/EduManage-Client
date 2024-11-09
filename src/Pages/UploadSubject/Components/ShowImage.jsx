@@ -19,7 +19,7 @@ const ShowImage = () => {
     })
 
     return (
-        <div>
+        <div className="w-full h-ful bg-[#010313] rounded overflow-hidden">
             <img src={data?.image?.moduleImage} alt="" className="w-full h-full rounded-md"/>
         </div>
     );

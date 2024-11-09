@@ -24,7 +24,7 @@ const TextInstruction = () => {
     const handleOpen = () => setOpen(!open);
 
     return (
-        <div className="w-full h-full p-5 bg-[#010313] rounded overflow-hidden">
+        <div className="w-full h-full p-5 pb-10 bg-[#010313] rounded overflow-hidden">
 
             { 
                 data?.moduleData[0]?.textForModule ? <div className="gro text-xl text-white flex flex-col">{data?.moduleData[0]?.textForModule?.slice(0 , 850)?.split('\n')?.map((line, index) => (

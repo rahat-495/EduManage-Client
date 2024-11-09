@@ -14,7 +14,7 @@ const MyClassesRoot = () => {
     const {pathname} = useLocation() ;
     const axiosSecure = useAxiosSecure() ;
     const userData = useSelector(state => state?.user) ;
-    const [moduleClick, setModuleClick] = useState(false) ;
+    const [moduleClick, setModuleClick] = useState([]) ;
 
     const {data : modules} = useQuery({
         queryKey : ['myClassModules' , pathname , userData] ,
@@ -34,7 +34,15 @@ const MyClassesRoot = () => {
         }
     })
 
-    console.log(moduleDetails?.moduleName)
+    const handleDropDown = (id) => {
+        if(!moduleClick.includes(id)){
+            setModuleClick([...moduleClick , id]) ;
+        }
+        else{
+            const removeClick = moduleClick.filter((removedId) => removedId !== id && removedId ) ;
+            setModuleClick(removeClick) ;
+        }
+    }
 
     return (
         <div className="overflow-x-hidden lg:overflow-visible">
@@ -61,44 +69,58 @@ const MyClassesRoot = () => {
 
                 <div className="lg:flex lg:items-start lg:justify-between gap-3 h-full">
 
-                    <div className="w-full h-[60vh] rounded bg-[#010313]">
+                    <div className="w-full rounded flex flex-col gap-3">
                         <Outlet />
+                        {
+                            pathname.split('/')[4] === 'textInstruction' && <div className="flex items-center justify-end gap-5 mr-5">
+                                <button className="px-4 py-1 text-lg font-semibold border border-[#7D48BF] gro hover:text-[#d3aeff] duration-300 rounded">Previous</button>
+                                <button className="px-8 py-1 text-lg bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffaf] hover:to-[#9286fac0] text-black gro rounded font-semibold duration-300">Next</button>
+                            </div>
+                        }
+                        {
+                            pathname.split('/')[4] === 'images' && <div className="flex items-center justify-end gap-5 mr-5">
+                                <button className="px-4 py-1 text-lg font-semibold border border-[#7D48BF] gro hover:text-[#d3aeff] duration-300 rounded">Previous</button>
+                                <button className="px-8 py-1 text-lg bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffaf] hover:to-[#9286fac0] text-black gro rounded font-semibold duration-300">Next</button>
+                            </div>
+                        }
+                        {
+                            pathname.split('/')[4] === 'videos' && <div className="flex items-center justify-end gap-5 mr-5">
+                                <button className="px-4 py-1 text-lg font-semibold border border-[#7D48BF] gro hover:text-[#d3aeff] duration-300 rounded">Previous</button>
+                                <button className="px-8 py-1 text-lg bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffaf] hover:to-[#9286fac0] text-black gro rounded font-semibold duration-300">Next</button>
+                            </div>
+                        }
                     </div>
 
-                    <div className="w-[550px] h-[80vh] max-h-[100vh] rounded flex flex-col gap-3 overflow-y-auto scrollbar-thin">
+                    <div className="w-[550px] h-[80vh] max-h-[100vh] bg-[#010313] rounded flex flex-col gap-3 overflow-y-auto scrollbar-thin">
 
-                        <div className="h-[80vh] grid grid-rows-2 gap-1">
+                        <div className="h-[80vh] grid grid-rows-1 gap-1">
 
-                            <div className="h-full w-full flex flex-col items-start gap-3 p-2 bg-[#010313] rounded overflow-auto scrollbar-none">
+                            <div className="h-full w-full flex flex-col items-start gap-3 bg-transparent p-2 rounded overflow-auto scrollbar-thin">
                                 {
                                     modules?.length > 0 && modules?.map((data) => 
                                     <div key={data?._id} className={`bg-[#211336] w-full py-1 px-2 rounded duration-1000 cursor-pointer`}
                                     >
-                                        <div onClick={() => {
-                                            moduleClick === data?._id ?
-                                            setModuleClick('') :
-                                            setModuleClick(data?._id)
-                                            }} className="cursor-pointer flex items-center justify-between">
+                                        <div onClick={() => handleDropDown(data?._id)} className="cursor-pointer flex items-center justify-between">
                                             <div className="flex flex-col items-start">
                                                 <p className="gro font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-[#5457FE]">{data?.moduleName}</p>
                                                 <p className="gro text-sm text-[#C7ABFF]">{data?.time} {data?.date.split(' ').slice(2 , 3)} {data?.date.split(' ').slice(3)}</p>
                                             </div>
 
                                             {
-                                                moduleClick === data?._id ? 
-                                                <p className={`bg-gradient-to-br from-purple-500 p-[2px] to-[#5457FE] rounded ${moduleClick === data?._id && 'rotate-180 duration-500'}`}>
+                                                moduleClick?.includes(data?._id) ? 
+                                                <p className={`bg-gradient-to-br from-purple-500 p-[2px] to-[#5457FE] rounded ${moduleClick.includes(data?._id) && 'rotate-180 duration-700'}`}>
                                                     <FaMinus className={`text-lg bg-[#211336]`}/>
                                                 </p> :
-                                                <p className={`bg-gradient-to-br from-purple-500 p-[2px] to-[#5457FE] rounded ${moduleClick !== data?._id && '-rotate-90 duration-500'}`}>
+                                                <p className={`bg-gradient-to-br from-purple-500 p-[2px] to-[#5457FE] rounded ${!moduleClick.includes(data?._id) && '-rotate-90 duration-500'}`}>
                                                     <FaPlus className="text-lg"/>
                                                 </p>
                                             }
                                         </div>
 
-                                        <div className={`${moduleClick === data?._id && 'mt-5 border-t py-2 border-gray-700'}`}>
+                                        <div className={`${moduleClick.includes(data?._id) && 'mt-5 border-t py-2 border-gray-700'}`}>
 
                                             {
-                                                moduleClick === data?._id && data?.moduleData?.map((moduleData , index) => <ModuleData key={index} data={moduleData} id={data?._id}/>)
+                                                moduleClick.includes(data?._id) && data?.moduleData?.map((moduleData , index) => <ModuleData key={index} data={moduleData} id={data?._id}/>)
                                             }
 
                                         </div>
@@ -107,17 +129,17 @@ const MyClassesRoot = () => {
                                 }
                             </div>
 
-                            <div className="h-full w-full flex flex-col items-start gap-3 p-2 bg-[#010313] rounded">
+                            {/* <div className="h-full w-full flex flex-col items-start gap-3 p-2 bg-transparent rounded">
                                 {
-                                    // assignments?.length > 0 && assignments?.map((data) => <NavLink to={`assignment/${data?._id}`} key={data?._id} className={({ isActive, isPending }) =>
-                                    //     isPending ? "pending bg-[#211336] w-full py-1 px-2 rounded" : isActive ? "bg-[#3a215f] w-full py-1 px-2 rounded" : "bg-[#211336] w-full py-1 px-2 rounded duration-300"
-                                    // }
-                                    // >
-                                    //     <p className="gro font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-teal-500">{data?.moduleName}</p>
-                                    //     <p className="gro font- text-[#C7ABFF]">{data?.time} {data?.date.split(' ').slice(2 , 3)} {data?.date.split(' ').slice(3)}</p>
-                                    // </NavLink>)
+                                    assignments?.length > 0 && assignments?.map((data) => <NavLink to={`assignment/${data?._id}`} key={data?._id} className={({ isActive, isPending }) =>
+                                        isPending ? "pending bg-[#211336] w-full py-1 px-2 rounded" : isActive ? "bg-[#3a215f] w-full py-1 px-2 rounded" : "bg-[#211336] w-full py-1 px-2 rounded duration-300"
+                                    }
+                                    >
+                                        <p className="gro font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-teal-500">{data?.moduleName}</p>
+                                        <p className="gro font- text-[#C7ABFF]">{data?.time} {data?.date.split(' ').slice(2 , 3)} {data?.date.split(' ').slice(3)}</p>
+                                    </NavLink>)
                                 }
-                            </div>
+                            </div> */}
 
                         </div>
 
