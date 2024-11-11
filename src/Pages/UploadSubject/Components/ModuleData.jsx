@@ -50,8 +50,6 @@ const ModuleData = ({data , id}) => {
         }
     }
 
-    console.log(pathname.includes('yourGrades/details/'))
-
     return (
         <div className="w-full">
             {

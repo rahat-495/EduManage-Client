@@ -56,6 +56,13 @@ const UploadSubject = () => {
         },
         onSuccess : () => {
             moduleRefetch() ;
+            setUploadedImages([]) ;
+            setUploadedVideos([]) ;-
+            Swal.fire({
+                title: "Success",
+                text: "Module Added Success Full !",
+                icon: "success"
+            });
         }
     })
 
@@ -131,15 +138,9 @@ const UploadSubject = () => {
             setLoading(true) ;
             moduleMutate(moduleData) ;
             setLoading(false) ;
-            moduleRefetch() ;
             handleAddModuleOpen() ;
             setUploadedImages([]) ;
-            setUploadedVideos([]) ;-
-            Swal.fire({
-                title: "Success",
-                text: "Module Added Success Full !",
-                icon: "success"
-            });
+            setUploadedVideos([]) ;
         }
     }
 
