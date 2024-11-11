@@ -53,7 +53,7 @@ const MyClassesRoot = () => {
                 <Nav/>
             </div>
 
-            <div className="max-w-[1440px] min-h-[70vh] mx-auto overflow-hidden lg:mb-10">
+            <div className="max-w-[1440px] min-h-[70vh] mx-auto overflow-hidden lg:mb-10 lg:mt-8">
 
                 {
                     moduleDetails?.moduleName && 

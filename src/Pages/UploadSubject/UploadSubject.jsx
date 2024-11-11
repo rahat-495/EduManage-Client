@@ -195,7 +195,7 @@ const UploadSubject = () => {
     }
 
     return (
-        <div className={`h-[80vh] mx-3 mb-10 lg:mx-0 lg:mt-5 ${moduleDetails?.moduleName && 'mb-20'}`}>
+        <div className={`h-[80vh] mx-3 mb-10 lg:mx-0 lg:mt-8 ${moduleDetails?.moduleName && 'mb-20'}`}>
 
             {
                 moduleDetails?.moduleName && 

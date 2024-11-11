@@ -23,7 +23,7 @@ const NavLists = () => {
               isPending
                 ? "pending"
                 : isActive
-                ? "font-semibold underline transition-all ease-in-out duration-300"
+                ? "font-semibold transition-all ease-in-out duration-300"
                 : ""
             }
           >
@@ -38,7 +38,7 @@ const NavLists = () => {
               isPending
                 ? "pending"
                 : isActive
-                ? "font-semibold underline transition-all ease-in-out duration-300"
+                ? "font-semibold transition-all ease-in-out duration-300"
                 : ""
             }
           >
@@ -59,7 +59,7 @@ const NavLists = () => {
               isPending
                 ? "pending"
                 : isActive
-                ? "font-semibold underline transition-all ease-in-out duration-300"
+                ? "font-semibold transition-all ease-in-out duration-300"
                 : ""
             }
           >
@@ -110,7 +110,7 @@ const NavLists = () => {
               isPending
                 ? "pending"
                 : isActive
-                ? "font-semibold underline transition-all ease-in-out duration-300"
+                ? "font-semibold transition-all ease-in-out duration-300"
                 : ""
             }
           >
@@ -138,7 +138,7 @@ const NavLists = () => {
                   isPending
                     ? "pending"
                     : isActive
-                    ? "font-semibold underline transition-all ease-in-out duration-300"
+                    ? "font-semibold transition-all ease-in-out duration-300"
                     : ""
                 }
               >
@@ -185,7 +185,7 @@ const NavLists = () => {
               isPending
                 ? "pending"
                 : isActive
-                ? "font-semibold underline transition-all ease-in-out duration-300"
+                ? "font-semibold transition-all ease-in-out duration-300"
                 : ""
             }
           >
@@ -206,7 +206,7 @@ const NavLists = () => {
               isPending
                 ? "pending"
                 : isActive
-                ? "font-semibold underline transition-all ease-in-out duration-300"
+                ? "font-semibold transition-all ease-in-out duration-300"
                 : ""
             }
           >
@@ -221,7 +221,7 @@ const NavLists = () => {
               isPending
                 ? "pending"
                 : isActive
-                ? "font-semibold underline transition-all ease-in-out duration-300"
+                ? "font-semibold transition-all ease-in-out duration-300"
                 : ""
             }
           >
@@ -238,7 +238,7 @@ const NavLists = () => {
                 isPending
                   ? "pending"
                   : isActive
-                  ? "font-semibold underline transition-all ease-in-out duration-300"
+                  ? "font-semibold transition-all ease-in-out duration-300"
                   : ""
               }
             >
@@ -254,7 +254,7 @@ const NavLists = () => {
               isPending
                 ? "pending"
                 : isActive
-                ? "font-semibold underline transition-all ease-in-out duration-300"
+                ? "font-semibold transition-all ease-in-out duration-300"
                 : ""
             }
           >
@@ -273,7 +273,7 @@ const NavLists = () => {
           isPending
             ? "pending"
             : isActive
-            ? "font-semibold underline transition-all ease-in-out duration-300"
+            ? "font-semibold transition-all ease-in-out duration-300"
             : ""
         }
       >
@@ -288,7 +288,7 @@ const NavLists = () => {
           isPending
             ? "pending"
             : isActive
-            ? "font-semibold underline transition-all ease-in-out duration-300"
+            ? "font-semibold transition-all ease-in-out duration-300"
             : ""
         }
       >
