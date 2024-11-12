@@ -57,35 +57,20 @@ const ModuleData = ({data , id}) => {
                 <div className="w-full">
                     {
                         data?.textForModuleTitle &&
-                        <div onClick={() => handleTextInstructionNavigate()} className={`${ pathname.split('/')[5] === 'textinstruction' && pathname.split('/')[6] === id ? "gro w-full pr-3 font-semibold bg-gradient-to-r from-[#CC45E1] to-[#6B0DEC] text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4" : 'gro w-full pr-3 font-semibold bg-transparent border-b text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4' }`}>
-                            {
-                                data?.whichStudentsSeen?.includes(userData?.studentUid) ?
-                                <IoCheckmarkDoneCircleOutline className="text-green-700 text-xl font-semibold"/> :
-                                <MdOutlineLock className="text-red-700 rounded-full border-2 border-red-700 p-[1px] text-xl"/> 
-                            }
+                        <div className={`${ pathname.split('/')[5] === 'textinstruction' && pathname.split('/')[6] === id ? "gro w-full pr-3 font-semibold bg-gradient-to-r from-[#CC45E1] to-[#6B0DEC] text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4" : 'gro w-full pr-3 font-semibold bg-transparent border-b text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4' }`}>
                             {data?.textForModuleTitle}
                         </div>
                     }
                     {
                         data?.moduleImages?.length > 0 && data?.moduleImages?.map((image , index) => 
-                            <div onClick={() => handleImageNavigate(image , index)} key={image} className={`gro w-full pr-3 font-semibold bg-transparent border-b text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4 justify-between ${pathname.split('/')[5] === 'images' && pathname.split('/')[6] === index.toString()  && "gro w-full pr-3 font-semibold bg-gradient-to-r from-[#CC45E1] to-[#6B0DEC] text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4" }`}>
-                                {
-                                    image?.whichStudentsSeen?.includes(userData?.studentUid) ?
-                                    <IoCheckmarkDoneCircleOutline className="text-green-700 text-2xl font-semibold"/> :
-                                    <MdOutlineLock className="text-red-700 rounded-full border-2 border-red-700 p-[1px] text-xl"/> 
-                                }
+                            <div key={image} className={`gro w-full pr-3 font-semibold bg-transparent border-b text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4 justify-between ${pathname.split('/')[5] === 'images' && pathname.split('/')[6] === index.toString()  && "gro w-full pr-3 font-semibold bg-gradient-to-r from-[#CC45E1] to-[#6B0DEC] text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4" }`}>
                                 <p className="flex items-center justify-between gap-5 w-full">{image?.imageName}</p> 
                             </div>
                         )
                     }
                     {
                         data?.moduleVideos?.length > 0 && data?.moduleVideos?.map((video , index) => 
-                            <div onClick={() => handleVideoNavigate(video , index)} key={video} className={`gro w-full pr-3 font-semibold bg-transparent border-b text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4 justify-between ${pathname.split('/')[5] === 'videos' && pathname.split('/')[6] === index.toString()  && "gro w-full pr-3 font-semibold bg-gradient-to-r from-[#CC45E1] to-[#6B0DEC] text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4" }`}>
-                                {
-                                    video?.whichStudentsSeen?.includes(userData?.studentUid) ?
-                                    <IoCheckmarkDoneCircleOutline className="text-green-700 text-2xl font-semibold"/> :
-                                    <MdOutlineLock className="text-red-700 rounded-full border-2 border-red-700 p-[1px] text-xl"/> 
-                                }
+                            <div key={video} className={`gro w-full pr-3 font-semibold bg-transparent border-b text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4 justify-between ${pathname.split('/')[5] === 'videos' && pathname.split('/')[6] === index.toString()  && "gro w-full pr-3 font-semibold bg-gradient-to-r from-[#CC45E1] to-[#6B0DEC] text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4" }`}>
                                 <p className="flex items-center justify-between gap-5 w-full">{video?.videoName}</p> 
                             </div>
                         )
