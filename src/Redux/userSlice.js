@@ -20,6 +20,7 @@ const initialState = {
     schools: [],
     grades: [],
     removedDevice: [],
+    lastSeenModuleDatas : [] ,
     devicesInfo: [
         {
             deviceName: deviceInfo?.os?.name + " " + deviceInfo?.os?.version,
@@ -52,6 +53,7 @@ export const userSlice = createSlice({
             state.isjoined = action.payload?.isjoined ;
             state.isjoinedModalSeen = action.payload?.isjoinedModalSeen ;
             state.devicesInfo = action?.payload?.devicesInfo ;
+            state.lastSeenModuleDatas = action?.payload?.lastSeenModuleDatas ;
         },
     }
 })

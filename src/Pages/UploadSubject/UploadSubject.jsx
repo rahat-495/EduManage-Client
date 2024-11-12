@@ -16,8 +16,8 @@ import UploadVideoForm from "./Components/UploadVideoForm";
 const key = import.meta.env.VITE_IMAGE_HOISTING_API_KEY;
 const apiUrl = `https://api.imgbb.com/1/upload?key=${key}`;
 
-const imageArray = [] ;
-const videoArray = [] ;
+let imageArray = [] ;
+let videoArray = [] ;
 
 const UploadSubject = () => {
     
@@ -57,7 +57,9 @@ const UploadSubject = () => {
         onSuccess : () => {
             moduleRefetch() ;
             setUploadedImages([]) ;
-            setUploadedVideos([]) ;-
+            setUploadedVideos([]) ;
+            imageArray = [] ;
+            videoArray = [] ;
             Swal.fire({
                 title: "Success",
                 text: "Module Added Success Full !",
