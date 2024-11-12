@@ -1,5 +1,5 @@
 
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import Nav from "../Shared/Navbar/Nav";
 import Footer from "../Shared/Footer/Footer";
 import { useQuery } from "@tanstack/react-query";
@@ -13,6 +13,7 @@ const MyClassesRoot = () => {
 
     const {pathname} = useLocation() ;
     const axiosSecure = useAxiosSecure() ;
+    const navigate = useNavigate() ;
     const userData = useSelector(state => state?.user) ;
     const [moduleClick, setModuleClick] = useState([]) ;
 
@@ -44,7 +45,48 @@ const MyClassesRoot = () => {
         }
     }
 
-    console.log(pathname.split('/')[4])
+    const handlePrevious = () => {
+        if(pathname.includes('/textinstruction/')){
+            console.log(pathname)
+        }
+
+        if(pathname.includes('/images/') && 0 === parseInt(pathname.split('/')[5])){
+            navigate(`textinstruction/${pathname.split('/')[6]}`)
+        }
+
+        if(pathname.includes('/images/') && moduleDetails?.moduleData[1]?.moduleImages?.length - 1 <= parseInt(pathname.split('/')[5])){
+            navigate(`images/${parseInt(pathname.split('/')[5]) - 1}/${pathname.split('/')[6]}`)
+        }
+
+        if(pathname.includes('/videos/') && moduleDetails?.moduleData[2]?.moduleVideos?.length - 1 === parseInt(pathname.split('/')[5])){
+            navigate(`images/${moduleDetails?.moduleData[1]?.moduleImages?.length - 1}/${pathname.split('/')[6]}`)
+        }
+
+        if(pathname.includes('/videos/') && moduleDetails?.moduleData[2]?.moduleVideos?.length - 1 < parseInt(pathname.split('/')[5])){
+            navigate(`videos/${parseInt(pathname.split('/')[5]) - 1}/${pathname.split('/')[6]}`)
+        }
+    }
+    
+    const handleNext = () => {
+        if(pathname.includes('/textinstruction/')){
+            navigate(`images/0/${pathname.split('/')[5]}`)
+        }
+
+        if(pathname.includes('/images/') && moduleDetails?.moduleData[1]?.moduleImages?.length - 1 > parseInt(pathname.split('/')[5])){
+            navigate(`images/${parseInt(pathname.split('/')[5]) + 1}/${pathname.split('/')[6]}`)
+        }
+
+        if(pathname.includes('/images/') && moduleDetails?.moduleData[1]?.moduleImages?.length - 1 === parseInt(pathname.split('/')[5])){
+            navigate(`videos/0/${pathname.split('/')[6]}`)
+        }
+
+        if(pathname.includes('/videos/') && moduleDetails?.moduleData[2]?.moduleVideos?.length - 1 > parseInt(pathname.split('/')[5])){
+            navigate(`videos/${parseInt(pathname.split('/')[5]) + 1}/${pathname.split('/')[6]}`)
+        }
+    }
+
+    // console.log(moduleDetails?.moduleData[1].moduleImages)
+    console.log(moduleDetails?.moduleData[2]?.moduleVideos?.length - 1 , parseInt(pathname.split('/')[5]))
 
     return (
         <div className="overflow-x-hidden lg:overflow-visible">
@@ -74,21 +116,24 @@ const MyClassesRoot = () => {
                     <div className="w-full rounded flex flex-col gap-3">
                         <Outlet />
                         {
-                            pathname.split('/')[4] === 'textinstruction' && <div className="flex items-center justify-end gap-5 mr-5">
-                                <button className="px-4 py-1 text-lg font-semibold border border-[#7D48BF] gro hover:text-[#d3aeff] duration-300 rounded">Previous</button>
-                                <button className="px-8 py-1 text-lg bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffd2] hover:to-[#9286face] text-black gro rounded font-semibold duration-300">Next</button>
+                            pathname.split('/')[4] === 'textinstruction' && 
+                            <div className="flex items-center justify-end gap-5 mr-5">
+                                <button onClick={handlePrevious} className="px-4 py-1 text-lg font-semibold border border-[#7D48BF] gro hover:text-[#d3aeff] duration-300 rounded">Previous</button>
+                                <button onClick={handleNext} className="px-8 py-1 text-lg bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffd2] hover:to-[#9286face] text-black gro rounded font-semibold duration-300">Next</button>
                             </div>
                         }
                         {
-                            pathname.split('/')[4] === 'images' && <div className="flex items-center justify-end gap-5 mr-5">
-                                <button className="px-4 py-1 text-lg font-semibold border border-[#7D48BF] gro hover:text-[#d3aeff] duration-300 rounded">Previous</button>
-                                <button className="px-8 py-1 text-lg bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffd2] hover:to-[#9286face] text-black gro rounded font-semibold duration-300">Next</button>
+                            pathname.split('/')[4] === 'images' && 
+                            <div className="flex items-center justify-end gap-5 mr-5">
+                                <button onClick={handlePrevious} className="px-4 py-1 text-lg font-semibold border border-[#7D48BF] gro hover:text-[#d3aeff] duration-300 rounded">Previous</button>
+                                <button onClick={handleNext} className="px-8 py-1 text-lg bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffd2] hover:to-[#9286face] text-black gro rounded font-semibold duration-300">Next</button>
                             </div>
                         }
                         {
-                            pathname.split('/')[4] === 'videos' && <div className="flex items-center justify-end gap-5 mr-5">
-                                <button className="px-4 py-1 text-lg font-semibold border border-[#7D48BF] gro hover:text-[#d3aeff] duration-300 rounded">Previous</button>
-                                <button className="px-8 py-1 text-lg bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffd2] hover:to-[#9286face] text-black gro rounded font-semibold duration-300">Next</button>
+                            pathname.split('/')[4] === 'videos' && 
+                            <div className="flex items-center justify-end gap-5 mr-5">
+                                <button onClick={handlePrevious} className="px-4 py-1 text-lg font-semibold border border-[#7D48BF] gro hover:text-[#d3aeff] duration-300 rounded">Previous</button>
+                                <button onClick={handleNext} className="px-8 py-1 text-lg bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffd2] hover:to-[#9286face] text-black gro rounded font-semibold duration-300">Next</button>
                             </div>
                         }
                     </div>

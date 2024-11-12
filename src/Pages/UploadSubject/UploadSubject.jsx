@@ -208,8 +208,8 @@ const UploadSubject = () => {
                     </Link>
                     <h1 className="gro text-xl font-semibold text-[#EAAAFF] w-full">
                         {pathname.split('/')[5] === 'textinstruction' && 'Text Instruction : ' + moduleDetails?.moduleName}
-                        {pathname.split('/')[5] === 'images' && moduleDetails?.moduleName + ' : ' + moduleDetails?.moduleData[1]?.moduleImages[pathname.split('/')[6]]?.imageName}
-                        {pathname.split('/')[5] === 'videos' && moduleDetails?.moduleName + ' : ' + moduleDetails?.moduleData[2]?.moduleVideos[pathname.split('/')[6]]?.videoName}
+                        {pathname.split('/')[5] === 'images' && moduleDetails?.moduleData[1]?.moduleImages[pathname.split('/')[6]]?.imageName}
+                        {pathname.split('/')[5] === 'videos' && moduleDetails?.moduleData[2]?.moduleVideos[pathname.split('/')[6]]?.videoName}
                     </h1>
                 </div>
             }
