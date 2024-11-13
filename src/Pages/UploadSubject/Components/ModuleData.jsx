@@ -26,7 +26,8 @@ const ModuleData = ({data , id}) => {
 
     const handleImageNavigate = (data , index) => {
         if(!data?.whichStudentsSeen?.includes(userData?.studentUid)){
-            navigate(`images/${index}/${id}`) ;
+            navigate(`images/${index}/${id}/${data?.imageName.split(' ').join('_')}`) ;
+            // console.log(`videos/${index}/${id}/${data?.imageName.split(' ').join('_')}`)
         }
         else{
             Swal.fire({
@@ -39,7 +40,8 @@ const ModuleData = ({data , id}) => {
     
     const handleVideoNavigate = (data , index) => {
         if(!data?.whichStudentsSeen?.includes(userData?.studentUid)){
-            navigate(`videos/${index}/${id}`) ;
+            navigate(`videos/${index}/${id}/${data?.videoName.split(' ').join('_')}`) ;
+            // console.log(`videos/${index}/${id}/${data?.videoName.split(' ').join('_')}`)
         }
         else{
             Swal.fire({
@@ -49,6 +51,8 @@ const ModuleData = ({data , id}) => {
             });
         }
     }
+
+    console.log(pathname.split('/')[7])
 
     return (
         <div className="w-full">
@@ -90,7 +94,7 @@ const ModuleData = ({data , id}) => {
                     }
                     {
                         data?.moduleImages?.length > 0 && data?.moduleImages?.map((image , index) => 
-                            <div onClick={() => handleImageNavigate(image , index)} key={image} className={`gro w-full pr-3 font-semibold bg-transparent border-b text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4 justify-between ${pathname.split('/')[4] === 'images' && pathname.split('/')[5] === index.toString()  && "gro w-full pr-3 font-semibold bg-gradient-to-r from-[#CC45E1] to-[#6B0DEC] text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4" }`}>
+                            <div onClick={() => handleImageNavigate(image , index)} key={image} className={`gro w-full pr-3 font-semibold bg-transparent border-b text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4 justify-between ${pathname.split('/')[4] === 'images' && pathname.split('/')[5] === index.toString() && pathname.split('/')[7] == image?.imageName?.split(' ').join('_')  && "gro w-full pr-3 font-semibold bg-gradient-to-r from-[#CC45E1] to-[#6B0DEC] text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4" }`}>
                                 {
                                     image?.whichStudentsSeen?.includes(userData?.studentUid) ?
                                     <IoCheckmarkDoneCircleOutline className="text-green-700 text-2xl font-semibold"/> :
@@ -102,7 +106,7 @@ const ModuleData = ({data , id}) => {
                     }
                     {
                         data?.moduleVideos?.length > 0 && data?.moduleVideos?.map((video , index) => 
-                            <div onClick={() => handleVideoNavigate(video , index)} key={video} className={`gro w-full pr-3 font-semibold bg-transparent border-b text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4 justify-between ${pathname.split('/')[4] === 'videos' && pathname.split('/')[5] === index.toString()  && "gro w-full pr-3 font-semibold bg-gradient-to-r from-[#CC45E1] to-[#6B0DEC] text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4" }`}>
+                            <div onClick={() => handleVideoNavigate(video , index)} key={video} className={`gro w-full pr-3 font-semibold bg-transparent border-b text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4 justify-between ${pathname.split('/')[4] === 'videos' && pathname.split('/')[5] === index.toString() && pathname.split('/')[7] == video?.videoName?.split(' ').join('_')  && "gro w-full pr-3 font-semibold bg-gradient-to-r from-[#CC45E1] to-[#6B0DEC] text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4" }`}>
                                 {
                                     video?.whichStudentsSeen?.includes(userData?.studentUid) ?
                                     <IoCheckmarkDoneCircleOutline className="text-green-700 text-2xl font-semibold"/> :

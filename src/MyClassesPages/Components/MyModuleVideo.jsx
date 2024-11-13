@@ -19,7 +19,7 @@ const MyModuleVideo = () => {
     })
 
     return (
-        <div className="flex items-center justify-center h-fit overflow-hidden p-1 w-full bg-[#010313] rounded">
+        <div className="flex items-center justify-center h-fit overflow-hidden p-[2px] w-full bg-[#010313] rounded-md">
             <video autoPlay controls src={data?.video?.moduleVideo} className="w-full h-full rounded"></video>
         </div>
     );

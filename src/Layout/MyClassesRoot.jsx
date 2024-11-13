@@ -55,38 +55,42 @@ const MyClassesRoot = () => {
         }
 
         else if(pathname.includes('/images/') && moduleDetails?.moduleData[1]?.moduleImages?.length - 1 <= parseInt(pathname.split('/')[5])){
-            navigate(`images/${parseInt(pathname.split('/')[5]) - 1}/${pathname.split('/')[6]}`) ;
+            navigate(`images/${parseInt(pathname.split('/')[5]) - 1}/${pathname.split('/')[6]}/${moduleDetails?.moduleData[1]?.moduleImages[parseInt(pathname.split('/')[5])-1]?.imageName?.split(' ').join('_')}`) ;
         }
 
-        else if(pathname.includes('/videos/') && 0 === parseInt(pathname.split('/')[5])){
-            navigate(`images/${moduleDetails?.moduleData[1]?.moduleImages?.length - 1}/${pathname.split('/')[6]}`) ;
+        else if(pathname.includes('/videos/') && 0 === parseInt(pathname.split('/')[5]) && moduleDetails?.moduleData[1]?.moduleImages?.length > 0){
+            navigate(`images/${moduleDetails?.moduleData[1]?.moduleImages?.length - 1}/${pathname.split('/')[6]}/${moduleDetails?.moduleData[1]?.moduleImages[moduleDetails?.moduleData[1]?.moduleImages?.length - 1]?.imageName?.split(' ').join('_')}`) ;
         }
 
         else if(pathname.includes('/videos/') && moduleDetails?.moduleData[2]?.moduleVideos?.length - 1 >= parseInt(pathname.split('/')[5])){
-            navigate(`videos/${parseInt(pathname.split('/')[5]) - 1}/${pathname.split('/')[6]}`) ;
+            navigate(`videos/${parseInt(pathname.split('/')[5]) - 1}/${pathname.split('/')[6]}/${moduleDetails?.moduleData[2]?.moduleVideos[parseInt(pathname.split('/')[5])-1]?.videoName?.split(' ').join('_')}`) ;
         }
     }
     
     const handleNext = () => {
         if(pathname.includes('/textinstruction/')){
-            navigate(`images/0/${pathname.split('/')[5]}`)
+            if(moduleDetails?.moduleData[1]?.moduleImages?.length > 0){
+                navigate(`images/0/${pathname.split('/')[5]}/${moduleDetails?.moduleData[1]?.moduleImages[0].imageName?.split(' ').join('_')}`)
+            }
+            else if(moduleDetails?.moduleData[2]?.moduleVideos?.length > 0){
+                navigate(`videos/0/${pathname.split('/')[5]}/${moduleDetails?.moduleData[2]?.moduleVideos[0].imageName?.split(' ').join('_')}`)
+            }
         }
 
         if(pathname.includes('/images/') && moduleDetails?.moduleData[1]?.moduleImages?.length - 1 > parseInt(pathname.split('/')[5])){
-            navigate(`images/${parseInt(pathname.split('/')[5]) + 1}/${pathname.split('/')[6]}`) ;
+            navigate(`images/${parseInt(pathname.split('/')[5]) + 1}/${pathname.split('/')[6]}/${moduleDetails?.moduleData[1]?.moduleImages[parseInt(pathname.split('/')[5])+1]?.imageName?.split(' ').join('_')}`) ;
         }
 
-        if(pathname.includes('/images/') && moduleDetails?.moduleData[1]?.moduleImages?.length - 1 === parseInt(pathname.split('/')[5])){
-            navigate(`videos/0/${pathname.split('/')[6]}`) ;
+        if(pathname.includes('/images/') && moduleDetails?.moduleData[1]?.moduleImages?.length - 1 === parseInt(pathname.split('/')[5]) && moduleDetails?.moduleData[2]?.moduleVideos?.length > 0){
+            navigate(`videos/0/${pathname.split('/')[6]}/${moduleDetails?.moduleData[2]?.moduleVideos[0]?.videoName?.split(' ').join('_')}`) ;
         }
 
         if(pathname.includes('/videos/') && moduleDetails?.moduleData[2]?.moduleVideos?.length - 1 > parseInt(pathname.split('/')[5])){
-            navigate(`videos/${parseInt(pathname.split('/')[5]) + 1}/${pathname.split('/')[6]}`) ;
+            navigate(`videos/${parseInt(pathname.split('/')[5]) + 1}/${pathname.split('/')[6]}/${moduleDetails?.moduleData[2]?.moduleVideos[parseInt(pathname.split('/')[5])+1]?.videoName?.split(' ').join('_')}`) ;
         }
     }
 
-    console.log(pathname.split('/')[5])
-    // console.log(moduleDetails?.moduleData[2]?.moduleVideos?.length - 1 , parseInt(pathname.split('/')[5]))
+    console.log(moduleDetails?.moduleData[2]?.moduleVideos[pathname.split('/')[5]]?.videoName?.split(' ').join('_'))
 
     return (
         <div className="overflow-x-hidden lg:overflow-visible">
