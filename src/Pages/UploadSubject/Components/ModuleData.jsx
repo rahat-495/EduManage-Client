@@ -63,14 +63,14 @@ const ModuleData = ({data , id}) => {
                     }
                     {
                         data?.moduleImages?.length > 0 && data?.moduleImages?.map((image , index) => 
-                            <div onClick={() => navigate(`images/${index}/${id}/${image?.imageName.split(' ').join('_')}`)} key={image} className={`gro w-full pr-3 font-semibold bg-transparent border-b text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4 justify-between ${pathname.split('/')[5] === 'images' && pathname.split('/')[6] === index.toString()  && "gro w-full pr-3 font-semibold bg-gradient-to-r from-[#CC45E1] to-[#6B0DEC] text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4" }`}>
+                            <div onClick={() => navigate(`images/${index}/${id}/${image?.imageName.split(' ').join('_')}`)} key={image} className={`gro w-full pr-3 font-semibold bg-transparent border-b text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4 justify-between ${pathname.split('/')[5] === 'images' && pathname.split('/')[6] === index.toString()  && pathname.split('/')[8] == image?.imageName?.split(' ').join('_')  &&  "gro w-full pr-3 font-semibold bg-gradient-to-r from-[#CC45E1] to-[#6B0DEC] text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4" }`}>
                                 <p className="flex items-center justify-between gap-5 w-full">{image?.imageName}</p> 
                             </div>
                         )
                     }
                     {
                         data?.moduleVideos?.length > 0 && data?.moduleVideos?.map((video , index) => 
-                            <div onClick={() => navigate(`videos/${index}/${id}/${video?.videoName.split(' ').join('_')}`)} key={video} className={`gro w-full pr-3 font-semibold bg-transparent border-b text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4 justify-between ${pathname.split('/')[5] === 'videos' && pathname.split('/')[6] === index.toString()  && "gro w-full pr-3 font-semibold bg-gradient-to-r from-[#CC45E1] to-[#6B0DEC] text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4" }`}>
+                            <div onClick={() => navigate(`videos/${index}/${id}/${video?.videoName.split(' ').join('_')}`)} key={video} className={`gro w-full pr-3 font-semibold bg-transparent border-b text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4 justify-between ${pathname.split('/')[5] === 'videos' && pathname.split('/')[6] === index.toString() && pathname.split('/')[8] == video?.videoName?.split(' ').join('_')  &&  "gro w-full pr-3 font-semibold bg-gradient-to-r from-[#CC45E1] to-[#6B0DEC] text-white px-1 py-2 my-4 rounded-[2px] flex items-center gap-4" }`}>
                                 <p className="flex items-center justify-between gap-5 w-full">{video?.videoName}</p> 
                             </div>
                         )

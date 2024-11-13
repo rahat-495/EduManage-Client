@@ -69,21 +69,6 @@ const UploadSubject = () => {
         }
     })
 
-    // const {data : assignments , refetch : assignmentsRefetch} = useQuery({
-    //     queryKey : ['uploadedAssignmentsList' , pathname] ,
-    //     queryFn : async () => {
-    //         const {data} = await axiosSecure.get(`/getUploadedAssignmentsList?grade=${pathname.split('/')[3]}&subject=${pathname.split('/')[4]}`)
-    //         return data ;
-    //     }
-    // })
-    
-    // const {mutate : assignmentMutate} = useMutation({
-    //     mutationFn : async (assingmentData) => {
-    //         const {data} = await axiosSecure.post('/createAssignment' , assingmentData) ;
-    //         return data ;
-    //     }
-    // })
-
     const {data : moduleDetails} = useQuery({
         queryKey : ['moduleData' , pathname] ,
         queryFn : async () => {
@@ -147,47 +132,6 @@ const UploadSubject = () => {
         }
     }
 
-    const handleAddAssignment = async (e) => {
-        e.preventDefault() ;
-
-        // const from = e.target ;
-        // const assignmentName = from.assignmentName.value ;
-        // const assignmentDescription = from.assignmentDescription.value ;
-        // const textForAssignment = from.textForAssignment.value ;
-
-        // if(textForAssignment.length === 0){
-        //     handleAddModuleOpen() ;
-        //     Swal.fire({
-        //         title: "Oops!",
-        //         html: "Please fill text for module fuild or <br/> select some images !",
-        //         icon: "warning"
-        //     });
-        // }
-        // else{
-        //     let urls = [] ;
-        //     setLoading(true) ;
-        //     const assignmentData = {
-        //         time,
-        //         assignmentName ,
-        //         textForAssignment ,
-        //         assignmentDescription ,
-        //         assignmentImages : urls ,
-        //         grade : pathname.split('/')[3] ,
-        //         subject : pathname.split('/')[4] ,
-        //         date : new Date().toDateString() ,
-        //     }
-        //     assignmentMutate(assignmentData) ;
-        //     setLoading(false) ;
-        //     handleAddModuleOpen() ;
-        //     assignmentsRefetch() ;
-        //     Swal.fire({
-        //         title: "Success",
-        //         text: "Module Added Success Full !",
-        //         icon: "success"
-        //     });
-        // }
-    }
-
     const handleDropDown = (id) => {
         if(!moduleClick.includes(id)){
             setModuleClick([...moduleClick , id]) ;
@@ -243,10 +187,8 @@ const UploadSubject = () => {
         }
     }
 
-    console.log(pathname.split('/')[6])
-
     return (
-        <div className={`h-[80vh] mx-3 mb-10 lg:mx-0 lg:mt-8 ${moduleDetails?.moduleName && 'mb-20'}`}>
+        <div className={`h-[85vh] mx-3 mb-10 lg:mx-0 lg:mt-8 ${moduleDetails?.moduleName && 'mb-20'}`}>
 
             {
                 moduleDetails?.moduleName && 
@@ -293,13 +235,14 @@ const UploadSubject = () => {
 
                     <div className="w-full flex flex-col gap-3">
                         <div className="w-full flex flex-col gap-3 sticky top-0">
-                            <Button onClick={handleAddModuleOpen} className="gro capitalize py-2 shadow-none hover:shadow-none bg-gradient-to-r from-purple-500 to-teal-500 rounded text-sm">Add Module</Button>
-                            <Button onClick={handleAddAssignmentOpen} className="gro capitalize py-2 shadow-none hover:shadow-none bg-gradient-to-r from-purple-500 to-teal-500 rounded text-sm">Add Assignment</Button>
+                            <Button onClick={handleAddModuleOpen} className="gro capitalize py-2 shadow-none hover:shadow-none bg-gradient-to-tl from-[#CC45E1] to-[#6B0DEC] rounded text-sm">Add Module</Button>
+                            <Button onClick={handleAddAssignmentOpen} className="gro capitalize py-2 shadow-none hover:shadow-none bg-gradient-to-tl from-[#CC45E1] to-[#6B0DEC] rounded text-sm">Add Assignment</Button>
                         </div>
                     </div>
 
-                    <div className="h-[70vh] grid grid-rows-2 gap-1">
-                        <div className="h-full w-full flex flex-col items-start gap-3  bg-transparent rounded overflow-auto scrollbar-none">
+                    <div className="h-[90vh] grid grid-rows-1 gap-1">
+                        
+                        <div className="h-full w-full flex flex-col items-start gap-3  bg-transparent rounded overflow-y-auto scrollbar-none">
                             {
                                 modules?.length > 0 && modules?.map((data) => 
                                 <div key={data?._id} className={`bg-[#211336] w-full py-1 px-2 rounded duration-1000 cursor-pointer`}
@@ -333,7 +276,7 @@ const UploadSubject = () => {
                             }
                         </div>
 
-                        <div className="h-full w-full flex flex-col items-start gap-3 p-2 bg-transparent rounded">
+                        {/* <div className="h-[20vh] w-full flex flex-col items-start gap-3 p-2 bg-transparent rounded">
                             {
                                 // assignments?.length > 0 && assignments?.map((data) => <NavLink to={`assignment/${data?._id}`} key={data?._id} className={({ isActive, isPending }) =>
                                 //     isPending ? "pending bg-[#211336] w-full py-1 px-2 rounded" : isActive ? "bg-[#3a215f] w-full py-1 px-2 rounded" : "bg-[#211336] w-full py-1 px-2 rounded duration-300"
@@ -343,7 +286,8 @@ const UploadSubject = () => {
                                 //     <p className="gro font- text-[#C7ABFF]">{data?.time} {data?.date.split(' ').slice(2 , 3)} {data?.date.split(' ').slice(3)}</p>
                                 // </NavLink>)
                             }
-                        </div>
+                        </div> */}
+
                     </div>
 
                 </div>
@@ -520,7 +464,7 @@ const UploadSubject = () => {
             >
                 <div className="p-3">
                     
-                    <form onSubmit={handleAddAssignment} className="flex flex-col gap-3 h-full">
+                    <form className="flex flex-col gap-3 h-full">
 
                         <div className="grid grid-cols-1 gap-3">
                             <div className="bg-gradient-to-r from-purple-500 to-[#6B0DEC] p-[1px] rounded-md h-12">

@@ -23,7 +23,7 @@ const ShowVideo = () => {
     })
 
     if(isLoading , loading){
-        return <Lottie animationData={loader} loop/>
+        return <div className="w-full h-[50vh] flex items-center justify-center"><Lottie className="w-40 h-40" animationData={loader} loop/></div>
     }
 
     return (
