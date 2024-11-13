@@ -50,20 +50,20 @@ const MyClassesRoot = () => {
             console.log(pathname)
         }
 
-        if(pathname.includes('/images/') && 0 === parseInt(pathname.split('/')[5])){
-            navigate(`textinstruction/${pathname.split('/')[6]}`)
+        else if(pathname.includes('/images/') && 0 === parseInt(pathname.split('/')[5])){
+            navigate(`textinstruction/${pathname.split('/')[6]}`) ;
         }
 
-        if(pathname.includes('/images/') && moduleDetails?.moduleData[1]?.moduleImages?.length - 1 <= parseInt(pathname.split('/')[5])){
-            navigate(`images/${parseInt(pathname.split('/')[5]) - 1}/${pathname.split('/')[6]}`)
+        else if(pathname.includes('/images/') && moduleDetails?.moduleData[1]?.moduleImages?.length - 1 <= parseInt(pathname.split('/')[5])){
+            navigate(`images/${parseInt(pathname.split('/')[5]) - 1}/${pathname.split('/')[6]}`) ;
         }
 
-        if(pathname.includes('/videos/') && moduleDetails?.moduleData[2]?.moduleVideos?.length - 1 === parseInt(pathname.split('/')[5])){
-            navigate(`images/${moduleDetails?.moduleData[1]?.moduleImages?.length - 1}/${pathname.split('/')[6]}`)
+        else if(pathname.includes('/videos/') && 0 === parseInt(pathname.split('/')[5])){
+            navigate(`images/${moduleDetails?.moduleData[1]?.moduleImages?.length - 1}/${pathname.split('/')[6]}`) ;
         }
 
-        if(pathname.includes('/videos/') && moduleDetails?.moduleData[2]?.moduleVideos?.length - 1 < parseInt(pathname.split('/')[5])){
-            navigate(`videos/${parseInt(pathname.split('/')[5]) - 1}/${pathname.split('/')[6]}`)
+        else if(pathname.includes('/videos/') && moduleDetails?.moduleData[2]?.moduleVideos?.length - 1 >= parseInt(pathname.split('/')[5])){
+            navigate(`videos/${parseInt(pathname.split('/')[5]) - 1}/${pathname.split('/')[6]}`) ;
         }
     }
     
@@ -73,20 +73,20 @@ const MyClassesRoot = () => {
         }
 
         if(pathname.includes('/images/') && moduleDetails?.moduleData[1]?.moduleImages?.length - 1 > parseInt(pathname.split('/')[5])){
-            navigate(`images/${parseInt(pathname.split('/')[5]) + 1}/${pathname.split('/')[6]}`)
+            navigate(`images/${parseInt(pathname.split('/')[5]) + 1}/${pathname.split('/')[6]}`) ;
         }
 
         if(pathname.includes('/images/') && moduleDetails?.moduleData[1]?.moduleImages?.length - 1 === parseInt(pathname.split('/')[5])){
-            navigate(`videos/0/${pathname.split('/')[6]}`)
+            navigate(`videos/0/${pathname.split('/')[6]}`) ;
         }
 
         if(pathname.includes('/videos/') && moduleDetails?.moduleData[2]?.moduleVideos?.length - 1 > parseInt(pathname.split('/')[5])){
-            navigate(`videos/${parseInt(pathname.split('/')[5]) + 1}/${pathname.split('/')[6]}`)
+            navigate(`videos/${parseInt(pathname.split('/')[5]) + 1}/${pathname.split('/')[6]}`) ;
         }
     }
 
-    // console.log(moduleDetails?.moduleData[1].moduleImages)
-    console.log(moduleDetails?.moduleData[2]?.moduleVideos?.length - 1 , parseInt(pathname.split('/')[5]))
+    console.log(pathname.split('/')[5])
+    // console.log(moduleDetails?.moduleData[2]?.moduleVideos?.length - 1 , parseInt(pathname.split('/')[5]))
 
     return (
         <div className="overflow-x-hidden lg:overflow-visible">
