@@ -104,11 +104,11 @@ const router = createBrowserRouter([
                         element : <TextInstruction/>,
                     },
                     {
-                        path : 'images/:index/:id' ,
+                        path : 'images/:index/:id/:imageName' ,
                         element : <ShowImage/>,
                     },
                     {
-                        path : 'videos/:index/:id' ,
+                        path : 'videos/:index/:id/:videoName' ,
                         element : <ShowVideo/>,
                     },
                     {

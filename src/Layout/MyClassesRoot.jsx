@@ -8,6 +8,7 @@ import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { useState } from "react";
 import { FaArrowLeft, FaMinus, FaPlus } from "react-icons/fa6";
 import ModuleData from "../Pages/UploadSubject/Components/ModuleData";
+import { Button } from "@material-tailwind/react";
 
 const MyClassesRoot = () => {
 
@@ -122,22 +123,22 @@ const MyClassesRoot = () => {
                         {
                             pathname.split('/')[4] === 'textinstruction' && 
                             <div className="flex items-center justify-end gap-5 mr-5">
-                                <button onClick={handlePrevious} className="px-4 py-1 text-lg font-semibold border border-[#7D48BF] gro hover:text-[#d3aeff] duration-300 rounded">Previous</button>
-                                <button onClick={handleNext} className="px-8 py-1 text-lg bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffd2] hover:to-[#9286face] text-black gro rounded font-semibold duration-300">Next</button>
+                                <Button onClick={handlePrevious} className="bg-transparent capitalize px-4 py-1 text-lg font-semibold border border-[#7D48BF] gro hover:text-[#d3aeff] duration-300 rounded">Previous</Button>
+                                <Button onClick={handleNext} className="px-8 py-1 text-lg capitalize bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffd2] hover:to-[#9286face] text-black gro rounded font-semibold duration-300">Next</Button>
                             </div>
                         }
                         {
                             pathname.split('/')[4] === 'images' && 
                             <div className="flex items-center justify-end gap-5 mr-5">
-                                <button onClick={handlePrevious} className="px-4 py-1 text-lg font-semibold border border-[#7D48BF] gro hover:text-[#d3aeff] duration-300 rounded">Previous</button>
-                                <button onClick={handleNext} className="px-8 py-1 text-lg bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffd2] hover:to-[#9286face] text-black gro rounded font-semibold duration-300">Next</button>
+                                <Button onClick={handlePrevious} className="bg-transparent capitalize px-4 py-1 text-lg font-semibold border border-[#7D48BF] gro hover:text-[#d3aeff] duration-300 rounded">Previous</Button>
+                                <Button onClick={handleNext} className="px-8 py-1 text-lg capitalize bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffd2] hover:to-[#9286face] text-black gro rounded font-semibold duration-300">Next</Button>
                             </div>
                         }
                         {
                             pathname.split('/')[4] === 'videos' && 
                             <div className="flex items-center justify-end gap-5 mr-5">
-                                <button onClick={handlePrevious} className="px-4 py-1 text-lg font-semibold border border-[#7D48BF] gro hover:text-[#d3aeff] duration-300 rounded">Previous</button>
-                                <button onClick={handleNext} className="px-8 py-1 text-lg bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffd2] hover:to-[#9286face] text-black gro rounded font-semibold duration-300">Next</button>
+                                <Button onClick={handlePrevious} className="bg-transparent capitalize px-4 py-1 text-lg font-semibold border border-[#7D48BF] gro hover:text-[#d3aeff] duration-300 rounded">Previous</Button>
+                                <Button onClick={handleNext} className="px-8 py-1 text-lg capitalize bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffd2] hover:to-[#9286face] text-black gro rounded font-semibold duration-300">Next</Button>
                             </div>
                         }
                     </div>

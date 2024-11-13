@@ -1,7 +1,7 @@
 
 import { Button, Dialog } from "@material-tailwind/react";
 import { useState } from "react";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import {useMutation, useQuery} from '@tanstack/react-query'
@@ -21,6 +21,7 @@ let videoArray = [] ;
 
 const UploadSubject = () => {
     
+    const navigate = useNavigate() ;
     const {pathname} = useLocation() ;
     const axiosSecure = useAxiosSecure() ;
     const [loading, setLoading] = useState(false) ;
@@ -197,6 +198,53 @@ const UploadSubject = () => {
         }
     }
 
+    const handlePrevious = () => {
+        if(pathname.includes('/textinstruction/')){
+            console.log(pathname)
+        }
+
+        else if(pathname.includes('/images/') && 0 === parseInt(pathname.split('/')[6])){
+            navigate(`textinstruction/${pathname.split('/')[7]}`) ;
+        }
+
+        else if(pathname.includes('/images/') && moduleDetails?.moduleData[1]?.moduleImages?.length - 1 <= parseInt(pathname.split('/')[6])){
+            navigate(`images/${parseInt(pathname.split('/')[6]) - 1}/${pathname.split('/')[7]}/${moduleDetails?.moduleData[1]?.moduleImages[parseInt(pathname.split('/')[6])-1]?.imageName?.split(' ').join('_')}`) ;
+        }
+
+        else if(pathname.includes('/videos/') && 0 === parseInt(pathname.split('/')[6]) && moduleDetails?.moduleData[1]?.moduleImages?.length > 0){
+            navigate(`images/${moduleDetails?.moduleData[1]?.moduleImages?.length - 1}/${pathname.split('/')[7]}/${moduleDetails?.moduleData[1]?.moduleImages[moduleDetails?.moduleData[1]?.moduleImages?.length - 1]?.imageName?.split(' ').join('_')}`) ;
+        }
+
+        else if(pathname.includes('/videos/') && moduleDetails?.moduleData[2]?.moduleVideos?.length - 1 >= parseInt(pathname.split('/')[6])){
+            navigate(`videos/${parseInt(pathname.split('/')[6]) - 1}/${pathname.split('/')[7]}/${moduleDetails?.moduleData[2]?.moduleVideos[parseInt(pathname.split('/')[6])-1]?.videoName?.split(' ').join('_')}`) ;
+        }
+    }
+    
+    const handleNext = () => {
+        if(pathname.includes('/textinstruction/')){
+            if(moduleDetails?.moduleData[1]?.moduleImages?.length > 0){
+                navigate(`images/0/${pathname.split('/')[6]}/${moduleDetails?.moduleData[1]?.moduleImages[0].imageName?.split(' ').join('_')}`)
+            }
+            else if(moduleDetails?.moduleData[2]?.moduleVideos?.length > 0){
+                navigate(`videos/0/${pathname.split('/')[6]}/${moduleDetails?.moduleData[2]?.moduleVideos[0].imageName?.split(' ').join('_')}`)
+            }
+        }
+
+        if(pathname.includes('/images/') && moduleDetails?.moduleData[1]?.moduleImages?.length - 1 > parseInt(pathname.split('/')[6])){
+            navigate(`images/${parseInt(pathname.split('/')[6]) + 1}/${pathname.split('/')[7]}/${moduleDetails?.moduleData[1]?.moduleImages[parseInt(pathname.split('/')[6])+1]?.imageName?.split(' ').join('_')}`) ;
+        }
+
+        if(pathname.includes('/images/') && moduleDetails?.moduleData[1]?.moduleImages?.length - 1 === parseInt(pathname.split('/')[6]) && moduleDetails?.moduleData[2]?.moduleVideos?.length > 0){
+            navigate(`videos/0/${pathname.split('/')[7]}/${moduleDetails?.moduleData[2]?.moduleVideos[0]?.videoName?.split(' ').join('_')}`) ;
+        }
+
+        if(pathname.includes('/videos/') && moduleDetails?.moduleData[2]?.moduleVideos?.length - 1 > parseInt(pathname.split('/')[6])){
+            navigate(`videos/${parseInt(pathname.split('/')[6]) + 1}/${pathname.split('/')[7]}/${moduleDetails?.moduleData[2]?.moduleVideos[parseInt(pathname.split('/')[6])+1]?.videoName?.split(' ').join('_')}`) ;
+        }
+    }
+
+    console.log(pathname.split('/')[6])
+
     return (
         <div className={`h-[80vh] mx-3 mb-10 lg:mx-0 lg:mt-8 ${moduleDetails?.moduleName && 'mb-20'}`}>
 
@@ -219,21 +267,24 @@ const UploadSubject = () => {
                 <div className="w-full rounded flex flex-col gap-3">
                     <Outlet />
                     {
-                        pathname.split('/')[5] === 'textinstruction' && <div className="flex items-center justify-end gap-5 mr-5">
-                            <button className="px-4 py-1 text-lg font-semibold border border-[#7D48BF] gro hover:text-[#d3aeff] duration-300 rounded">Previous</button>
-                            <button className="px-8 py-1 text-lg bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffd2] hover:to-[#9286face] text-black gro rounded font-semibold duration-300">Next</button>
+                        pathname.split('/')[5] === 'textinstruction' && 
+                        <div className="flex items-center justify-end gap-5 mr-5">
+                            <Button onClick={handlePrevious} className="bg-transparent capitalize px-4 py-1 text-lg font-semibold border border-[#7D48BF] gro hover:text-[#d3aeff] duration-300 rounded">Previous</Button>
+                            <Button onClick={handleNext} className="px-8 py-1 text-lg capitalize bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffd2] hover:to-[#9286face] text-black gro rounded font-semibold duration-300">Next</Button>
                         </div>
                     }
                     {
-                        pathname.split('/')[5] === 'images' && <div className="flex items-center justify-end gap-5 mr-5">
-                            <button className="px-4 py-1 text-lg font-semibold border border-[#7D48BF] gro hover:text-[#d3aeff] duration-300 rounded">Previous</button>
-                            <button className="px-8 py-1 text-lg bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffd2] hover:to-[#9286face] text-black gro rounded font-semibold duration-300">Next</button>
+                        pathname.split('/')[5] === 'images' && 
+                        <div className="flex items-center justify-end gap-5 mr-5">
+                            <Button onClick={handlePrevious} className="bg-transparent capitalize px-4 py-1 text-lg font-semibold border border-[#7D48BF] gro hover:text-[#d3aeff] duration-300 rounded">Previous</Button>
+                            <Button onClick={handleNext} className="px-8 py-1 text-lg capitalize bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffd2] hover:to-[#9286face] text-black gro rounded font-semibold duration-300">Next</Button>
                         </div>
                     }
                     {
-                        pathname.split('/')[5] === 'videos' && <div className="flex items-center justify-end gap-5 mr-5">
-                            <button className="px-4 py-1 text-lg font-semibold border border-[#7D48BF] gro hover:text-[#d3aeff] duration-300 rounded">Previous</button>
-                            <button className="px-8 py-1 text-lg bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffd2] hover:to-[#9286face] text-black gro rounded font-semibold duration-300">Next</button>
+                        pathname.split('/')[5] === 'videos' && 
+                        <div className="flex items-center justify-end gap-5 mr-5">
+                            <Button onClick={handlePrevious} className="bg-transparent capitalize px-4 py-1 text-lg font-semibold border border-[#7D48BF] gro hover:text-[#d3aeff] duration-300 rounded">Previous</Button>
+                            <Button onClick={handleNext} className="px-8 py-1 text-lg capitalize bg-gradient-to-r from-[#DF80FF] to-[#9286FA] hover:from-[#df80ffd2] hover:to-[#9286face] text-black gro rounded font-semibold duration-300">Next</Button>
                         </div>
                     }
                 </div>
