@@ -37,11 +37,12 @@ const MyClassesRoot = () => {
     })
 
     const handleDropDown = (id) => {
+        console.log(moduleClick , id)
         if(!moduleClick.includes(id)){
             setModuleClick([...moduleClick , id]) ;
         }
         else{
-            const removeClick = moduleClick.filter((removedId) => removedId !== id && removedId ) ;
+            const removeClick = moduleClick?.filter((removedId) => removedId !== id && removedId ) ;
             setModuleClick(removeClick) ;
         }
     }

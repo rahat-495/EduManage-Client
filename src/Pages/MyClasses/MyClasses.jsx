@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 const MyClasses = () => {
 
-    const {user , setModuleClick} = useAuth() ;
+    const {user , moduleClick , setModuleClick} = useAuth() ;
     const axiosSecure = useAxiosSecure() ;
     const userData = useSelector(state => state.user) ;
 
@@ -35,7 +35,7 @@ const MyClasses = () => {
                                 key={index} 
                                 to={linkTo} 
                                 onClick={() => {
-                                    linkTo.split('/')[3].length > 20 && setModuleClick(linkTo.split('/')[3]) ; 
+                                    linkTo.split('/')[3].length > 20 && setModuleClick([...moduleClick , linkTo.split('/')[3]]) ; 
                                 }}
                                 className="px-5 py-10 bg-white rounded-md border hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-500 cursor-pointer"
                             >
