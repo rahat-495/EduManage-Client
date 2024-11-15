@@ -50,6 +50,8 @@ const ModuleData = ({data , id}) => {
         }
     }
 
+    console.log(pathname.split('/')[6])
+
     return (
         <div className="w-full">
             {

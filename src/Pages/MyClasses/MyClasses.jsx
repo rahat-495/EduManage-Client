@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 const MyClasses = () => {
 
-    const {user} = useAuth() ;
+    const {user , setModuleClick} = useAuth() ;
     const axiosSecure = useAxiosSecure() ;
     const userData = useSelector(state => state.user) ;
 
@@ -18,8 +18,6 @@ const MyClasses = () => {
             return data ;
         }
     })
-
-    console.log(userData?.lastSeenModuleDatas)
 
     return (
         <div className="min-h-[70vh] mx-3 mb-10 lg:mx-0 lg:mb-0">
@@ -32,12 +30,15 @@ const MyClasses = () => {
 
                         const lastSeenLink = userData?.lastSeenModuleDatas?.find((link) => link.includes(sub));
                         const linkTo = lastSeenLink ? `details/${lastSeenLink}` : `details/${sub}`;
-                        
                         return(
-                            <Link 
-                            key={index} 
-                            to={linkTo} 
-                            className="px-5 py-10 bg-white rounded-md border hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-500 cursor-pointer">
+                            <Link
+                                key={index} 
+                                to={linkTo} 
+                                onClick={() => {
+                                    linkTo.split('/')[3].length > 20 && setModuleClick(linkTo.split('/')[3]) ; 
+                                }}
+                                className="px-5 py-10 bg-white rounded-md border hover:border-purple-500 bg-gradient-to-r from-purple-500 to-teal-500 duration-500 cursor-pointer"
+                            >
                                 <h1 className="text-white text-center text-xl gro capitalize">{sub}</h1>
                             </Link>
                         )

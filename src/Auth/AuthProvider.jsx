@@ -17,6 +17,7 @@ const AuthProvider = ({children}) => {
     const axiosSecure = useAxiosSecure() ;
     const [user , setCurrentUser] = useState(null) ;
     const [loading , setLoading] = useState(true) ;
+    const [moduleClick, setModuleClick] = useState([]) ;
     const parser = new UAParser();
     const deviceInfo = parser.getResult();
     const userData = useSelector(state => state?.user) ;
@@ -119,6 +120,8 @@ const AuthProvider = ({children}) => {
         createUser ,
         githubLogin ,
         googleLogin ,
+        moduleClick ,
+        setModuleClick ,
     }
 
     return (

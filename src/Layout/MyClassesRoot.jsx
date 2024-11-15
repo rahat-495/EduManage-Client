@@ -5,18 +5,18 @@ import Footer from "../Shared/Footer/Footer";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
-import { useState } from "react";
 import { FaArrowLeft, FaMinus, FaPlus } from "react-icons/fa6";
 import ModuleData from "../Pages/UploadSubject/Components/ModuleData";
 import { Button } from "@material-tailwind/react";
+import useAuth from "../Hooks/useAuth";
 
 const MyClassesRoot = () => {
 
+    const {moduleClick , setModuleClick} = useAuth() ;
     const {pathname} = useLocation() ;
     const axiosSecure = useAxiosSecure() ;
     const navigate = useNavigate() ;
     const userData = useSelector(state => state?.user) ;
-    const [moduleClick, setModuleClick] = useState([]) ;
 
     const {data : modules} = useQuery({
         queryKey : ['myClassModules' , pathname , userData] ,
