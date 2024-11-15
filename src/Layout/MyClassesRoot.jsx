@@ -91,8 +91,6 @@ const MyClassesRoot = () => {
         }
     }
 
-    console.log(moduleDetails?.moduleData[2]?.moduleVideos[pathname.split('/')[5]]?.videoName?.split(' ').join('_'))
-
     return (
         <div className="overflow-x-hidden lg:overflow-visible">
 
