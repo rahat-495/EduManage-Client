@@ -41,6 +41,7 @@ import MyClassesDefault from '../MyClassesPages/MyClassesDefault';
 import MyModuleImage from '../MyClassesPages/Components/MyModuleImage';
 import MyModuleVideo from '../MyClassesPages/Components/MyModuleVideo';
 import TextInstruction from '../Pages/UploadSubject/Components/TextInstruction';
+import NoModuleAreCooket from '../MyClassesPages/Components/NoModuleAreCooket';
 
 const router = createBrowserRouter([
     {
@@ -218,6 +219,10 @@ const router = createBrowserRouter([
             {
                 path : 'videos/:index/:id/:imageName' ,
                 element : <MyModuleVideo/>,
+            },
+            {
+                path : 'noModuleAreCooket' ,
+                element : <NoModuleAreCooket/>,
             },
         ]
     },
