@@ -47,7 +47,7 @@ const MyClassesRoot = () => {
         }
     }
 
-    const handlePrevious = () => {
+    const handlePrevious = async () => {
         if(pathname.includes('/textinstruction/')){
             console.log(pathname)
         }
@@ -69,7 +69,7 @@ const MyClassesRoot = () => {
         }
     }
     
-    const handleNext = () => {
+    const handleNext = async () => {
         if(pathname.includes('/textinstruction/')){
             if(moduleDetails?.moduleData[1]?.moduleImages?.length > 0){
                 navigate(`images/0/${pathname.split('/')[5]}/${moduleDetails?.moduleData[1]?.moduleImages[0].imageName?.split(' ').join('_')}`)
@@ -89,6 +89,11 @@ const MyClassesRoot = () => {
 
         if(pathname.includes('/videos/') && moduleDetails?.moduleData[2]?.moduleVideos?.length - 1 > parseInt(pathname.split('/')[5])){
             navigate(`videos/${parseInt(pathname.split('/')[5]) + 1}/${pathname.split('/')[6]}/${moduleDetails?.moduleData[2]?.moduleVideos[parseInt(pathname.split('/')[5])+1]?.videoName?.split(' ').join('_')}`) ;
+        }
+
+        if(pathname.includes('/videos/') && moduleDetails?.moduleData[2]?.moduleVideos?.length - 1 === 0){
+            const {data} = await axiosSecure.get(`/goToNextLink?moduleId=${moduleDetails?._id}&subject=${moduleDetails?.subject}`) ;
+            console.log(data)
         }
     }
 

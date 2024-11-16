@@ -12,7 +12,7 @@ const ModuleData = ({data , id}) => {
     const userData = useSelector(state => state?.user) ;
 
     const handleTextInstructionNavigate = () => {
-        if(data?.whichStudentsSeen?.includes(userData?.studentUid)){
+        if(!data?.whichStudentsSeen?.includes(userData?.studentUid)){
             navigate(`textinstruction/${id}`) ;
         }
         else{
@@ -25,7 +25,7 @@ const ModuleData = ({data , id}) => {
     }
 
     const handleImageNavigate = (data , index) => {
-        if(data?.whichStudentsSeen?.includes(userData?.studentUid)){
+        if(!data?.whichStudentsSeen?.includes(userData?.studentUid)){
             navigate(`images/${index}/${id}/${data?.imageName.split(' ').join('_')}`) ;
         }
         else{
@@ -38,7 +38,7 @@ const ModuleData = ({data , id}) => {
     }
     
     const handleVideoNavigate = (data , index) => {
-        if(data?.whichStudentsSeen?.includes(userData?.studentUid)){
+        if(!data?.whichStudentsSeen?.includes(userData?.studentUid)){
             navigate(`videos/${index}/${id}/${data?.videoName.split(' ').join('_')}`) ;
         }
         else{
