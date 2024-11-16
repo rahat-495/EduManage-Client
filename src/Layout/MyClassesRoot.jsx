@@ -48,8 +48,9 @@ const MyClassesRoot = () => {
     }
 
     const handlePrevious = async () => {
-        if(pathname.includes('/textinstruction/')){
-            console.log(pathname)
+        if(pathname.includes('/textinstruction/') && modules?.length > 1){
+            const {data} = await axiosSecure.get(`/goToPrevLink?moduleId=${moduleDetails?._id}&subject=${moduleDetails?.subject}`) ;
+            navigate(data?.link) ;
         }
 
         else if(pathname.includes('/images/') && 0 === parseInt(pathname.split('/')[5])){
@@ -91,9 +92,9 @@ const MyClassesRoot = () => {
             navigate(`videos/${parseInt(pathname.split('/')[5]) + 1}/${pathname.split('/')[6]}/${moduleDetails?.moduleData[2]?.moduleVideos[parseInt(pathname.split('/')[5])+1]?.videoName?.split(' ').join('_')}`) ;
         }
 
-        if(pathname.includes('/videos/') && moduleDetails?.moduleData[2]?.moduleVideos?.length - 1 === 0){
+        if(pathname.includes('/videos/') && moduleDetails?.moduleData[2]?.moduleVideos?.length - 1 === parseInt(pathname.split('/')[5])){
             const {data} = await axiosSecure.get(`/goToNextLink?moduleId=${moduleDetails?._id}&subject=${moduleDetails?.subject}`) ;
-            console.log(data)
+            navigate(data?.link) ;
         }
     }
 
