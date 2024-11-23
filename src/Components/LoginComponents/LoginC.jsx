@@ -19,6 +19,7 @@ const LoginC = ({location}) => {
     const navigate = useNavigate() ;
     const [eye , setEye] = useState(false) ;
     const [remember , setRemember] = useState(false) ;
+    const [loading , setLoading] = useState(false) ;
     const [errorText , setErrorText] = useState('') ;
     const parser = new UAParser();
     const deviceInfo = parser.getResult();
@@ -31,12 +32,15 @@ const LoginC = ({location}) => {
         const pass = form.password.value ;
     
         if(remember){
+          setLoading(true) ;
           signIn(email , pass) 
           .then((result) => {
             console.log(result);
             form.reset() ;
             toast.success('Login Success Fully !') ;
-
+            
+            setLoading(false) ;
+            
             const userInfo = {
               name : result?.user?.displayName ,
               email : result?.user?.email ,
@@ -94,11 +98,13 @@ const LoginC = ({location}) => {
     }
 
     const handleGoogleLogin = () => {
+      setLoading(true) ;
       googleLogin()
       .then( async (result) => {
-
+        
         console.log(result);  
         toast.success('Login Success Fully !') ;
+        setLoading(false) ;
         
         const userInfo = {
           name : result?.user?.displayName ,
@@ -187,18 +193,30 @@ const LoginC = ({location}) => {
               )}
             </div>
 
-          <input
-            type="submit"
-            className="w-full btn text-gray-800 hover:text-white btn-outline hover:bg-[#393939]"
-            value={"Log In"}
-          />
+          {
+            !loading ?
+            <input
+              type="submit"
+              className="w-full btn text-gray-800 hover:text-white btn-outline hover:bg-[#393939]"
+              value={"Log In"}
+            />:
+            <button className="w-full btn text-gray-800 hover:text-white btn-outline hover:bg-[#393939]">
+              <span className="loading loading-dots loading-sm"></span>
+            </button>
+          }
 
           <div className="divider">OR</div>
 
-          <Button onClick={handleGoogleLogin} className="text-lg gap-3 justify-center flex items-center bg-transparent text-black border border-[#343434] hover:shadow-none">
-              <FcGoogle  className="text-2xl"/>
-              <p className="text-base">Login With Google</p>
-          </Button>
+          {
+            !loading ? 
+            <Button onClick={handleGoogleLogin} className="text-lg gap-3 justify-center flex items-center bg-transparent text-black border border-[#343434] hover:shadow-none">
+                <FcGoogle  className="text-2xl"/>
+                <p className="text-base capitalize">Login With Google</p>
+            </Button> :
+            <Button className="text-lg gap-3 justify-center flex items-center bg-transparent text-black border border-[#343434] hover:shadow-none">
+              <span className="loading loading-dots loading-sm"></span>
+            </Button>
+          }
 
         </form>
       </CardBody>

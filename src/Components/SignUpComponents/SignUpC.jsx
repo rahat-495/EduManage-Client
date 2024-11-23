@@ -21,6 +21,7 @@ const SignUpC = ({remember , setRemember}) => {
   const {createUser , setProfile} = useAuth() ;
   const navigate = useNavigate() ;
   const [eye , setEye] = useState(false) ;
+  const [loading , setLoading] = useState(false) ;
   const [errorText , setErrorText] = useState('') ;
   const [passInt, setPassInt] = useState("");
   const parser = new UAParser();
@@ -46,11 +47,13 @@ const SignUpC = ({remember , setRemember}) => {
       if (passInt.length >= 6) {
         if (/[!@#$%^&*(),.?":{}|<>]/.test(passInt)) {
           if (/[a-z]/.test(passInt) && /[A-Z]/.test(passInt)) {
+            setLoading(true) ;
             createUser(email, pass)
-              .then((result) => {
-                console.log(result.user);
-                toast.success("Register Success Fully !");
-                form.reset();
+            .then((result) => {
+              console.log(result.user);
+              toast.success("Register Success Fully !");
+              form.reset();
+              setLoading(false) ;
 
                 const userInfo = {
                   name ,
@@ -171,11 +174,17 @@ const SignUpC = ({remember , setRemember}) => {
             </div>
 
               <div className="col-span-2">
-                <input  
-                  type="submit"
-                  className="w-full btn text-gray-800 hover:text-white btn-outline hover:bg-[#393939]"
-                  value={"Sign Up"}
-                />
+                {
+                  !loading ?
+                  <input
+                    type="submit"
+                    className="w-full btn text-gray-800 hover:text-white btn-outline hover:bg-[#393939]"
+                    value={"Sign Up"}
+                  />:
+                  <button className="w-full btn text-gray-800 hover:text-white btn-outline hover:bg-[#393939]">
+                    <span className="loading loading-dots loading-sm"></span>
+                  </button>
+                }
               </div>
           </form>
       </CardBody>
