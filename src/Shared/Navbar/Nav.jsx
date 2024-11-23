@@ -18,9 +18,10 @@ import useAuth from "../../Hooks/useAuth";
 import NavLists from "../../Components/NavLists/Navlists";
 import ProfileLinks from "../../Components/ProfileLinks/ProfileLinks";
 import messageLogo from "../../../public/images/messageLogo.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { MdLogout } from "react-icons/md";
 import MessagesSiteNav from "../../Messages/Components/MessagesSiteNav";
+import { setUser } from "../../Redux/userSlice";
 
 const Nav = () => {
 
@@ -28,6 +29,7 @@ const Nav = () => {
   const { user, logOut } = useAuth();
   const [openNav, setOpenNav] = useState(false);
   const userData = useSelector((state) => state?.user);
+  const dispatch = useDispatch() ;
   const [openRight, setOpenRight] = useState(false);
   const [open, setOpen] = React.useState(false);
  
@@ -135,7 +137,35 @@ const Nav = () => {
                           <ProfileLinks />
 
                           <Button
-                            onClick={() => logOut()}
+                            onClick={() => {
+                              logOut() ;
+                              dispatch(setUser({
+                                _id : '',
+                                name: '',
+                                email: '',
+                                image: '',
+                                studentUid: '',
+                                role: "",
+                                isBlock: false,
+                                isFired: false,
+                                isjoined : '' ,
+                                isjoinedModalSeen : false ,
+                                applyForTeacher: "No",
+                                schools: [],
+                                grades: [],
+                                removedDevice: [],
+                                lastSeenModuleDatas : [] ,
+                                devicesInfo: [
+                                    {
+                                        deviceName: deviceInfo?.os?.name + " " + deviceInfo?.os?.version,
+                                        loginDate: new Date().toLocaleDateString(),
+                                        loginTime: new Date().toLocaleTimeString(),
+                                        loginShift: new Date().toLocaleTimeString("en-US", { hour: "numeric", hour12: true }).split(" ")[1],
+                                        isRemoved: false,
+                                    },
+                                ],
+                              }))
+                            }}
                             className="gap-3 gro w-fit text-[#e855de] hover:text-purple-500 duration-200 text-sm font-semibold bg-transparent flex items-center ml-3 p-0 mb-2"
                           >
                             Log Out <MdLogout className="text-base font-bold" />

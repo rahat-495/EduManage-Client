@@ -2,9 +2,11 @@
 import { Typography } from "@material-tailwind/react";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
+import useAuth from "../../Hooks/useAuth";
 
 const ProfileLinks = () => {
 
+  const {user} = useAuth() ;
   const currentUserData = useSelector(state => state.user) ;
   const role = useSelector(state => state?.user?.role) ;
 
@@ -135,7 +137,7 @@ const ProfileLinks = () => {
       <div className="my-5 flex flex-col gap-1">
 
         {
-          currentUserData?.isjoined && 
+          (user && currentUserData?.isjoined) && 
           <>
             <NavLink
               to={"/myClasses"}
