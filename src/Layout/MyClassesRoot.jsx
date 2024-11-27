@@ -49,7 +49,7 @@ const MyClassesRoot = () => {
 
     const handlePrevious = async () => {
         if(pathname.includes('/textinstruction/') && modules?.length > 1){
-            const {data} = await axiosSecure.get(`/goToPrevLink?moduleId=${moduleDetails?._id}&subject=${moduleDetails?.subject}`) ;
+            const {data} = await axiosSecure.get(`/goToPrevLink?moduleId=${moduleDetails?._id}&subject=${moduleDetails?.subject}&studentUid=${userData?.studentUid}`) ;
             if(data?.success){
                 navigate(data?.link) ;
             }
@@ -95,7 +95,7 @@ const MyClassesRoot = () => {
         }
 
         if(pathname.includes('/videos/') && moduleDetails?.moduleData[2]?.moduleVideos?.length - 1 === parseInt(pathname.split('/')[5])){
-            const {data} = await axiosSecure.get(`/goToNextLink?moduleId=${moduleDetails?._id}&subject=${moduleDetails?.subject}`) ;
+            const {data} = await axiosSecure.get(`/goToNextLink?moduleId=${moduleDetails?._id}&subject=${moduleDetails?.subject}&studentUid=${userData?.studentUid}`) ;
             if(data?.success){
                 navigate(data?.link) ;
             }
