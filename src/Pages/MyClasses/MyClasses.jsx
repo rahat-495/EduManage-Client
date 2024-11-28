@@ -30,6 +30,7 @@ const MyClasses = () => {
 
                         const lastSeenLink = userData?.lastSeenModuleDatas?.find((link) => link.includes(sub));
                         const linkTo = lastSeenLink ? `details/${lastSeenLink}` : `details/${sub}`;
+
                         return(
                             <Link
                                 key={index} 

@@ -48,27 +48,53 @@ const MyClassesRoot = () => {
     }
 
     const handlePrevious = async () => {
-        if(pathname.includes('/textinstruction/') && modules?.length > 1){
+        if(pathname.includes('/textinstruction/') && modules?.length > 1 && userData?.studentUid){
             const {data} = await axiosSecure.get(`/goToPrevLink?moduleId=${moduleDetails?._id}&subject=${moduleDetails?.subject}&studentUid=${userData?.studentUid}`) ;
+            if(data?.reload){
+                window.location.reload() ;
+            }
             if(data?.success){
                 navigate(data?.link) ;
             }
         }
-
-        else if(pathname.includes('/images/') && 0 === parseInt(pathname.split('/')[5])){
+        
+        else if(pathname.includes('/images/') && 0 === parseInt(pathname.split('/')[5]) && userData?.studentUid){
             navigate(`textinstruction/${pathname.split('/')[6]}`) ;
+            const {data} = await axiosSecure.get(`/goToPrevLink?link=${`textinstruction/${pathname.split('/')[6]}`}&studentUid=${userData?.studentUid}&subject=${moduleDetails?.subject}`) ;
+            
+            if(data?.reload){
+                window.location.reload() ;
+            }
         }
-
-        else if(pathname.includes('/images/') && moduleDetails?.moduleData[1]?.moduleImages?.length - 1 <= parseInt(pathname.split('/')[5])){
+        
+        else if(pathname.includes('/images/') && moduleDetails?.moduleData[1]?.moduleImages?.length - 1 <= parseInt(pathname.split('/')[5]) && userData?.studentUid){
             navigate(`images/${parseInt(pathname.split('/')[5]) - 1}/${pathname.split('/')[6]}/${moduleDetails?.moduleData[1]?.moduleImages[parseInt(pathname.split('/')[5])-1]?.imageName?.split(' ').join('_')}`) ;
-        }
+            
+            const {data} = await axiosSecure.get(`/goToPrevLink?link=${`images/${parseInt(pathname.split('/')[5]) - 1}/${pathname.split('/')[6]}/${moduleDetails?.moduleData[1]?.moduleImages[parseInt(pathname.split('/')[5])-1]?.imageName?.split(' ').join('_')}`}&studentUid=${userData?.studentUid}&subject=${moduleDetails?.subject}`) ;
 
-        else if(pathname.includes('/videos/') && 0 === parseInt(pathname.split('/')[5]) && moduleDetails?.moduleData[1]?.moduleImages?.length > 0){
+            if(data?.reload){
+                window.location.reload() ;
+            }
+        }
+        
+        else if(pathname.includes('/videos/') && 0 === parseInt(pathname.split('/')[5]) && moduleDetails?.moduleData[1]?.moduleImages?.length > 0 && userData?.studentUid){
             navigate(`images/${moduleDetails?.moduleData[1]?.moduleImages?.length - 1}/${pathname.split('/')[6]}/${moduleDetails?.moduleData[1]?.moduleImages[moduleDetails?.moduleData[1]?.moduleImages?.length - 1]?.imageName?.split(' ').join('_')}`) ;
-        }
+            
+            const {data} = await axiosSecure.get(`/goToPrevLink?link=${`images/${moduleDetails?.moduleData[1]?.moduleImages?.length - 1}/${pathname.split('/')[6]}/${moduleDetails?.moduleData[1]?.moduleImages[moduleDetails?.moduleData[1]?.moduleImages?.length - 1]?.imageName?.split(' ').join('_')}`}&studentUid=${userData?.studentUid}&subject=${moduleDetails?.subject}`) ;
 
-        else if(pathname.includes('/videos/') && moduleDetails?.moduleData[2]?.moduleVideos?.length - 1 >= parseInt(pathname.split('/')[5])){
+            if(data?.reload){
+                window.location.reload() ;
+            }
+        }
+        
+        else if(pathname.includes('/videos/') && moduleDetails?.moduleData[2]?.moduleVideos?.length - 1 >= parseInt(pathname.split('/')[5]) && userData?.studentUid){
             navigate(`videos/${parseInt(pathname.split('/')[5]) - 1}/${pathname.split('/')[6]}/${moduleDetails?.moduleData[2]?.moduleVideos[parseInt(pathname.split('/')[5])-1]?.videoName?.split(' ').join('_')}`) ;
+            
+            const {data} = await axiosSecure.get(`/goToPrevLink?link=${`videos/${parseInt(pathname.split('/')[5]) - 1}/${pathname.split('/')[6]}/${moduleDetails?.moduleData[2]?.moduleVideos[parseInt(pathname.split('/')[5])-1]?.videoName?.split(' ').join('_')}`}&studentUid=${userData?.studentUid}&subject=${moduleDetails?.subject}`) ;
+
+            if(data?.reload){
+                window.location.reload() ;
+            }
         }
     }
     
@@ -104,6 +130,8 @@ const MyClassesRoot = () => {
             }
         }
     }
+
+    console.log(pathname.split('/')[3])
 
     return (
         <div className="overflow-x-hidden lg:overflow-visible">
